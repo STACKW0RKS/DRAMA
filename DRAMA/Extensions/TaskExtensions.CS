@@ -11,11 +11,14 @@ namespace DRAMA.Extensions
         /// </summary>
         public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
         {
-            using var timeoutCancellationTokenSource = new CancellationTokenSource();
-            var completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
+            using CancellationTokenSource timeoutCancellationTokenSource = new();
+            Task completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
 
-            if (completedTask.Equals(task)) { timeoutCancellationTokenSource.Cancel(); return await task; }
-            else { throw new TimeoutException(); }
+            if (completedTask.Equals(task).Equals(false)) throw new TimeoutException();
+
+            timeoutCancellationTokenSource.Cancel();
+
+            return await task;
         }
 
         /// <summary>
@@ -23,11 +26,11 @@ namespace DRAMA.Extensions
         /// </summary>
         public static async Task TimeoutAfter(this Task task, TimeSpan timeout)
         {
-            using var timeoutCancellationTokenSource = new CancellationTokenSource();
-            var completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
+            using CancellationTokenSource timeoutCancellationTokenSource = new();
+            Task completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
 
-            if (completedTask.Equals(task)) { timeoutCancellationTokenSource.Cancel(); }
-            else { throw new TimeoutException(); }
+            if (completedTask.Equals(task)) timeoutCancellationTokenSource.Cancel();
+            else throw new TimeoutException();
         }
     }
 }
