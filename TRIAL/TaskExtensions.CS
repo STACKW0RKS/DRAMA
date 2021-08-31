@@ -15,7 +15,7 @@ namespace TRIAL
             [TestMethod]
             public async Task Task_With_No_Return_Type_Completes_Before_It_Times_Out()
             {
-                Task task = Task.Run(async () => await Task.Delay(250));
+                Task task = Task.Delay(250);
                 await task.TimeoutAfter(new TimeSpan(00, 00, 05));
                 Assert.IsTrue(task.IsCompletedSuccessfully, "Task With No Return Type Has Completed Successfully");
             }
@@ -24,7 +24,7 @@ namespace TRIAL
             public async Task Task_With_No_Return_Type_Throws_Exception_After_It_Times_Out()
             {
                 CancellationTokenSource timeoutCancellationTokenSource = new();
-                Task task = Task.Run(async () => await Task.Delay(1250, timeoutCancellationTokenSource.Token));
+                Task task = Task.Delay(1250, timeoutCancellationTokenSource.Token);
 
                 try { await task.TimeoutAfter(new TimeSpan(00, 00, 01)); }
                 catch (TimeoutException) { timeoutCancellationTokenSource.Cancel(); }
@@ -57,7 +57,7 @@ namespace TRIAL
                     await Task.Delay(1250, timeoutCancellationTokenSource.Token);
 
                     return true;
-                });
+                }, timeoutCancellationTokenSource.Token);
 
                 try { result = await task.TimeoutAfter(new TimeSpan(00, 00, 01)); }
 
