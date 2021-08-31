@@ -36,17 +36,32 @@ namespace TRIAL
         public class None
         {
             [TestMethod]
-            public void None_On_Collection_Without_Elements_Is_True()
+            public void None_On_Collection_Without_Elements_Returns_True()
+                => Assert.IsTrue(new List<string>().None(), "Input Collection Is Empty");
+
+            [TestMethod]
+            public void None_On_Collection_With_Elements_Returns_False()
             {
-                List<string> inputCollection = new();
-                Assert.IsTrue(inputCollection.None(), "Input Collection Is Empty");
+                List<int> inputCollection = new() {42, 13, 666};
+                Assert.IsFalse(inputCollection.None(), "Input Collection Is Empty");
             }
 
             [TestMethod]
-            public void None_On_Collection_With_Elements_Is_False()
+            public void None_On_Filtered_Collection_Without_Elements_Returns_True()
+                => Assert.IsTrue(new List<string>().None(element => element.Equals("foo")), "Filtered Input Collection Is Empty");
+
+            [TestMethod]
+            public void None_On_Filtered_Collection_With_Elements_Which_Do_Not_Satisfy_Condition_Returns_True()
             {
-                List<int> inputCollection = new() {42, 13, 666};
-                Assert.IsFalse(inputCollection.None(), "Input Collection Is Not Empty");
+                List<int> inputCollection = new() { 42, 13, 666 };
+                Assert.IsTrue(inputCollection.None(element => element.Equals(163)), "No Elements In Filtered Input Collection Satisfy Condition");
+            }
+
+            [TestMethod]
+            public void None_On_Filtered_Collection_With_Elements_Which_Satisfy_Condition_Returns_False()
+            {
+                List<int> inputCollection = new() { 42, 13, 666 };
+                Assert.IsFalse(inputCollection.None(element => element.Equals(42)), "No Elements In Filtered Input Collection Satisfy Condition");
             }
         }
     }

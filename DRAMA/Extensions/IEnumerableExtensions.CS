@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,5 +23,11 @@ namespace DRAMA.Extensions
         /// </summary>
         public static bool None<T>(this IEnumerable<T> collection)
             => !collection.Any();
+
+        /// <summary>
+        ///     Returns TRUE if no element in the collection satisfies the condition specified by a predicate. Otherwise, returns FALSE.
+        /// </summary>
+        public static bool None<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+            => !collection.Any(predicate);
     }
 }
