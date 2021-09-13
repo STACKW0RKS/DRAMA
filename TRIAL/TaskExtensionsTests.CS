@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TRIAL
 {
     [TestClass]
-    public class TaskExtensions
+    public class TaskExtensionsTests
     {
         [TestClass]
         public class TimeoutAfter
