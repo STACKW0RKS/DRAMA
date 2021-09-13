@@ -16,7 +16,7 @@ namespace TRIAL
             {
                 string[] inputCollection = {"foo", "bar", "qux"};
                 IEnumerable<string> outputCollection = inputCollection.Shuffle();
-                Assert.AreEqual(inputCollection.Count(), outputCollection.Count(), "Output Collection Element Count");
+                Assert.AreEqual(inputCollection.Length, outputCollection.Count(), "Output Collection Element Count");
             }
         }
 
