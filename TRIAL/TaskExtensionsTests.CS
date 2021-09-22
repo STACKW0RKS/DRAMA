@@ -2,17 +2,17 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DRAMA.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TRIAL
 {
-    [TestClass]
+    [TestFixture]
     public class TaskExtensionsTests
     {
-        [TestClass]
+        [TestFixture]
         public class TimeoutAfter
         {
-            [TestMethod]
+            [Test]
             public async Task Task_With_No_Return_Type_Completes_Before_It_Times_Out()
             {
                 Task task = Task.Delay(250);
@@ -20,7 +20,7 @@ namespace TRIAL
                 Assert.IsTrue(task.IsCompletedSuccessfully, "Task With No Return Type Has Completed Successfully");
             }
 
-            [TestMethod]
+            [Test]
             public async Task Task_With_No_Return_Type_Throws_Exception_After_It_Times_Out()
             {
                 CancellationTokenSource timeoutCancellationTokenSource = new();
@@ -32,7 +32,7 @@ namespace TRIAL
                 Assert.IsTrue(task.IsCanceled, "Task With No Return Type Has Successfully Timed Out");
             }
 
-            [TestMethod]
+            [Test]
             public async Task Task_With_Return_Type_Completes_Before_It_Times_Out()
             {
                 Task<bool> task = Task.Run(async () =>
@@ -46,7 +46,7 @@ namespace TRIAL
                 Assert.IsTrue(result, "Task With Return Type Has Completed Successfully");
             }
 
-            [TestMethod]
+            [Test]
             public async Task Task_With_Return_Type_Throws_Exception_After_It_Times_Out()
             {
                 bool result;

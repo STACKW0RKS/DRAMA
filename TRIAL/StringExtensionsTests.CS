@@ -1,15 +1,15 @@
 ﻿using DRAMA.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TRIAL
 {
-    [TestClass]
+    [TestFixture]
     public class StringExtensionsTests
     {
-        [TestClass]
+        [TestFixture]
         public class ToTitleCase
         {
-            [TestMethod]
+            [Test]
             public void Text_Is_Converted_To_Title_Case()
             {
                 const string text = "Why did the programmer listen to the UNIX shell? So he could hear the C.";
@@ -19,10 +19,10 @@ namespace TRIAL
             }
         }
 
-        [TestClass]
+        [TestFixture]
         public class Flatten
         {
-            [TestMethod]
+            [Test]
             public void Flattened_Text_Has_Leading_And_Trailing_White_Spaces_Removed()
             {
                 string text = $"{string.Empty} Why Do Java Programmers Have to Wear Glasses? Because They Can’t C#. {string.Empty}";
@@ -31,7 +31,7 @@ namespace TRIAL
                 Assert.AreEqual(comparisonText, text.Flatten(), "Flattened Text Has No Leading Or Trailing White-Space Characters");
             }
 
-            [TestMethod]
+            [Test]
             public void Flattened_Text_Is_Uppercase()
             {
                 const string text = "Why do programmers always mix up Christmas and Halloween? Because Dec 25 is Oct 31.";

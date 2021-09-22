@@ -1,63 +1,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using DRAMA.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TRIAL
 {
-    [TestClass]
+    [TestFixture]
     public class IEnumerableExtensionsTests
     {
-        [TestClass]
+        [TestFixture]
         public class Shuffle
         {
-            [TestMethod]
+            [Test]
             public void Input_Collection_And_Output_Collection_Have_The_Same_Element_Count()
             {
-                string[] inputCollection = {"foo", "bar", "qux"};
+                string[] inputCollection = { "foo", "bar", "qux" };
                 IEnumerable<string> outputCollection = inputCollection.Shuffle();
                 Assert.AreEqual(inputCollection.Length, outputCollection.Count(), "Output Collection Element Count");
             }
         }
 
-        [TestClass]
+        [TestFixture]
         public class RandomElement
         {
-            [TestMethod]
+            [Test]
             public void Randomly_Selected_Element_Exists_In_Input_Collection()
             {
-                int[] inputCollection = {42, 13, 666};
+                int[] inputCollection = { 42, 13, 666 };
                 int randomElement = inputCollection.RandomElement();
                 Assert.IsTrue(inputCollection.Contains(randomElement), "Input Collection Contains Randomly Selected Element");
             }
         }
 
-        [TestClass]
+        [TestFixture]
         public class None
         {
-            [TestMethod]
+            [Test]
             public void None_On_Collection_Without_Elements_Returns_True()
                 => Assert.IsTrue(new List<string>().None(), "Input Collection Is Empty");
 
-            [TestMethod]
+            [Test]
             public void None_On_Collection_With_Elements_Returns_False()
             {
-                List<int> inputCollection = new() {42, 13, 666};
+                List<int> inputCollection = new() { 42, 13, 666 };
                 Assert.IsFalse(inputCollection.None(), "Input Collection Is Empty");
             }
 
-            [TestMethod]
+            [Test]
             public void None_On_Filtered_Collection_Without_Elements_Returns_True()
                 => Assert.IsTrue(new List<string>().None(element => element.Equals("foo")), "Filtered Input Collection Is Empty");
 
-            [TestMethod]
+            [Test]
             public void None_On_Filtered_Collection_With_Elements_Which_Do_Not_Satisfy_Condition_Returns_True()
             {
                 List<int> inputCollection = new() { 42, 13, 666 };
                 Assert.IsTrue(inputCollection.None(element => element.Equals(163)), "No Elements In Filtered Input Collection Satisfy Condition");
             }
 
-            [TestMethod]
+            [Test]
             public void None_On_Filtered_Collection_With_Elements_Which_Satisfy_Condition_Returns_False()
             {
                 List<int> inputCollection = new() { 42, 13, 666 };
