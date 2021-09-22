@@ -12,7 +12,8 @@ namespace DRAMA.Extensions
 
         /// <summary>
         ///     Trims leading and trailing white-space characters, and converts the text to uppercase.
-        ///     <para>The intended use of this method is string comparison operations.</para>
+        ///     <br/>
+        ///     The intended use of this method is string comparison operations.
         /// </summary>
         public static string Flatten(this string text)
             => text?.Trim().ToUpper();
