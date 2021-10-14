@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace DRAMA.Extensions
 {
@@ -17,5 +18,33 @@ namespace DRAMA.Extensions
         /// </summary>
         public static string Flatten(this string text)
             => text?.Trim().ToUpper();
+
+        /// <summary>
+        ///     Returns TRUE if the source string does not contain the provided text. Otherwise, returns FALSE.
+        /// </summary>
+        public static bool ContainsNot(this string text, string value)
+            => !text.Contains(value);
+
+        /// <summary>
+        ///     Returns TRUE if the source string does not contain the provided text, while specifying the comparison type. Otherwise, returns FALSE.
+        ///     <br/>
+        ///     Valid string comparison types are the following: CurrentCulture, CurrentCultureIgnoreCase, InvariantCulture, InvariantCultureIgnoreCase, Ordinal, OrdinalIgnoreCase.
+        /// </summary>
+        public static bool ContainsNot(this string text, string value, StringComparison comparisonType)
+            => !text.Contains(value, comparisonType);
+
+        /// <summary>
+        ///     Returns TRUE if the source string does not contain the provided character. Otherwise, returns FALSE.
+        /// </summary>
+        public static bool ContainsNot(this string text, char value)
+            => !text.Contains(value);
+
+        /// <summary>
+        ///     Returns TRUE if the source string does not contain the provided character, while specifying the comparison type. Otherwise, returns FALSE.
+        ///     <br/>
+        ///     Valid string comparison types are the following: CurrentCulture, CurrentCultureIgnoreCase, InvariantCulture, InvariantCultureIgnoreCase, Ordinal, OrdinalIgnoreCase.
+        /// </summary>
+        public static bool ContainsNot(this string text, char value, StringComparison comparisonType)
+            => !text.Contains(value, comparisonType);
     }
 }

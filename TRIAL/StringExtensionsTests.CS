@@ -40,5 +40,25 @@ namespace TRIAL
                 Assert.AreEqual(comparisonText, text.Flatten(), "Flattened Text Is Uppercase");
             }
         }
+
+        [TestFixture]
+        public class ContainsNot
+        {
+            [Test]
+            public void String_Containing_Text_Returns_False()
+                => Assert.IsFalse("SLAUGHTER".ContainsNot("LAUGHTER"), "String Does Not Contain Text");
+
+            [Test]
+            public void String_Not_Containing_Text_Returns_True()
+                => Assert.IsTrue("COFFEE".ContainsNot("GLUTEN"), "String Does Not Contain Text");
+
+            [Test]
+            public void String_Containing_Character_Returns_False()
+                => Assert.IsFalse("DRAMA".ContainsNot('A'), "String Does Not Contain Character");
+
+            [Test]
+            public void String_Not_Containing_Character_Returns_True()
+                => Assert.IsTrue("DRAMA".ContainsNot('V'), "String Does Not Contain Character");
+        }
     }
 }
