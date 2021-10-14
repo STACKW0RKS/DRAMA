@@ -4,33 +4,63 @@ namespace DRAMA.Models.TabularData
 {
     public class Table<TContent>
     {
-        public /* required */ Row<TContent> Header { get; init; }
-        public /* required */ IEnumerable<Row<TContent>> Rows { get; init; }
-        public /* required */ IEnumerable<Column<TContent>> Columns { get; init; }
+        public Table(Row<TContent> header, IEnumerable<Row<TContent>> rows, IEnumerable<Column<TContent>> columns)
+        {
+            Header = header;
+            Rows = rows;
+            Columns = columns;
+        }
+
+        public Row<TContent> Header { get; init; }
+        public IEnumerable<Row<TContent>> Rows { get; init; }
+        public IEnumerable<Column<TContent>> Columns { get; init; }
     }
 
     public class Row<TContent>
     {
-        public /* required */ int Index { get; init; }
-        public /* required */ IEnumerable<Cell<TContent>> Cells { get; init; }
-        public /* required */ Table<TContent> Table { get; init; }
+        public Row(int index, IEnumerable<Cell<TContent>> cells, Table<TContent> table)
+        {
+            Index = index;
+            Cells = cells;
+            Table = table;
+        }
+
+        public int Index { get; init; }
+        public IEnumerable<Cell<TContent>> Cells { get; init; }
+        public Table<TContent> Table { get; init; }
     }
 
     public class Column<TContent>
     {
-        public /* required */ int Index { get; init; }
-        public /* required */ string Name { get; init; }
-        public /* required */ IEnumerable<Cell<TContent>> Cells { get; init; }
-        public /* required */ Table<TContent> Table { get; init; }
+        public Column(int index, string name, IEnumerable<Cell<TContent>> cells, Table<TContent> table)
+        {
+            Index = index;
+            Name = name;
+            Cells = cells;
+            Table = table;
+        }
+
+        public int Index { get; init; }
+        public string Name { get; init; }
+        public IEnumerable<Cell<TContent>> Cells { get; init; }
+        public Table<TContent> Table { get; init; }
     }
 
     public class Cell<TContent>
     {
-        public /* required */ int RowIndex { get; init; }
-        public /* required */ int ColumnIndex { get; init; }
-        public (int Row, int Column) Index => (RowIndex, ColumnIndex);
-        public /* required */ string ColumnName { get; init; }
-        public /* required */ TContent Content { get; init; }
-        public /* required */ Table<TContent> Table { get; init; }
+        public Cell(int rowIndex, int columnIndex, string columnName, TContent content, Table<TContent> table)
+        {
+            RowIndex = rowIndex;
+            ColumnIndex = columnIndex;
+            ColumnName = columnName;
+            Content = content;
+            Table = table;
+        }
+
+        public int RowIndex { get; init; }
+        public int ColumnIndex { get; init; }
+        public string ColumnName { get; init; }
+        public TContent Content { get; init; }
+        public Table<TContent> Table { get; init; }
     }
 }
