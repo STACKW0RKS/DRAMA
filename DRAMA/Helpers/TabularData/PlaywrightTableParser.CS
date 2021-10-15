@@ -58,6 +58,18 @@ namespace DRAMA.Helpers.TabularData
             return table;
         }
 
+        public static async Task<Table<string>> ParseTableToText(PlaywrightTableParserOptions options)
+        {
+            Table<IElementHandle> elementTable = await ParseTable(options);
+            Table<string> textTable = new();
+
+            // TODO: Complete This Method
+            // TODO: Write Member Descriptions
+            // TODO: Create Unit Tests
+
+            return default;
+        }
+
         private static async Task InitialisePlaywrightTableParser(PlaywrightTableParserOptions options)
         {
             Table = await options.TableContainer.QuerySelectorAsync(options.TableSelector);
