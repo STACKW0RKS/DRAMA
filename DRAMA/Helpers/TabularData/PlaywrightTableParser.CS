@@ -67,6 +67,9 @@ namespace DRAMA.Helpers.TabularData
             // TODO: Write Member Descriptions
             // TODO: Create Unit Tests
 
+            // TODO: Rename TRIAL To AUDITION
+            // TODO: Create NuGet Package
+
             return default;
         }
 
