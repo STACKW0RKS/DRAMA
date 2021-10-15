@@ -7,7 +7,7 @@ namespace DRAMA.Models.TabularData
     {
         /// <summary>
         ///     Creates a table column with content of the specified type.
-        ///     <br />
+        ///     <br/>
         ///     The collection of cells is already defined, and passed as a parameter to the constructor.
         /// </summary>
         public Column(int index, string name, IEnumerable<Cell<TContent>> cells, Table<TContent> table)
@@ -20,7 +20,7 @@ namespace DRAMA.Models.TabularData
 
         /// <summary>
         ///     Creates a table column with content of the specified type.
-        ///     <br />
+        ///     <br/>
         ///     The collection of cells is not fully defined, and the Cells property needs to be set post object construction.
         /// </summary>
         public Column(int index, string name, Table<TContent> table)

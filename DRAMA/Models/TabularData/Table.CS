@@ -7,7 +7,7 @@ namespace DRAMA.Models.TabularData
     {
         /// <summary>
         ///     Creates a table with content of the specified type.
-        ///     <br />
+        ///     <br/>
         ///     The header, rows, and columns are not fully defined, and the Header, Rows, and Columns properties need to be set
         ///     post object construction.
         /// </summary>
@@ -19,7 +19,7 @@ namespace DRAMA.Models.TabularData
 
         /// <summary>
         ///     Creates a table with content of the specified type.
-        ///     <br />
+        ///     <br/>
         ///     The header, rows, and columns are already defined, and passed as parameters to the constructor.
         /// </summary>
         public Table(Row<TContent> header, IEnumerable<Row<TContent>> rows, IEnumerable<Column<TContent>> columns)
