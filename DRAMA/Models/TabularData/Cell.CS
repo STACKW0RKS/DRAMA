@@ -1,4 +1,6 @@
-﻿namespace DRAMA.Models.TabularData
+﻿using System.Linq;
+
+namespace DRAMA.Models.TabularData
 {
     public class Cell<TContent>
     {
@@ -19,5 +21,7 @@
         public string ColumnName { get; init; }
         public TContent Content { get; init; }
         public Table<TContent> Table { get; init; }
+        public Row<TContent> Row => Table.Rows.Single(row => row.Index.Equals(RowIndex));
+        public Column<TContent> Column => Table.Columns.Single(column => column.Index.Equals(ColumnIndex));
     }
 }

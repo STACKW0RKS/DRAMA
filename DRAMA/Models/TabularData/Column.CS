@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace DRAMA.Models.TabularData
 {
@@ -10,7 +9,7 @@ namespace DRAMA.Models.TabularData
         ///     <br/>
         ///     The collection of cells is already defined, and passed as a parameter to the constructor.
         /// </summary>
-        public Column(int index, string name, IEnumerable<Cell<TContent>> cells, Table<TContent> table)
+        public Column(int index, string name, List<Cell<TContent>> cells, Table<TContent> table)
         {
             Index = index;
             Name = name;
@@ -27,25 +26,31 @@ namespace DRAMA.Models.TabularData
         {
             Index = index;
             Name = name;
-            Cells = Enumerable.Empty<Cell<TContent>>();
+            Cells = new List<Cell<TContent>>();
             Table = table;
         }
 
         public int Index { get; init; }
         public string Name { get; init; }
-        public IEnumerable<Cell<TContent>> Cells { get; private set; }
+        public List<Cell<TContent>> Cells { get; private set; }
         public Table<TContent> Table { get; init; }
 
         /// <summary>
         ///     Sets the collection of cells in this column.
         /// </summary>
-        public void SetCells(IEnumerable<Cell<TContent>> cells)
+        public void SetCells(List<Cell<TContent>> cells)
             => Cells = cells;
 
         /// <summary>
         ///     Adds a cell to the collection of cells in this column.
         /// </summary>
         public void AddCell(Cell<TContent> cell)
-            => Cells = Cells.Append(cell);
+            => Cells.Add(cell);
+
+        /// <summary>
+        ///     Adds cells to the collection of cells in this column.
+        /// </summary>
+        public void AddCells(List<Cell<TContent>> cells)
+            => Cells.AddRange(cells);
     }
 }
