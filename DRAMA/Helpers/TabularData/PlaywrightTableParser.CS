@@ -13,7 +13,6 @@ namespace DRAMA.Helpers.TabularData
         // TODO: Add Cells Content
         // TODO: Create Interface For Table Parser To Enforce Populating The Entire Table Object
         // TODO: Complete This Method (Create ToTextTable() Extension Method)
-        // TODO: Rename TRIAL To AUDITION
         // TODO: Create NuGet Package
 
         /// <summary>
