@@ -13,7 +13,5 @@
         /// </summary>
         public static int DecrementBy(this int value, int decrement)
             => value - decrement;
-
-        // TODO: Add Unit Tests
     }
 }
