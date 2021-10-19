@@ -38,8 +38,8 @@ namespace DRAMA.Models.TabularData
         /// <summary>
         ///     Sets the header of this table.
         /// </summary>
-        public void SetHeader(Row<TContent> row)
-            => Header = row;
+        public void SetHeader(Row<TContent> header)
+            => Header = header;
 
         /// <summary>
         ///     Sets the collection of rows in this table.
@@ -62,8 +62,8 @@ namespace DRAMA.Models.TabularData
         /// <summary>
         ///     Sets the header of this table.
         /// </summary>
-        public void SetFooter(Row<TContent> row)
-            => Footer = row;
+        public void SetFooter(Row<TContent> footer)
+            => Footer = footer;
 
         /// <summary>
         ///     Sets the collection of columns in this table.
