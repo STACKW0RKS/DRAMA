@@ -17,9 +17,9 @@ namespace DRAMA.Helpers.TabularData
         // TODO: Create NuGet Package
 
         /// <summary>
-        ///     Parses an HTML table to a table of element handle objects, which can be interacted with (e.g. read, click, evaluate).
+        ///     Parses an HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
         ///     <br/>
-        ///     More information on the element handle API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-elementhandle"></a>.
+        ///     More information on the element handle API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-elementhandle/"></a>.
         /// </summary>
         internal static async Task<Table<IElementHandle>> ParseTable(IElementHandle parent, TableParserSelectors selectors)
         {
