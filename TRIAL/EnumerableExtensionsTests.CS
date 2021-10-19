@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace TRIAL
 {
     [TestFixture]
-    public class IEnumerableExtensionsTests
+    public class EnumerableExtensionsTests
     {
         [TestFixture]
         public class Shuffle

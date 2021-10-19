@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DRAMA.Extensions
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
         ///     Returns a new collection composed of the input collection's elements in a random order.
