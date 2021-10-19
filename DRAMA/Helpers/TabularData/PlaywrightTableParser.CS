@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DRAMA.Extensions;
 using DRAMA.Models.TabularData;
@@ -7,22 +6,95 @@ using Microsoft.Playwright;
 
 namespace DRAMA.Helpers.TabularData
 {
-    public static class PlaywrightTableParser
+    internal static class PlaywrightTableParser
     {
-        public static IElementHandle Table { get; private set; }
-        public static string BodyCellSelector { get; private set; }
-        public static string BodyRowSelector { get; private set; }
-        public static string HeaderCellSelector { get; private set; }
-        public static string HeaderRowSelector { get; private set; }
+        // TODO: Find Elements Out Of Viewport
+        // TODO: Add Cells InnerText
+        // TODO: Add Cells Content
+        // TODO: Create Interface For Table Parser To Enforce Populating The Entire Table Object
 
-        public static async Task<Table<IElementHandle>> ParseTable(PlaywrightTableParserOptions options)
+        internal static async Task<Table<IElementHandle>> ParseTable(IElementHandle parent, TableParserSelectors selectors)
         {
-            await InitialisePlaywrightTableParser(options);
+            Table<IElementHandle> table = new Table<IElementHandle>();
 
+            table = await ParseHeader(parent, table, selectors);
+            table = await ParseRows(parent, table, selectors);
+            table = await ParseFooter(parent, table, selectors);
+
+            return table;
+        }
+
+        private static async Task<Table<IElementHandle>> ParseHeader(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+        {
+            // Query The Table Element's Parent For The Header Row Element
+            IElementHandle headerRow = await parent.QuerySelectorAsync(selectors.HeaderRowSelector);
+
+            // If No Header Element Is Found, Stop Parsing And Return The Output Table As Is
+            if (headerRow is null) return table;
+
+            // Query The Header Row Element For Cell Elements; Since A Header Element Exists, This List Should Never Be Empty
+            IReadOnlyList<IElementHandle> headerCells = await headerRow.QuerySelectorAllAsync(selectors.HeaderCellSelector);
+
+            // Create The Parsed Header Row, Detached From The Output Table
+            // The Parsed Header Row Has An Index Of Zero; All Other Parsed Rows Are One-Indexed, Even If The Table Does Not Have A Header
+            Row<IElementHandle> parsedHeaderRow = new(0, table);
+
+            // For Each Cell Element Discovered...
+            for (int columnIndex = 0; columnIndex < headerCells.Count; columnIndex++)
+            {
+                // Get The Current Cell Element
+                IElementHandle headerCell = headerCells[columnIndex];
+
+                // Create A Parsed Column That Corresponds To The Current Cell Element; Parsed Columns Are One-Indexed
+                Column<IElementHandle> parsedColumn = new(columnIndex.IncrementBy(1), await headerCell.InnerTextAsync(), table);
+
+                // Create A Parsed Cell From The Current Cell Element
+                Cell<IElementHandle> parsedHeaderCell = new(headerCell, await headerCell.InnerTextAsync(), table, parsedHeaderRow, parsedColumn);
+
+                // Add The Parsed Cell To The Parsed Header Row
+                parsedHeaderRow.AddCell(parsedHeaderCell);
+
+                // Set The Parsed Cell As The Current Parsed Column's Header
+                parsedColumn.SetHeader(parsedHeaderCell);
+
+                // Attach The Current Parsed Column To The Output Table
+                table.AddColumn(parsedColumn);
+            }
+
+            // Set The Parsed Header Row To Be The Output Table's Header
+            table.SetHeader(parsedHeaderRow);
+
+            // Return The Partially Parsed Table, Which Now Contains Columns And The Header
+            return table;
+        }
+
+        private static async Task<Table<IElementHandle>> ParseRows(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+        {
+
+        }
+
+        private static async Task<Table<IElementHandle>> ParseFooter(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /*
+        internal static async Task<Table<IElementHandle>> ParseTable(IElementHandle parent, TableParserSelectors selectors)
+        {
             Table<IElementHandle> table = new();
 
-            IElementHandle header = await Table.QuerySelectorAsync(HeaderRowSelector);
-            ImmutableList<IElementHandle> headerCells = header is not null ? (await header.QuerySelectorAllAsync(HeaderCellSelector)).ToImmutableList() : ImmutableList<IElementHandle>.Empty;
+            IElementHandle header = await parent.QuerySelectorAsync(selectors.HeaderRowSelector);
+            ImmutableList<IElementHandle> headerCells = header is not null ? (await header.QuerySelectorAllAsync(selectors.HeaderCellSelector)).ToImmutableList() : ImmutableList<IElementHandle>.Empty;
 
             if (headerCells.Any())
                 for (int columnIndex = 0; columnIndex < headerCells.Count; columnIndex++)
@@ -35,14 +107,14 @@ namespace DRAMA.Helpers.TabularData
                     table.Columns[columnIndex].AddCell(parsedHeaderCell);
                 }
 
-            ImmutableList<IElementHandle> rows = (await Table.QuerySelectorAllAsync(BodyRowSelector)).ToImmutableList();
+            ImmutableList<IElementHandle> rows = (await parent.QuerySelectorAllAsync(selectors.BodyRowSelector)).ToImmutableList();
 
             if (rows.None()) return table;
 
             for (int rowIndex = 0; rowIndex < rows.Count; rowIndex++)
             {
                 IElementHandle row = rows[rowIndex];
-                ImmutableList<IElementHandle> rowCells = (await row.QuerySelectorAllAsync(BodyCellSelector)).ToImmutableList();
+                ImmutableList<IElementHandle> rowCells = (await row.QuerySelectorAllAsync(selectors.BodyCellSelector)).ToImmutableList();
                 Row<IElementHandle> parsedRow = new(rowIndex + 1, table);
                 table.AddRow(parsedRow);
 
@@ -57,13 +129,15 @@ namespace DRAMA.Helpers.TabularData
 
             return table;
         }
+        */
 
-        public static async Task<Table<string>> ParseTableToText(PlaywrightTableParserOptions options)
+        /*
+        public static async Task<Table<string>> ParseTableToText(IElementHandle parent, PlaywrightTableParserOptions options)
         {
-            Table<IElementHandle> elementTable = await ParseTable(options);
+            Table<IElementHandle> elementTable = await ParseTable(parent, options);
             Table<string> textTable = new();
 
-            // TODO: Complete This Method
+            // TODO: Complete This Method (Create ToTextTable() Extension Method)
             // TODO: Write Member Descriptions
             // TODO: Create Unit Tests
 
@@ -72,14 +146,6 @@ namespace DRAMA.Helpers.TabularData
 
             return default;
         }
-
-        private static async Task InitialisePlaywrightTableParser(PlaywrightTableParserOptions options)
-        {
-            Table = await options.TableContainer.QuerySelectorAsync(options.TableSelector);
-            HeaderRowSelector = options.HeaderRowSelector;
-            HeaderCellSelector = options.HeaderCellSelector;
-            BodyRowSelector = options.BodyRowSelector;
-            BodyCellSelector = options.BodyCellSelector;
-        }
+        */
     }
 }
