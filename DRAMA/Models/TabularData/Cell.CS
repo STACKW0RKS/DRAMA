@@ -1,27 +1,23 @@
-﻿using System.Linq;
-
-namespace DRAMA.Models.TabularData
+﻿namespace DRAMA.Models.TabularData
 {
     public class Cell<TContent>
     {
         /// <summary>
         ///     Creates a table cell with content of the specified type.
         /// </summary>
-        public Cell(int rowIndex, int columnIndex, string columnName, TContent content, Table<TContent> table)
+        public Cell(TContent content, string text, Table<TContent> table, Row<TContent> row, Column<TContent> column)
         {
-            RowIndex = rowIndex;
-            ColumnIndex = columnIndex;
-            ColumnName = columnName;
             Content = content;
+            Text = text;
             Table = table;
+            Row = row;
+            Column = column;
         }
 
-        public int RowIndex { get; init; }
-        public int ColumnIndex { get; init; }
-        public string ColumnName { get; init; }
         public TContent Content { get; init; }
+        public string Text { get; init; }
         public Table<TContent> Table { get; init; }
-        public Row<TContent> Row => Table.Rows.Single(row => row.Index.Equals(RowIndex));
-        public Column<TContent> Column => Table.Columns.Single(column => column.Index.Equals(ColumnIndex));
+        public Row<TContent> Row { get; init; }
+        public Column<TContent> Column { get; init; }
     }
 }

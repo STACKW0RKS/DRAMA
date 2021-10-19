@@ -7,29 +7,32 @@ namespace DRAMA.Models.TabularData
         /// <summary>
         ///     Creates a table with content of the specified type.
         ///     <br/>
-        ///     The header, rows, and columns are not fully defined, and the Header, Rows, and Columns properties need to be set post object construction.
+        ///     The header, rows, footer, and columns are not fully defined, and the Header, Rows, and Columns properties need to be set post object construction.
         /// </summary>
         public Table()
         {
-            Header = new Row<TContent>(0, this);
+            Header = null;
             Rows = new List<Row<TContent>>();
+            Footer = null;
             Columns = new List<Column<TContent>>();
         }
 
         /// <summary>
         ///     Creates a table with content of the specified type.
         ///     <br/>
-        ///     The header, rows, and columns are already defined, and passed as parameters to the constructor.
+        ///     The header, rows, footer, and columns are already defined, and passed as arguments to the constructor's parameters.
         /// </summary>
-        public Table(Row<TContent> header, List<Row<TContent>> rows, List<Column<TContent>> columns)
+        public Table(Row<TContent> header, List<Row<TContent>> rows, Row<TContent> footer, List<Column<TContent>> columns)
         {
             Header = header;
             Rows = rows;
+            Footer = footer;
             Columns = columns;
         }
 
         public Row<TContent> Header { get; private set; }
         public List<Row<TContent>> Rows { get; private set; }
+        public Row<TContent> Footer { get; private set; }
         public List<Column<TContent>> Columns { get; private set; }
 
         /// <summary>
@@ -55,6 +58,12 @@ namespace DRAMA.Models.TabularData
         /// </summary>
         public void AddRows(List<Row<TContent>> rows)
             => Rows.AddRange(rows);
+
+        /// <summary>
+        ///     Sets the header of this table.
+        /// </summary>
+        public void SetFooter(Row<TContent> row)
+            => Footer = row;
 
         /// <summary>
         ///     Sets the collection of columns in this table.
