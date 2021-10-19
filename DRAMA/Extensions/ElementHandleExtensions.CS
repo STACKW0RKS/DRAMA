@@ -7,9 +7,11 @@ namespace DRAMA.Extensions
 {
     public static class ElementHandleExtensions
     {
-        // TODO: Populate These Methods With Summaries
         // TODO: Write Unit Tests For These Methods
 
+        /// <summary>
+        ///     Parses a standard HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
+        /// </summary>
         public static async Task<Table<IElementHandle>> ParseHtmlTable(this IElementHandle parent, TableParserSelectors selectors = null)
             => await PlaywrightTableParser.ParseTable(parent, selectors ?? new TableParserSelectors
             (
@@ -22,8 +24,11 @@ namespace DRAMA.Extensions
                 "th, td"
             ));
 
-        // https://www.ag-grid.com/
-        // JS, Angular, React, Vue
+        /// <summary>
+        ///     Parses an AG Grid element to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
+        ///     <br/>
+        ///     The implementation of the grid can be either JavaScript, Angular, React, or Vue. More information can be found at <a href="https://www.ag-grid.com/"></a>.
+        /// </summary>
         public static async Task<Table<IElementHandle>> ParseAgGrid(this IElementHandle parent, TableParserSelectors selectors = null)
             => await PlaywrightTableParser.ParseTable(parent, selectors ?? new TableParserSelectors
             (
