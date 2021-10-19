@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DRAMA.Extensions;
 using DRAMA.Models.TabularData;
@@ -50,7 +50,7 @@ namespace DRAMA.Helpers.TabularData
 
             // If The Table Does Not Have Any Columns Yet, Create Columns
             if (table.Columns.None())
-            {
+
                 // For Each Cell Element Discovered...
                 for (int columnIndex = 0; columnIndex < headerCells.Count; columnIndex++)
                 {
@@ -63,7 +63,6 @@ namespace DRAMA.Helpers.TabularData
                     // Attach The Current Parsed Column To The Output Table
                     table.AddColumn(parsedColumn);
                 }
-            }
 
             // Create The Parsed Header Row, Detached From The Output Table
             // The Parsed Header Row Has An Index Of Zero; All Other Parsed Rows Are One-Indexed, Even If The Table Does Not Have A Header
@@ -116,7 +115,7 @@ namespace DRAMA.Helpers.TabularData
 
                 // If The Table Does Not Have Any Columns Yet, Create Columns
                 if (table.Columns.None())
-                {
+
                     // For Each Cell Element Discovered...
                     for (int columnIndex = 0; columnIndex < bodyRowCells.Count; columnIndex++)
                     {
@@ -129,7 +128,6 @@ namespace DRAMA.Helpers.TabularData
                         // Attach The Current Parsed Column To The Output Table
                         table.AddColumn(parsedColumn);
                     }
-                }
 
                 // Create A Parsed Body Row, Detached From The Output Table; Non-Header Rows Are One-Indexed, Including The Footer
                 Row<IElementHandle> parsedBodyRow = new(bodyRowIndex.IncrementBy(1), table);
@@ -176,7 +174,7 @@ namespace DRAMA.Helpers.TabularData
 
             // If The Table Does Not Have Any Columns Yet, Create Columns
             if (table.Columns.None())
-            {
+
                 // For Each Cell Element Discovered...
                 for (int columnIndex = 0; columnIndex < footerCells.Count; columnIndex++)
                 {
@@ -189,7 +187,6 @@ namespace DRAMA.Helpers.TabularData
                     // Attach The Current Parsed Column To The Output Table
                     table.AddColumn(parsedColumn);
                 }
-            }
 
             // Create The Parsed Footer Row, Detached From The Output Table
             Row<IElementHandle> parsedFooterRow = new(table.Rows.Count.IncrementBy(1), table);
