@@ -8,11 +8,6 @@ namespace DRAMA.Helpers.TabularData
 {
     internal static class PlaywrightTableParser
     {
-        // TODO: Find Elements Out Of Viewport
-        // TODO: Add Cells InnerText
-        // TODO: Add Cells Content
-        // TODO: Create Interface For Table Parser To Enforce Populating The Entire Table Object
-        // TODO: Complete This Method (Create ToTextTable() Extension Method)
         // TODO: Create NuGet Package
 
         /// <summary>
