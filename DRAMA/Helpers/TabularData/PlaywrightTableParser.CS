@@ -8,8 +8,6 @@ namespace DRAMA.Helpers.TabularData
 {
     internal static class PlaywrightTableParser
     {
-        // TODO: Create NuGet Package
-
         /// <summary>
         ///     Parses an HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
         ///     <br/>

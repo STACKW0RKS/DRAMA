@@ -5,14 +5,27 @@
 		<IsPackable>FALSE</IsPackable>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PackageID>SPOTLIGHT</PackageID>
+		<Version>0.1.0</Version>
+		<Title>SPOTLIGHT</Title>
+		<Owner>Vlad-Alexandru Tănăsescu</Owner>
+		<PackageDescription>Dramatic Unit Testing</PackageDescription>
+		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
+		<Authors>Vlad-Alexandru Tănăsescu</Authors>
+		<Company>StackWorks™</Company>
+		<RepositoryURL>https://github.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework</RepositoryURL>
+		<LicenseURL>https://raw.githubusercontent.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework/main/LICENSE</LicenseURL>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.NET.Test.SDK" Version="16.11.0" />
-	  <PackageReference Include="NUnit" Version="3.13.2" />
-	  <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+		<PackageReference Include="Microsoft.NET.Test.SDK" Version="16.11.0" />
+		<PackageReference Include="NUnit" Version="3.13.2" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
+		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
 	</ItemGroup>
 
 </Project>
