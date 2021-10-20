@@ -2,7 +2,7 @@
 using DRAMA.Extensions;
 using NUnit.Framework;
 
-namespace TRIAL
+namespace SPOTLIGHT.Tests
 {
     [TestFixture]
     public class JsonElementExtensionsTests

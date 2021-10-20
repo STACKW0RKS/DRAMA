@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DRAMA.Extensions;
 using NUnit.Framework;
 
-namespace TRIAL
+namespace SPOTLIGHT.Tests
 {
     [TestFixture]
     public class TaskExtensionsTests
