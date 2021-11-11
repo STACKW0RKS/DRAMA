@@ -1,53 +1,50 @@
-﻿using System.Collections.Generic;
+﻿namespace DRAMA.Models.TabularData;
 
-namespace DRAMA.Models.TabularData
+public class Row<TContent>
 {
-    public class Row<TContent>
+    /// <summary>
+    ///     Creates a table row with content of the specified type.
+    ///     <br/>
+    ///     The collection of cells is not fully defined, and the Cells property needs to be set post object construction.
+    /// </summary>
+    public Row(int index, Table<TContent> table)
     {
-        /// <summary>
-        ///     Creates a table row with content of the specified type.
-        ///     <br/>
-        ///     The collection of cells is not fully defined, and the Cells property needs to be set post object construction.
-        /// </summary>
-        public Row(int index, Table<TContent> table)
-        {
-            Index = index;
-            Cells = new List<Cell<TContent>>();
-            Table = table;
-        }
-
-        /// <summary>
-        ///     Creates a table row with content of the specified type.
-        ///     <br/>
-        ///     The collection of cells is already defined, and passed as an argument to the constructor's parameters.
-        /// </summary>
-        public Row(int index, List<Cell<TContent>> cells, Table<TContent> table)
-        {
-            Index = index;
-            Cells = cells;
-            Table = table;
-        }
-
-        public int Index { get; init; }
-        public List<Cell<TContent>> Cells { get; private set; }
-        public Table<TContent> Table { get; init; }
-
-        /// <summary>
-        ///     Sets the collection of cells in this row.
-        /// </summary>
-        public void SetCells(List<Cell<TContent>> cells)
-            => Cells = cells;
-
-        /// <summary>
-        ///     Adds a cell to the collection of cells in this row.
-        /// </summary>
-        public void AddCell(Cell<TContent> cell)
-            => Cells.Add(cell);
-
-        /// <summary>
-        ///     Adds cells to the collection of cells in this row.
-        /// </summary>
-        public void AddCells(List<Cell<TContent>> cells)
-            => Cells.AddRange(cells);
+        Index = index;
+        Cells = new List<Cell<TContent>>();
+        Table = table;
     }
+
+    /// <summary>
+    ///     Creates a table row with content of the specified type.
+    ///     <br/>
+    ///     The collection of cells is already defined, and passed as an argument to the constructor's parameters.
+    /// </summary>
+    public Row(int index, List<Cell<TContent>> cells, Table<TContent> table)
+    {
+        Index = index;
+        Cells = cells;
+        Table = table;
+    }
+
+    public int Index { get; init; }
+    public List<Cell<TContent>> Cells { get; private set; }
+    public Table<TContent> Table { get; init; }
+
+    /// <summary>
+    ///     Sets the collection of cells in this row.
+    /// </summary>
+    public void SetCells(List<Cell<TContent>> cells)
+        => Cells = cells;
+
+    /// <summary>
+    ///     Adds a cell to the collection of cells in this row.
+    /// </summary>
+    public void AddCell(Cell<TContent> cell)
+        => Cells.Add(cell);
+
+    /// <summary>
+    ///     Adds cells to the collection of cells in this row.
+    /// </summary>
+    public void AddCells(List<Cell<TContent>> cells)
+        => Cells.AddRange(cells);
 }
