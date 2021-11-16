@@ -1,21 +1,8 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.SDK">
 
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
 		<IsPackable>FALSE</IsPackable>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<PackageID>SPOTLIGHT</PackageID>
-		<Version>0.1.1</Version>
-		<Title>SPOTLIGHT</Title>
-		<Owner>Vlad-Alexandru Tănăsescu</Owner>
-		<PackageDescription>Dramatic Unit Testing</PackageDescription>
-		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
-		<Authors>Vlad-Alexandru Tănăsescu</Authors>
-		<Company>StackWorks™</Company>
-		<RepositoryURL>https://github.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework</RepositoryURL>
-		<LicenseURL>https://raw.githubusercontent.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework/main/LICENSE</LicenseURL>
 	</PropertyGroup>
 
 	<ItemGroup>

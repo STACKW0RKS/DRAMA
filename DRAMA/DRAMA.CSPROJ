@@ -1,22 +1,48 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.SDK">
 
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
 		<IsPackable>TRUE</IsPackable>
+		<GeneratePackageOnBuild>TRUE</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageID>DRAMA</PackageID>
-		<Version>0.1.1</Version>
+		<Version>0.1.2</Version>
 		<Title>DRAMA</Title>
-		<Owner>Vlad-Alexandru Tănăsescu</Owner>
-		<PackageDescription>6th Generation Enterprise-Grade .NET-Based Test Automation Framework</PackageDescription>
-		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
+		<Product>DRAMA</Product>
+		<Description>6th Generation Enterprise-Grade .NET-Based Test Automation Framework</Description>
+		<Copyright>Copyright © 2018-2022 StackWorks™ All Rights Reserved</Copyright>
+		<PackageProjectURL>https://www.nuget.org/packages/DRAMA/</PackageProjectURL>
+		<PackageIcon>ICON.PNG</PackageIcon>
+		<PackageReadmeFile>README.MD</PackageReadmeFile>
 		<RepositoryURL>https://github.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework</RepositoryURL>
-		<LicenseURL>https://raw.githubusercontent.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework/main/LICENSE</LicenseURL>
+		<RepositoryType>GIT</RepositoryType>
+		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
+		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
+		<NeutralLanguage>en-GB</NeutralLanguage>
+		<AssemblyVersion>0.1.2.1</AssemblyVersion>
+		<FileVersion>0.1.2.1</FileVersion>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>FALSE</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\ICON.PNG" Visible="FALSE">
+			<Pack>TRUE</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.MD" Visible="FALSE">
+			<Pack>TRUE</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\LICENSE" Visible="FALSE">
+			<Pack>TRUE</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Playwright" Version="1.16.1" />
