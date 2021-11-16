@@ -5,12 +5,16 @@ public static class TaskExtensions
     /// <summary>
     ///     Forces the Task<T> to time out after the specified amount of time.
     /// </summary>
-    public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
+    public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout, string customExceptionMessage = null)
     {
         using CancellationTokenSource timeoutCancellationTokenSource = new();
         Task completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
 
-        if (completedTask.Equals(task).Equals(false)) throw new TimeoutException();
+        if (completedTask.Equals(task).Equals(false))
+        {
+            if (customExceptionMessage is null) throw new TimeoutException();
+            if (customExceptionMessage is not null) throw new TimeoutException(customExceptionMessage);
+        }
 
         timeoutCancellationTokenSource.Cancel();
 
@@ -20,12 +24,17 @@ public static class TaskExtensions
     /// <summary>
     ///     Forces the Task to time out after the specified amount of time.
     /// </summary>
-    public static async Task TimeoutAfter(this Task task, TimeSpan timeout)
+    public static async Task TimeoutAfter(this Task task, TimeSpan timeout, string customExceptionMessage = null)
     {
         using CancellationTokenSource timeoutCancellationTokenSource = new();
         Task completedTask = await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellationTokenSource.Token));
 
         if (completedTask.Equals(task)) timeoutCancellationTokenSource.Cancel();
-        else throw new TimeoutException();
+
+        else
+        {
+            if (customExceptionMessage is null) throw new TimeoutException();
+            if (customExceptionMessage is not null) throw new TimeoutException(customExceptionMessage);
+        }
     }
 }
