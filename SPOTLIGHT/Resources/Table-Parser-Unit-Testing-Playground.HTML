@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="container" lang="en">
+  <head>
+    <title>Table Parser Unit Testing Playground</title>
+    <style>
+      .container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .row {
+        width: 100%;
+        height: 32.5vh;
+      }
+      .column {
+        width: 32.5vh;
+        height: 100%;
+      }
+      table {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+      }
+      th,
+      td {
+        border-style: solid;
+        border-width: 1px;
+        border-color: grey;
+        text-align: center;
+      }
+      th {
+        background-color: lightblue;
+      }
+      tfoot td {
+        font-weight: bold;
+        background-color: lightgrey;
+      }
+      body {
+        background-color: whitesmoke;
+      }
+    </style>
+  </head>
+
+  <body class="container">
+    <table class="container">
+      <tr class="row">
+        <td class="column">
+          <h2>Complete</h2>
+          <table id="complete">
+            <thead>
+              <tr>
+                <th>0-1</th>
+                <th>0-2</th>
+                <th>0-3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1-1</td>
+                <td>1-2</td>
+                <td>1-3</td>
+              </tr>
+              <tr>
+                <td>2-1</td>
+                <td>2-2</td>
+                <td>2-3</td>
+              </tr>
+              <tr>
+                <td>3-1</td>
+                <td>3-2</td>
+                <td>3-3</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>4-1</td>
+                <td>4-2</td>
+                <td>4-3</td>
+              </tr>
+            </tfoot>
+          </table>
+        </td>
+        <td class="column">
+          <h2>No Rows</h2>
+          <table id="no-rows">
+            <thead></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </td>
+        <td class="column">
+          <h2>No Sections (THEAD/TBODY/TFOOT)</h2>
+          <table id="no-sections"></table>
+        </td>
+      </tr>
+      <tr class="row">
+        <td class="column">
+          <h2>No Header</h2>
+          <table id="no-header">
+            <tbody>
+              <tr>
+                <td>1-1</td>
+                <td>1-2</td>
+                <td>1-3</td>
+              </tr>
+              <tr>
+                <td>2-1</td>
+                <td>2-2</td>
+                <td>2-3</td>
+              </tr>
+              <tr>
+                <td>3-1</td>
+                <td>3-2</td>
+                <td>3-3</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>4-1</td>
+                <td>4-2</td>
+                <td>4-3</td>
+              </tr>
+            </tfoot>
+          </table>
+        </td>
+        <td class="column">
+          <h2>No Body</h2>
+          <table id="no-body">
+            <thead>
+              <tr>
+                <th>0-1</th>
+                <th>0-2</th>
+                <th>0-3</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td>4-1</td>
+                <td>4-2</td>
+                <td>4-3</td>
+              </tr>
+            </tfoot>
+          </table>
+        </td>
+        <td class="column">
+          <h2>No Footer</h2>
+          <table id="no-footer">
+            <thead>
+              <tr>
+                <th>0-1</th>
+                <th>0-2</th>
+                <th>0-3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1-1</td>
+                <td>1-2</td>
+                <td>1-3</td>
+              </tr>
+              <tr>
+                <td>2-1</td>
+                <td>2-2</td>
+                <td>2-3</td>
+              </tr>
+              <tr>
+                <td>3-1</td>
+                <td>3-2</td>
+                <td>3-3</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr class="row">
+        <td class="column">
+          <h2>Just Header</h2>
+          <table id="just-header">
+            <thead>
+              <tr>
+                <th>0-1</th>
+                <th>0-2</th>
+                <th>0-3</th>
+              </tr>
+            </thead>
+          </table>
+        </td>
+        <td class="column">
+          <h2>Just Body</h2>
+          <table id="just-body">
+            <tbody>
+              <tr>
+                <td>1-1</td>
+                <td>1-2</td>
+                <td>1-3</td>
+              </tr>
+              <tr>
+                <td>2-1</td>
+                <td>2-2</td>
+                <td>2-3</td>
+              </tr>
+              <tr>
+                <td>3-1</td>
+                <td>3-2</td>
+                <td>3-3</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="column">
+          <h2>Just Footer</h2>
+          <table id="just-footer">
+            <tfoot>
+              <tr>
+                <td>4-1</td>
+                <td>4-2</td>
+                <td>4-3</td>
+              </tr>
+            </tfoot>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
