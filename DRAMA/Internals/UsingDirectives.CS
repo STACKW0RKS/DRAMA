@@ -1,18 +1,18 @@
-﻿# region DRAMA Usings
+﻿# region DRAMA Using Directives
     global using DRAMA.Extensions;
     global using DRAMA.Helpers.TabularData;
     global using DRAMA.Models.TabularData;
 # endregion
 
-# region Microsoft Usings
+# region Microsoft Using Directives
     global using Microsoft.Playwright;
 # endregion
 
-# region TechTalk Usings
+# region TechTalk Using Directives
     global using TechTalk.SpecFlow;
 # endregion
 
-# region System Usings
+# region System Using Directives
     global using System;
     global using System.Collections.Generic;
     global using System.Globalization;

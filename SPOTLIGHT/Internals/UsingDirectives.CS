@@ -1,12 +1,12 @@
-﻿# region DRAMA Usings
+﻿# region DRAMA Using Directives
     global using DRAMA.Extensions;
 # endregion
 
-# region NUnit Usings
+# region NUnit Using Directives
     global using NUnit.Framework;
 # endregion
 
-# region System Usings
+# region System Using Directives
     global using System;
     global using System.Collections.Generic;
     global using System.Linq;
