@@ -4,7 +4,7 @@ public static class PlaywrightTableParser
 {
     /// <summary>
     ///     Parses an HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
-    ///     <br/>
+    ///     <br />
     ///     More information on the element handle API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-elementhandle/"></a>.
     /// </summary>
     public static async Task<Table<IElementHandle>> ParseTable(IElementHandle parent, TableParserSelectors selectors)
@@ -20,7 +20,7 @@ public static class PlaywrightTableParser
 
     /// <summary>
     ///     Parses the header of an HTML table, and returns a table of element handles.
-    ///     <br/>
+    ///     <br />
     ///     Preferably, this table header parser should be called before both the table body parser and the table footer parser.
     /// </summary>
     private static async Task<Table<IElementHandle>> ParseHeader(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
@@ -79,7 +79,7 @@ public static class PlaywrightTableParser
 
     /// <summary>
     ///     Parses the body of an HTML table, and returns a table of element handles.
-    ///     <br/>
+    ///     <br />
     ///     Preferably, this table body parser should be called after the table header parser and before the table footer parser.
     /// </summary>
     private static async Task<Table<IElementHandle>> ParseRows(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
@@ -144,7 +144,7 @@ public static class PlaywrightTableParser
 
     /// <summary>
     ///     Parses the footer of an HTML table, and returns a table of element handles.
-    ///     <br/>
+    ///     <br />
     ///     Preferably, this table footer parser should be called after both the table header parser and the table body parser.
     /// </summary>
     private static async Task<Table<IElementHandle>> ParseFooter(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)

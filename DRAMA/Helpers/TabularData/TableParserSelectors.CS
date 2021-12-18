@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Helpers.TabularData;
+namespace DRAMA.Helpers.TabularData;
 
 public class TableParserSelectors
 {

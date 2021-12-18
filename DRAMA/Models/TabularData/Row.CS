@@ -4,7 +4,7 @@ public class Row<TContent>
 {
     /// <summary>
     ///     Creates a table row with content of the specified type.
-    ///     <br/>
+    ///     <br />
     ///     The collection of cells is not fully defined, and the Cells property needs to be set post object construction.
     /// </summary>
     public Row(int index, Table<TContent> table)
@@ -16,7 +16,7 @@ public class Row<TContent>
 
     /// <summary>
     ///     Creates a table row with content of the specified type.
-    ///     <br/>
+    ///     <br />
     ///     The collection of cells is already defined, and passed as an argument to the constructor's parameters.
     /// </summary>
     public Row(int index, List<Cell<TContent>> cells, Table<TContent> table)

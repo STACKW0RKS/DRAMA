@@ -1,10 +1,10 @@
-﻿namespace DRAMA.Models.TabularData;
+namespace DRAMA.Models.TabularData;
 
 public class Column<TContent>
 {
     /// <summary>
     ///     Creates a table column with content of the specified type.
-    ///     <br/>
+    ///     <br />
     ///     The header and the collection of cells are not fully defined, and the Header and Cells properties need to be set post object construction.
     /// </summary>
     public Column(int index, string name, Table<TContent> table)
@@ -18,7 +18,7 @@ public class Column<TContent>
 
     /// <summary>
     ///     Creates a table column with content of the specified type.
-    ///     <br/>
+    ///     <br />
     ///     The header and the collection of cells are already defined, and passed as arguments to the constructor's parameters.
     /// </summary>
     public Column(int index, string name, Cell<TContent> header, List<Cell<TContent>> cells, Table<TContent> table)

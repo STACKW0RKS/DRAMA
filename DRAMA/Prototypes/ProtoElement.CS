@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.
-///     <br/>
+///     <br />
 ///     Inheriting from this class exposes several properties which can be used to interact with the element and/or its parent: Page, ElementSelector, ElementLocator, ElementHandle.
 /// </summary>
 public abstract class ProtoElement
@@ -10,17 +10,17 @@ public abstract class ProtoElement
     /// <summary>
     ///     <para>
     ///         Initialises an element object from a page object parent.
-    ///         <br/>
+    ///         <br />
     ///         The "initialiseElementHandle" parameter of this constructor defines whether the element is static and can be initialised by the constructor, or whether the element is dynamic and needs to be initialised at a later point in time.
     ///     </para>
     ///     <para>
     ///         Static elements are defined as elements which always exist in the (shadow) DOM and are always visible.
-    ///         <br/>
+    ///         <br />
     ///         Dynamic elements are defined as elements which only start existing in the (shadow) DOM and that only become visible after certain events are triggered, e.g. clicking a button causes a modal window to pop up on screen.
     ///     </para>
     ///     <para>
     ///         Parents of dynamic elements need to implement the Initialise() and Dispose() members, in order to avoid null reference exceptions. These parents can be either page objects or other element objects.
-    ///         <br/>
+    ///         <br />
     ///         e.g. OnElementInitialisation() => Element.Initialise(); OnElementTermination() => Element.Dispose();
     ///     </para>
     /// </summary>

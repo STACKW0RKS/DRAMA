@@ -4,7 +4,7 @@ public static class JsonElementExtensions
 {
     /// <summary>
     ///     Traverses a JsonElement and returns the sub-element with the specified key name.
-    ///     <br/>
+    ///     <br />
     ///     EXAMPLE USAGE: response?.Get("one")?.Get("two")?.Get("three")?.GetString();
     /// </summary>
     public static JsonElement? Get(this JsonElement element, string name)
@@ -12,7 +12,7 @@ public static class JsonElementExtensions
 
     /// <summary>
     ///     Traverses a JsonElement and returns the sub-element with the specified array index.
-    ///     <br/>
+    ///     <br />
     ///     EXAMPLE USAGE: response?.Get(1)?.Get(2)?.Get(3)?.GetString();
     /// </summary>
     public static JsonElement? Get(this JsonElement element, int index)

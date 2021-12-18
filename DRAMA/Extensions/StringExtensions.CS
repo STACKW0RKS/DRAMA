@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Extensions;
+namespace DRAMA.Extensions;
 
 public static class StringExtensions
 {
@@ -10,7 +10,7 @@ public static class StringExtensions
 
     /// <summary>
     ///     Trims leading and trailing white-space characters, and converts the text to uppercase.
-    ///     <br/>
+    ///     <br />
     ///     The intended use of this method is string comparison operations.
     /// </summary>
     public static string Flatten(this string text)
@@ -24,7 +24,7 @@ public static class StringExtensions
 
     /// <summary>
     ///     Returns TRUE if the source string does not contain the provided text, while specifying the comparison type. Otherwise, returns FALSE.
-    ///     <br/>
+    ///     <br />
     ///     Valid string comparison types are the following: CurrentCulture, CurrentCultureIgnoreCase, InvariantCulture, InvariantCultureIgnoreCase, Ordinal, OrdinalIgnoreCase.
     /// </summary>
     public static bool ContainsNot(this string text, string value, StringComparison comparisonType)
@@ -38,7 +38,7 @@ public static class StringExtensions
 
     /// <summary>
     ///     Returns TRUE if the source string does not contain the provided character, while specifying the comparison type. Otherwise, returns FALSE.
-    ///     <br/>
+    ///     <br />
     ///     Valid string comparison types are the following: CurrentCulture, CurrentCultureIgnoreCase, InvariantCulture, InvariantCultureIgnoreCase, Ordinal, OrdinalIgnoreCase.
     /// </summary>
     public static bool ContainsNot(this string text, char value, StringComparison comparisonType)
