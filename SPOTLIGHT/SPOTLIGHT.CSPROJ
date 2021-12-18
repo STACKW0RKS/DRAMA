@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.SDK">
+<Project Sdk="Microsoft.NET.SDK">
 
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
@@ -13,6 +13,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\Table-Parser-Unit-Testing-Playground.HTML">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
