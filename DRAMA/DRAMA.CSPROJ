@@ -45,7 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Playwright" Version="1.17.0" />
+		<PackageReference Include="Microsoft.Playwright" Version="1.17.3" />
 		<PackageReference Include="SpecFlow" Version="3.9.40" />
 	</ItemGroup>
 
