@@ -2,9 +2,6 @@ namespace DRAMA.Extensions;
 
 public static class ElementHandleExtensions
 {
-    // TODO: Write Unit Tests For These Methods (Needs A DOM With A Table)
-    // TODO: Unit Test All Table Parsing Order Configurations
-
     /// <summary>
     ///     Parses a standard HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
     /// </summary>

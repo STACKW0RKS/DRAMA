@@ -6,8 +6,6 @@ public class PlaywrightTableParserTests
     [TestFixture]
     public class ParseTable
     {
-        #region Initialise Playwright Driver In Constructor & Terminate Playwright Driver In Destructor
-
         public ParseTable()
             => Task.Run(InitialisePlaywrightDriver).Wait();
 
@@ -36,42 +34,58 @@ public class PlaywrightTableParserTests
             _driver.Dispose();
         }
 
-        #endregion
-
         [Test]
-        public void Parsing_A_Complete_Table_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+        public async Task Parsing_A_Complete_Table_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#complete")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Header.Cells.InnerText().ToArray(), "Header Cells Text");
+                Assert.AreEqual(new[] { "1-1", "1-2", "1-3" }, table.Rows.RowByIndex(1).Cells.InnerText().ToArray(), "First Row Cells Text");
+                Assert.AreEqual(new[] { "2-1", "2-2", "2-3" }, table.Rows.RowByIndex(2).Cells.InnerText().ToArray(), "Second Row Cells Text");
+                Assert.AreEqual(new[] { "3-1", "3-2", "3-3" }, table.Rows.RowByIndex(3).Cells.InnerText().ToArray(), "Third Row Cells Text");
+                Assert.AreEqual(new[] { "4-1", "4-2", "4-3" }, table.Footer.Cells.InnerText().ToArray(), "Footer Cells Text");
+                Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Columns.Select(column => column.Name).ToArray(), "Column Names");
+                Assert.IsTrue(table.Rows.First().Equals(table.Rows.RowByIndex(1)), "Row With Index 1 Is First");
+                Assert.IsTrue(table.Rows.Last().Equals(table.Rows.RowByIndex(3)), "Row With Index 3 Is Last");
+                Assert.IsTrue(table.Columns.First().Equals(table.Columns.ColumnByIndex(1)), "Column With Index 1 Is First");
+                Assert.IsTrue(table.Columns.Last().Equals(table.Columns.ColumnByIndex(3)), "Column With Index 3 Is Last");
+
+                // TODO: Add More Tests To This General Usage Case
+            });
+        }
 
         [Test]
         public void Parsing_A_Table_With_No_Rows_Generates_No_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_A_Table_With_No_Sections_Generates_No_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_With_No_Header_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_With_No_Body_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_With_No_Footer_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_Just_With_Header_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_Just_With_Body_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
 
         [Test]
         public void Parsing_Table_Just_With_Footer_Generates_All_The_Correct_Cells()
-            => Assert.Pass();
+            => Assert.Fail();
     }
 }

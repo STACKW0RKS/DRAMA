@@ -2,8 +2,6 @@
 
 public static class CellExtensions
 {
-    // TODO: Write Unit Tests For These Methods (Needs A DOM With A Table)
-
     /// <summary>
     ///     Returns each element handle in the list of cells.
     /// </summary>
