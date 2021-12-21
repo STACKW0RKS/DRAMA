@@ -7,7 +7,8 @@
 /// </summary>
 public abstract class ProtoPage
 {
-    protected ProtoPage(IPage page) => Page = page;
+    protected ProtoPage(IPage page)
+        => Page = page;
 
     public IPage Page { get; init; }
 }
