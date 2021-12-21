@@ -12,5 +12,5 @@ public static class CellExtensions
     ///     Returns the inner text of each element handle in the list of cells.
     /// </summary>
     public static IEnumerable<string> InnerText(this List<Cell<IElementHandle>> cells)
-        => cells.Select(cell => cell.Content.InnerTextAsync().Result);
+        => cells.Select(cell => cell.Content.InnerTextAsync().GetAwaiter().GetResult());
 }

@@ -39,10 +39,10 @@ public abstract class ProtoElement
     /// </summary>
     protected ProtoElement(IElementHandle parentElement, string selector)
     {
-        Page = Task.Run(async () => await parentElement.OwnerFrameAsync()).Result?.Page;
+        Page = Task.Run(async () => await parentElement.OwnerFrameAsync()).GetAwaiter().GetResult()?.Page;
         ElementSelector = selector;
         ElementLocator = Page?.Locator(selector);
-        ElementHandle = Task.Run(async () => await parentElement.QuerySelectorAsync(selector)).Result;
+        ElementHandle = Task.Run(async () => await parentElement.QuerySelectorAsync(selector)).GetAwaiter().GetResult();
     }
 
     public IPage Page { get; init; }
