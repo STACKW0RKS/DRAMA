@@ -46,10 +46,15 @@ public class PlaywrightTableParserTests
                 Assert.AreEqual(new[] { "2-1", "2-2", "2-3" }, table.Rows.RowByIndex(2).Cells.InnerText().ToArray(), "Second Row Cells Text");
                 Assert.AreEqual(new[] { "3-1", "3-2", "3-3" }, table.Rows.RowByIndex(3).Cells.InnerText().ToArray(), "Third Row Cells Text");
                 Assert.AreEqual(new[] { "4-1", "4-2", "4-3" }, table.Footer.Cells.InnerText().ToArray(), "Footer Cells Text");
+
                 Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Columns.Select(column => column.Name).ToArray(), "Column Names");
+
                 Assert.IsTrue(table.Rows.First().Equals(table.Rows.RowByIndex(1)), "Row With Index 1 Is First");
+                Assert.IsTrue(table.Rows.Skip(1).Take(1).Single().Equals(table.Rows.RowByIndex(2)), "Row With Index 2 Is Second");
                 Assert.IsTrue(table.Rows.Last().Equals(table.Rows.RowByIndex(3)), "Row With Index 3 Is Last");
+
                 Assert.IsTrue(table.Columns.First().Equals(table.Columns.ColumnByIndex(1)), "Column With Index 1 Is First");
+                Assert.IsTrue(table.Columns.Skip(1).Take(1).Single().Equals(table.Columns.ColumnByIndex(2)), "Column With Index 2 Is Second");
                 Assert.IsTrue(table.Columns.Last().Equals(table.Columns.ColumnByIndex(3)), "Column With Index 3 Is Last");
 
                 // TODO: Add More Tests To This General Usage Case
