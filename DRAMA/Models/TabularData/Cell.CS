@@ -1,9 +1,12 @@
 ﻿namespace DRAMA.Models.TabularData;
 
+/// <summary>
+///     A table cell with content of the specified type.
+/// </summary>
 public class Cell<TContent>
 {
     /// <summary>
-    ///     Creates a table cell with content of the specified type.
+    ///     Constructs a table cell with content of the specified type.
     /// </summary>
     public Cell(TContent content, string text, Table<TContent> table, Row<TContent> row, Column<TContent> column)
     {
@@ -14,9 +17,28 @@ public class Cell<TContent>
         Column = column;
     }
 
+    /// <summary>
+    ///     The content of the cell.
+    /// </summary>
     public TContent Content { get; init; }
+
+    /// <summary>
+    ///     The text of the cell.
+    /// </summary>
     public string Text { get; init; }
+
+    /// <summary>
+    ///     The parent table of the cell.
+    /// </summary>
     public Table<TContent> Table { get; init; }
+
+    /// <summary>
+    ///     The parent row of the cell.
+    /// </summary>
     public Row<TContent> Row { get; init; }
+
+    /// <summary>
+    ///     The parent column of the cell.
+    /// </summary>
     public Column<TContent> Column { get; init; }
 }

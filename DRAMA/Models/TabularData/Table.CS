@@ -1,9 +1,12 @@
 namespace DRAMA.Models.TabularData;
 
+/// <summary>
+///     A table with content of the specified type.
+/// </summary>
 public class Table<TContent>
 {
     /// <summary>
-    ///     Creates a table with content of the specified type.
+    ///     Constructs a table with content of the specified type.
     ///     <br />
     ///     The header, rows, footer, and columns are not fully defined, and the Header, Rows, and Columns properties need to be set post object construction.
     /// </summary>
@@ -16,7 +19,7 @@ public class Table<TContent>
     }
 
     /// <summary>
-    ///     Creates a table with content of the specified type.
+    ///     Constructs a table with content of the specified type.
     ///     <br />
     ///     The header, rows, footer, and columns are already defined, and passed as arguments to the constructor's parameters.
     /// </summary>
@@ -28,9 +31,24 @@ public class Table<TContent>
         Columns = columns;
     }
 
+    /// <summary>
+    ///     The table's header row.
+    /// </summary>
     public Row<TContent> Header { get; private set; }
+
+    /// <summary>
+    ///     The collection of rows in the table's body.
+    /// </summary>
     public List<Row<TContent>> Rows { get; private set; }
+
+    /// <summary>
+    ///     The table's footer row.
+    /// </summary>
     public Row<TContent> Footer { get; private set; }
+
+    /// <summary>
+    ///     The collection of columns in the table.
+    /// </summary>
     public List<Column<TContent>> Columns { get; private set; }
 
     /// <summary>

@@ -1,9 +1,12 @@
 namespace DRAMA.Models.TabularData;
 
+/// <summary>
+///     A table column with content of the specified type.
+/// </summary>
 public class Column<TContent>
 {
     /// <summary>
-    ///     Creates a table column with content of the specified type.
+    ///     Constructs a table column with content of the specified type.
     ///     <br />
     ///     The header and the collection of cells are not fully defined, and the Header and Cells properties need to be set post object construction.
     /// </summary>
@@ -17,7 +20,7 @@ public class Column<TContent>
     }
 
     /// <summary>
-    ///     Creates a table column with content of the specified type.
+    ///     Constructs a table column with content of the specified type.
     ///     <br />
     ///     The header and the collection of cells are already defined, and passed as arguments to the constructor's parameters.
     /// </summary>
@@ -30,10 +33,31 @@ public class Column<TContent>
         Table = table;
     }
 
+    /// <summary>
+    ///     The index of the column. Columns are one-indexed.
+    /// </summary>
     public int Index { get; init; }
+
+    /// <summary>
+    ///     The name of the column.
+    ///     In the case of most table parsers, this will be the text of the header cell.
+    /// </summary>
     public string Name { get; init; }
+
+    /// <summary>
+    ///     The header cell of the column.
+    /// </summary>
     public Cell<TContent> Header { get; private set; }
+
+    /// <summary>
+    ///     The collection of cells in the column.
+    ///     Does not include the header cell.
+    /// </summary>
     public List<Cell<TContent>> Cells { get; private set; }
+
+    /// <summary>
+    ///     The parent table of the column.
+    /// </summary>
     public Table<TContent> Table { get; init; }
 
     /// <summary>

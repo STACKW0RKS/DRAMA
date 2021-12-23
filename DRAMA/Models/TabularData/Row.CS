@@ -1,9 +1,12 @@
 ﻿namespace DRAMA.Models.TabularData;
 
+/// <summary>
+///     A table row with content of the specified type.
+/// </summary>
 public class Row<TContent>
 {
     /// <summary>
-    ///     Creates a table row with content of the specified type.
+    ///     Constructs a table row with content of the specified type.
     ///     <br />
     ///     The collection of cells is not fully defined, and the Cells property needs to be set post object construction.
     /// </summary>
@@ -15,7 +18,7 @@ public class Row<TContent>
     }
 
     /// <summary>
-    ///     Creates a table row with content of the specified type.
+    ///     Constructs a table row with content of the specified type.
     ///     <br />
     ///     The collection of cells is already defined, and passed as an argument to the constructor's parameters.
     /// </summary>
@@ -26,8 +29,20 @@ public class Row<TContent>
         Table = table;
     }
 
+    /// <summary>
+    ///     The index of the row.
+    ///     The header row has an index of zero. Body rows and the footer row are one-indexed.
+    /// </summary>
     public int Index { get; init; }
+
+    /// <summary>
+    ///     The collection of cells in the row.
+    /// </summary>
     public List<Cell<TContent>> Cells { get; private set; }
+
+    /// <summary>
+    ///     The parent table of the row.
+    /// </summary>
     public Table<TContent> Table { get; init; }
 
     /// <summary>
