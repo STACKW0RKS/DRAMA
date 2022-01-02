@@ -4,6 +4,7 @@
 		<TargetFramework>NET6.0</TargetFramework>
 		<IsPackable>TRUE</IsPackable>
 		<GeneratePackageOnBuild>TRUE</GeneratePackageOnBuild>
+		<ImplicitUsings>ENABLE</ImplicitUsings>
 	</PropertyGroup>
 
 	<PropertyGroup>

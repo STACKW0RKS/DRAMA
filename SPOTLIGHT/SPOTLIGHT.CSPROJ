@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
 		<IsPackable>FALSE</IsPackable>
+		<ImplicitUsings>ENABLE</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
