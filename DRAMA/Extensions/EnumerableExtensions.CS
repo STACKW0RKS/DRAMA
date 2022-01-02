@@ -6,7 +6,7 @@ public static class EnumerableExtensions
     ///     Returns a new collection composed of the input collection's elements in a random order.
     /// </summary>
     public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> collection)
-        => collection.OrderBy(element => new Random().Next());
+        => collection.OrderBy(element => Random.Shared.Next());
 
     /// <summary>
     ///     Returns a random element from the collection.
