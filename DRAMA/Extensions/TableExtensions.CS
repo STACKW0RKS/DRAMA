@@ -2,6 +2,24 @@
 
 public static class TableExtensions
 {
+    /// <summary>
+    ///     Returns the collection of cells in the table.
+    /// </summary>
+    public static List<Cell<TContent>> Cells<TContent>(this Table<TContent> table)
+    {
+        List<Cell<TContent>> cells = new();
+
+        if (table.Header is not null) cells.AddRange(table.Header.Cells);
+
+        if (table.Rows.Any())
+            foreach (Row<TContent> row in table.Rows)
+                cells.AddRange(row.Cells);
+
+        if (table.Footer is not null) cells.AddRange(table.Footer.Cells);
+
+        return cells;
+    }
+
     // TODO: Write Unit Tests For This Method (Needs A DOM With A Table)
 
     /// <summary>
