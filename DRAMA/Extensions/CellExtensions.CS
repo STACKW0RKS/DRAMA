@@ -61,4 +61,6 @@ public static class CellExtensions
 
         return cells.Single(cell => cell.Row.Index.Equals(rowIndex) && cell.Column.Index.Equals(columnIndex));
     }
+
+    // TODO: Fix All The CellByIndex Methods To Account For Footer (Calculate Total Table Rows)
 }
