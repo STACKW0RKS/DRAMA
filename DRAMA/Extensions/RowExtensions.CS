@@ -3,13 +3,15 @@
 public static class RowExtensions
 {
     /// <summary>
-    ///     Returns row with defined index. If row with defined index does not exist, returns null.
+    ///     Returns the row with the defined index. If the row with the defined index does not exist, returns null.
     /// </summary>
     public static Row<TContent> RowByIndex<TContent>(this List<Row<TContent>> rows, int index)
     {
-        if (index < 1) throw new ArgumentOutOfRangeException(nameof(index), index, "Row Index Is Less Than Minimum Row Collection Count");
-        if (index > rows.Count) throw new ArgumentOutOfRangeException(nameof(index), index, "Row Index Is Greater Than Current Row Collection Count");
+        if (rows.None()) return null;
 
-        return rows.Any() ? rows.Single(row => row.Index.Equals(index)) : null;
+        if (index < 1) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Row Index Is Less Than Minimum Row Index");
+        if (index > rows.Count) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Row Index Is Greater Than Current Maximum Row Index");
+
+        return rows.SingleOrDefault(row => row.Index.Equals(index));
     }
 }

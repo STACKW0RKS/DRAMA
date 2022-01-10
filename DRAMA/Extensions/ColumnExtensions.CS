@@ -3,19 +3,21 @@
 public static class ColumnExtensions
 {
     /// <summary>
-    ///     Returns column with defined index. If column with defined index does not exist, returns null.
+    ///     Returns the column with the defined index. If the column with the defined index does not exist, returns null.
     /// </summary>
     public static Column<TContent> ColumnByIndex<TContent>(this List<Column<TContent>> columns, int index)
     {
-        if (index < 1) throw new ArgumentOutOfRangeException(nameof(index), index, "Column Index Is Less Than Minimum Column Collection Count");
-        if (index > columns.Count) throw new ArgumentOutOfRangeException(nameof(index), index, "Column Index Is Greater Than Current Column Collection Count");
+        if (columns.None()) return null;
 
-        return columns.Any() ? columns.Single(column => column.Index.Equals(index)) : null;
+        if (index < 1) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Less Than Minimum Column Index");
+        if (index > columns.Count) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Greater Than Current Maximum Column Index");
+
+        return columns.SingleOrDefault(column => column.Index.Equals(index));
     }
 
     /// <summary>
-    ///     Returns column with defined name. If column with defined name does not exist, returns null.
+    ///     Returns the column with the defined name. If the column with the defined name does not exist, returns null.
     /// </summary>
     public static Column<TContent> ColumnByName<TContent>(this List<Column<TContent>> columns, string name)
-        => columns.Any(column => column.Name.Equals(name)) ? columns.Single(column => column.Name.Equals(name)) : null;
+        => columns.None() ? null : columns.SingleOrDefault(column => column.Name.Equals(name));
 }
