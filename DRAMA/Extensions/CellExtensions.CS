@@ -88,8 +88,8 @@ public static class CellExtensions
         if (rowIndex < minRowIndex) throw new ArgumentOutOfRangeException(nameof(rowIndex), rowIndex, "Provided Row Index Is Less Than Current Minimum Row Index");
 
         int maxRowIndex = (cells.RandomElement().Table.Header is not null ? 1 : 0)
-                          + (cells.RandomElement().Table.Rows.Any() ? cells.RandomElement().Table.Rows.Last().Index : 0)
-                          + (cells.RandomElement().Table.Footer is not null ? 1 : 0);
+                        + (cells.RandomElement().Table.Rows.Any() ? cells.RandomElement().Table.Rows.Last().Index : 0)
+                        + (cells.RandomElement().Table.Footer is not null ? 1 : 0);
 
         if (rowIndex > maxRowIndex) throw new ArgumentOutOfRangeException(nameof(rowIndex), rowIndex, "Provided Row Index Is Greater Than Current Maximum Row Index");
     }
