@@ -14,7 +14,7 @@ public static class CellExtensions
     ///     Returns the inner text of each element handle in the list of cells.
     /// </summary>
     public static List<string> InnerText(this List<Cell<IElementHandle>> cells)
-        => cells.Select(cell => cell.Content.InnerTextAsync().GetAwaiter().GetResult()).ToList();
+        => cells.Select(cell => cell.Text).ToList();
 
     /// <summary>
     ///     Returns the cell with the defined row index. If the cell with the defined row index does not exist, returns null.
