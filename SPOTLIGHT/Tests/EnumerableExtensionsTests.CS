@@ -10,8 +10,8 @@ public class EnumerableExtensionsTests
         public void Input_Collection_And_Output_Collection_Have_The_Same_Element_Count()
         {
             string[] inputCollection = { "foo", "bar", "qux" };
-            IEnumerable<string> outputCollection = inputCollection.Shuffle();
-            Assert.AreEqual(inputCollection.Length, outputCollection.Count(), "Output Collection Element Count");
+            string[] outputCollection = inputCollection.Shuffle().ToArray();
+            Assert.AreEqual(inputCollection.Length, outputCollection.Length, "Output Collection Element Count");
         }
     }
 
