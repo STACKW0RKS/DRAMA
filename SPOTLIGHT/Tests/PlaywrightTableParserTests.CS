@@ -59,31 +59,50 @@ public class PlaywrightTableParserTests
                 # endregion
 
                 # region Assert Integrity Of Row Indices
+                Assert.IsTrue(table.Header.Equals(table.HeaderBodyFooterRows().RowByIndex(0)), "Row With Index 0 Is The Header");
                 Assert.IsTrue(table.Rows.First().Equals(table.Rows.RowByIndex(1)), "Row With Index 1 Is First");
                 Assert.IsTrue(table.Rows.Skip(1).Take(1).Single().Equals(table.Rows.RowByIndex(2)), "Row With Index 2 Is Second");
-                Assert.IsTrue(table.Rows.Last().Equals(table.Rows.RowByIndex(3)), "Row With Index 3 Is Last");
+                Assert.IsTrue(table.Rows.Last().Equals(table.Rows.RowByIndex(3)), "Row With Index 3 Is Third");
+                Assert.IsTrue(table.Footer.Equals(table.HeaderBodyFooterRows().RowByIndex(4)), "Row With Index 4 Is The Footer");
                 # endregion
 
                 # region Assert Integrity Of Column Indices
                 Assert.IsTrue(table.Columns.First().Equals(table.Columns.ColumnByIndex(1)), "Column With Index 1 Is First");
                 Assert.IsTrue(table.Columns.Skip(1).Take(1).Single().Equals(table.Columns.ColumnByIndex(2)), "Column With Index 2 Is Second");
-                Assert.IsTrue(table.Columns.Last().Equals(table.Columns.ColumnByIndex(3)), "Column With Index 3 Is Last");
+                Assert.IsTrue(table.Columns.Last().Equals(table.Columns.ColumnByIndex(3)), "Column With Index 3 Is Third");
                 # endregion
 
                 # region Assert Integrity Of Column Names
                 Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Columns.Select(column => column.Name).ToArray(), "Column Names");
+                Assert.AreEqual(table.Columns.ColumnByIndex(1).Name, "0-1", "Name Of First Column");
+                Assert.AreEqual(table.Columns.ColumnByIndex(2).Name, "0-2", "Name Of Second Column");
+                Assert.AreEqual(table.Columns.ColumnByIndex(3).Name, "0-3", "Name Of Third Column");
                 # endregion
 
-                # region Assert Integrity Of Cell-To-Row And Cell-To-Column Relationships
-                Assert.AreEqual((table.Header, table.Columns.ColumnByName("0-1")), (table.Cells().CellByIndex(0, 1).Row, table.Cells().CellByIndex(0, 1).Column), "Cell 0-1 Row And Column");
-                Assert.AreEqual((table.Header, table.Columns.ColumnByName("0-2")), (table.Cells().CellByIndex(0, 2).Row, table.Cells().CellByIndex(0, 2).Column), "Cell 0-2 Row And Column");
-                Assert.AreEqual((table.Header, table.Columns.ColumnByName("0-3")), (table.Cells().CellByIndex(0, 3).Row, table.Cells().CellByIndex(0, 3).Column), "Cell 0-3 Row And Column");
-                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(1, 1).Row, table.Cells().CellByIndex(0, 1).Column), "Cell 1-1 Row And Column");
-                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(1, 2).Row, table.Cells().CellByIndex(0, 2).Column), "Cell 1-2 Row And Column");
-                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(1, 3).Row, table.Cells().CellByIndex(0, 3).Column), "Cell 1-3 Row And Column");
+                # region Assert Integrity Of Header Cell-To-Row And Cell-To-Column Relationships
+                Assert.AreEqual((table.Header, table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(0, 1).Row, table.Cells().CellByIndex(0, 1).Column), "Cell 0-1 Row And Column");
+                Assert.AreEqual((table.Header, table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(0, 2).Row, table.Cells().CellByIndex(0, 2).Column), "Cell 0-2 Row And Column");
+                Assert.AreEqual((table.Header, table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(0, 3).Row, table.Cells().CellByIndex(0, 3).Column), "Cell 0-3 Row And Column");
                 # endregion
 
-                // TODO: Complete Asserting Integrity Of Cell To Row And Cell To Column Relationships
+                # region Assert Integrity Of Body Cell-To-Row And Cell-To-Column Relationships
+                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(1, 1).Row, table.Cells().CellByIndex(1, 1).Column), "Cell 1-1 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(1, 2).Row, table.Cells().CellByIndex(1, 2).Column), "Cell 1-2 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(1), table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(1, 3).Row, table.Cells().CellByIndex(1, 3).Column), "Cell 1-3 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(2), table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(2, 1).Row, table.Cells().CellByIndex(2, 1).Column), "Cell 2-1 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(2), table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(2, 2).Row, table.Cells().CellByIndex(2, 2).Column), "Cell 2-2 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(2), table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(2, 3).Row, table.Cells().CellByIndex(2, 3).Column), "Cell 2-3 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(3), table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(3, 1).Row, table.Cells().CellByIndex(3, 1).Column), "Cell 3-1 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(3), table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(3, 2).Row, table.Cells().CellByIndex(3, 2).Column), "Cell 3-2 Row And Column");
+                Assert.AreEqual((table.Rows.RowByIndex(3), table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(3, 3).Row, table.Cells().CellByIndex(3, 3).Column), "Cell 3-3 Row And Column");
+                # endregion
+
+                # region Assert Integrity Of Footer Cell-To-Row And Cell-To-Column Relationships
+                Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(1)), (table.Cells().CellByIndex(4, 1).Row, table.Cells().CellByIndex(4, 1).Column), "Cell 4-1 Row And Column");
+                Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(4, 2).Row, table.Cells().CellByIndex(4, 2).Column), "Cell 4-2 Row And Column");
+                Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(4, 3).Row, table.Cells().CellByIndex(4, 3).Column), "Cell 4-3 Row And Column");
+                # endregion
+
                 // TODO: Add More Tests To This General Usage Case
             });
         }
