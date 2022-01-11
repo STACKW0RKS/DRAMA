@@ -102,6 +102,10 @@ public class PlaywrightTableParserTests
                 Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(4, 2).Row, table.Cells().CellByIndex(4, 2).Column), "Cell 4-2 Row And Column");
                 Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(4, 3).Row, table.Cells().CellByIndex(4, 3).Column), "Cell 4-3 Row And Column");
                 # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
             });
         }
 
@@ -121,6 +125,10 @@ public class PlaywrightTableParserTests
 
                 # region Assert Presence Of Cells
                 Assert.IsEmpty(table.Cells(), "Collection Of Table Cells Is Empty");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
                 # endregion
             });
         }
@@ -142,31 +150,191 @@ public class PlaywrightTableParserTests
                 # region Assert Presence Of Cells
                 Assert.IsEmpty(table.Cells(), "Collection Of Table Cells Is Empty");
                 # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
             });
         }
 
         [Test]
-        public void Parsing_Table_With_No_Header_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_With_No_Header_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#no-header")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Header
+                Assert.IsNull(table.Header, "Table Header Is Null");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "1-1", "1-2", "1-3" }, table.Rows.RowByIndex(1).Cells.InnerText().ToArray(), "First Row Cells Text");
+                Assert.AreEqual(new[] { "2-1", "2-2", "2-3" }, table.Rows.RowByIndex(2).Cells.InnerText().ToArray(), "Second Row Cells Text");
+                Assert.AreEqual(new[] { "3-1", "3-2", "3-3" }, table.Rows.RowByIndex(3).Cells.InnerText().ToArray(), "Third Row Cells Text");
+                Assert.AreEqual(new[] { "4-1", "4-2", "4-3" }, table.Footer.Cells.InnerText().ToArray(), "Footer Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual(new[] { "1-1", "2-1", "3-1", "4-1" }, table.Columns.ColumnByIndex(1).Cells.InnerText().ToArray(), "First Columns Cells Text");
+                Assert.AreEqual(new[] { "1-2", "2-2", "3-2", "4-2" }, table.Columns.ColumnByIndex(2).Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                Assert.AreEqual(new[] { "1-3", "2-3", "3-3", "4-3" }, table.Columns.ColumnByIndex(3).Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_Table_With_No_Body_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_With_No_Body_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#no-body")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Body
+                Assert.IsEmpty(table.Rows, "Collection Of Body Rows Is Empty");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Header.Cells.InnerText().ToArray(), "Header Cells Text");
+                Assert.AreEqual(new[] { "4-1", "4-2", "4-3" }, table.Footer.Cells.InnerText().ToArray(), "Footer Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual("0-1", table.Columns.ColumnByIndex(1).Header.Text, "First Column Header Cell Text");
+                Assert.AreEqual("0-2", table.Columns.ColumnByIndex(2).Header.Text, "Second Column Header Cell Text");
+                Assert.AreEqual("0-3", table.Columns.ColumnByIndex(3).Header.Text, "Third Column Header Cell Text");
+                Assert.AreEqual(new[] { "4-1" }, table.Columns.ColumnByIndex(1).Cells.InnerText().ToArray(), "First Columns Cells Text");
+                Assert.AreEqual(new[] { "4-2" }, table.Columns.ColumnByIndex(2).Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                Assert.AreEqual(new[] { "4-3" }, table.Columns.ColumnByIndex(3).Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_Table_With_No_Footer_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_With_No_Footer_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#no-footer")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Footer
+                Assert.IsNull(table.Footer, "Table Footer Is Null");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Header.Cells.InnerText().ToArray(), "Header Cells Text");
+                Assert.AreEqual(new[] { "1-1", "1-2", "1-3" }, table.Rows.RowByIndex(1).Cells.InnerText().ToArray(), "First Row Cells Text");
+                Assert.AreEqual(new[] { "2-1", "2-2", "2-3" }, table.Rows.RowByIndex(2).Cells.InnerText().ToArray(), "Second Row Cells Text");
+                Assert.AreEqual(new[] { "3-1", "3-2", "3-3" }, table.Rows.RowByIndex(3).Cells.InnerText().ToArray(), "Third Row Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual("0-1", table.Columns.ColumnByIndex(1).Header.Text, "First Column Header Cell Text");
+                Assert.AreEqual("0-2", table.Columns.ColumnByIndex(2).Header.Text, "Second Column Header Cell Text");
+                Assert.AreEqual("0-3", table.Columns.ColumnByIndex(3).Header.Text, "Third Column Header Cell Text");
+                Assert.AreEqual(new[] { "1-1", "2-1", "3-1" }, table.Columns.ColumnByIndex(1).Cells.InnerText().ToArray(), "First Columns Cells Text");
+                Assert.AreEqual(new[] { "1-2", "2-2", "3-2" }, table.Columns.ColumnByIndex(2).Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                Assert.AreEqual(new[] { "1-3", "2-3", "3-3" }, table.Columns.ColumnByIndex(3).Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_Table_Just_With_Header_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_Just_With_Header_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#just-header")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Non-Header Sections
+                Assert.IsEmpty(table.Rows, "Collection Of Body Rows Is Empty");
+                Assert.IsNull(table.Footer, "Table Footer Is Null");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "0-1", "0-2", "0-3" }, table.Header.Cells.InnerText().ToArray(), "Header Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual("0-1", table.Columns.ColumnByIndex(1).Header.Text, "First Column Header Cell Text");
+                Assert.AreEqual("0-2", table.Columns.ColumnByIndex(2).Header.Text, "Second Column Header Cell Text");
+                Assert.AreEqual("0-3", table.Columns.ColumnByIndex(3).Header.Text, "Third Column Header Cell Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_Table_Just_With_Body_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_Just_With_Body_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#just-body")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Non-Body Sections
+                Assert.IsNull(table.Header, "Table Header Is Null");
+                Assert.IsNull(table.Footer, "Table Footer Is Null");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "1-1", "1-2", "1-3" }, table.Rows.RowByIndex(1).Cells.InnerText().ToArray(), "First Row Cells Text");
+                Assert.AreEqual(new[] { "2-1", "2-2", "2-3" }, table.Rows.RowByIndex(2).Cells.InnerText().ToArray(), "Second Row Cells Text");
+                Assert.AreEqual(new[] { "3-1", "3-2", "3-3" }, table.Rows.RowByIndex(3).Cells.InnerText().ToArray(), "Third Row Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual(new[] { "1-1", "2-1", "3-1" }, table.Columns.ColumnByIndex(1).Cells.InnerText().ToArray(), "First Columns Cells Text");
+                Assert.AreEqual(new[] { "1-2", "2-2", "3-2" }, table.Columns.ColumnByIndex(2).Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                Assert.AreEqual(new[] { "1-3", "2-3", "3-3" }, table.Columns.ColumnByIndex(3).Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_Table_Just_With_Footer_Generates_All_The_Correct_Cells()
-            => Assert.Fail();
+        public async Task Parsing_Table_Just_With_Footer_Generates_All_The_Correct_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#just-footer")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Non-Footer Sections
+                Assert.IsNull(table.Header, "Table Header Is Null");
+                Assert.IsEmpty(table.Rows, "Collection Of Body Rows Is Empty");
+                # endregion
+
+                # region Assert Horizontal Integrity Of Text Content
+                Assert.AreEqual(new[] { "4-1", "4-2", "4-3" }, table.Footer.Cells.InnerText().ToArray(), "Footer Cells Text");
+                # endregion
+
+                # region Assert Vertical Integrity Of Text Content
+                Assert.AreEqual(new[] { "4-1" }, table.Columns.ColumnByIndex(1).Cells.InnerText().ToArray(), "First Columns Cells Text");
+                Assert.AreEqual(new[] { "4-2" }, table.Columns.ColumnByIndex(2).Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                Assert.AreEqual(new[] { "4-3" }, table.Columns.ColumnByIndex(3).Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                # endregion
+
+                # region Assert Cell Count
+                Assert.AreEqual(table.HeaderBodyFooterRows().Count * table.Columns.Count, table.Cells().Count, "The Total Number Of Cells Equals The Number Of Rows In All Table Sections Times The Number Of Columns");
+                # endregion
+            });
+        }
     }
 }
