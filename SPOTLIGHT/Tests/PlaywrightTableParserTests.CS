@@ -106,12 +106,44 @@ public class PlaywrightTableParserTests
         }
 
         [Test]
-        public void Parsing_A_Table_With_No_Rows_Generates_No_Cells()
-            => Assert.Fail();
+        public async Task Parsing_A_Table_With_No_Rows_Generates_No_Cells()
+        {
+            Table<IElementHandle> table = await(await _page.QuerySelectorAsync("#no-rows")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Rows
+                Assert.IsNull(table.Header, "Table Header Is Null");
+                Assert.IsEmpty(table.Rows, "Collection Of Body Rows Is Empty");
+                Assert.IsEmpty(table.HeaderBodyFooterRows(), "Collection Of Header, Body, And Footer Rows Is Empty");
+                Assert.IsNull(table.Footer, "Table Footer Is Null");
+                # endregion
+
+                # region Assert Presence Of Cells
+                Assert.IsEmpty(table.Cells(), "Collection Of Table Cells Is Empty");
+                # endregion
+            });
+        }
 
         [Test]
-        public void Parsing_A_Table_With_No_Sections_Generates_No_Cells()
-            => Assert.Fail();
+        public async Task Parsing_A_Table_With_No_Sections_Generates_No_Cells()
+        {
+            Table<IElementHandle> table = await (await _page.QuerySelectorAsync("#no-sections")).ParseHtmlTable();
+
+            Assert.Multiple(() =>
+            {
+                # region Assert Presence Of Rows
+                Assert.IsNull(table.Header, "Table Header Is Null");
+                Assert.IsEmpty(table.Rows, "Collection Of Body Rows Is Empty");
+                Assert.IsEmpty(table.HeaderBodyFooterRows(), "Collection Of Header, Body, And Footer Rows Is Empty");
+                Assert.IsNull(table.Footer, "Table Footer Is Null");
+                # endregion
+
+                # region Assert Presence Of Cells
+                Assert.IsEmpty(table.Cells(), "Collection Of Table Cells Is Empty");
+                # endregion
+            });
+        }
 
         [Test]
         public void Parsing_Table_With_No_Header_Generates_All_The_Correct_Cells()
