@@ -2,6 +2,8 @@
 
 public static class ColumnExtensions
 {
+    // TODO: Write Unit Tests For These Methods
+
     /// <summary>
     ///     Returns the column with the defined index. If the column with the defined index does not exist, returns null.
     /// </summary>
@@ -9,8 +11,8 @@ public static class ColumnExtensions
     {
         if (columns.None()) return null;
 
-        if (index < 1) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Less Than Minimum Column Index");
-        if (index > columns.Count) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Greater Than Current Maximum Column Index");
+        if (index < columns.Select(column => column.Index).Min()) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Less Than Minimum Column Index");
+        if (index > columns.Select(column => column.Index).Max()) throw new ArgumentOutOfRangeException(nameof(index), index, "Provided Column Index Is Greater Than Current Maximum Column Index");
 
         return columns.SingleOrDefault(column => column.Index.Equals(index));
     }
