@@ -102,8 +102,6 @@ public class PlaywrightTableParserTests
                 Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(2)), (table.Cells().CellByIndex(4, 2).Row, table.Cells().CellByIndex(4, 2).Column), "Cell 4-2 Row And Column");
                 Assert.AreEqual((table.Footer, table.Columns.ColumnByIndex(3)), (table.Cells().CellByIndex(4, 3).Row, table.Cells().CellByIndex(4, 3).Column), "Cell 4-3 Row And Column");
                 # endregion
-
-                // TODO: Add More Tests To This General Usage Case
             });
         }
 
