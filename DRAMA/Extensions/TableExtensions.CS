@@ -2,6 +2,8 @@
 
 public static class TableExtensions
 {
+    // TODO: Write Unit Tests For These Methods
+
     /// <summary>
     ///     Returns the collection of cells in the table.
     /// </summary>
@@ -20,7 +22,19 @@ public static class TableExtensions
         return cells;
     }
 
-    // TODO: Write Unit Tests For This Method (Needs A DOM With A Table)
+    /// <summary>
+    ///     Returns the collection of all rows in the table, including any rows in the table's header and footer, if these exist.
+    /// </summary>
+    public static List<Row<TContent>> HeaderBodyFooterRows<TContent>(this Table<TContent> table)
+    {
+        List<Row<TContent>> rows = new();
+
+        if (table.Header is not null) rows.Add(table.Header);
+        if (table.Rows.Any()) rows.AddRange(table.Rows);
+        if (table.Footer is not null) rows.Add(table.Footer);
+
+        return rows;
+    }
 
     /// <summary>
     ///     Parses a table of element handles to a table of text values.
