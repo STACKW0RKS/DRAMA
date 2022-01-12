@@ -65,6 +65,18 @@ public static class CellExtensions
     }
 
     /// <summary>
+    ///     Returns the cell with a relationship to the column with the defined name. If the cell with a relationship to the column with the defined name does not exist, returns null.
+    /// </summary>
+    public static Cell<TContent> CellByColumnName<TContent>(this List<Cell<TContent>> cells, string columnName)
+        => cells.None() ? null : cells.SingleOrDefault(cell => cell.Column.Name.Equals(columnName));
+
+    /// <summary>
+    ///     Returns the cells with a relationship to the column with the defined name. If no cells with a relationship to the column with the defined name exist, returns an empty collection.
+    /// </summary>
+    public static List<Cell<TContent>> CellsByColumnName<TContent>(this List<Cell<TContent>> cells, string columnName)
+        => cells.None() ? new List<Cell<TContent>>() : cells.Where(cell => cell.Column.Name.Equals(columnName)).ToList();
+
+    /// <summary>
     ///     Returns the cell with the defined index. If the cell with the defined index does not exist, returns null.
     /// </summary>
     public static Cell<TContent> CellByIndex<TContent>(this List<Cell<TContent>> cells, int rowIndex, int columnIndex)
@@ -75,6 +87,19 @@ public static class CellExtensions
         ValidateColumnIndex(cells, columnIndex);
 
         return cells.SingleOrDefault(cell => cell.Row.Index.Equals(rowIndex) && cell.Column.Index.Equals(columnIndex));
+    }
+
+    /// <summary>
+    ///     Returns the cell with the defined row index and with a relationship to the column with the defined name.
+    ///     If the cell with the defined row index and with a relationship to the column with the defined name does not exist, returns null.
+    /// </summary>
+    public static Cell<TContent> CellByRowIndexAndColumnName<TContent>(this List<Cell<TContent>> cells, int rowIndex, string columnName)
+    {
+        if (cells.None()) return null;
+
+        ValidateRowIndex(cells, rowIndex);
+
+        return cells.SingleOrDefault(cell => cell.Row.Index.Equals(rowIndex) && cell.Column.Name.Equals(columnName));
     }
 
     /// <summary>
