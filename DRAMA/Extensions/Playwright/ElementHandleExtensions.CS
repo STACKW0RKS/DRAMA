@@ -1,4 +1,4 @@
-namespace DRAMA.Extensions;
+namespace DRAMA.Extensions.Playwright;
 
 public static class ElementHandleExtensions
 {

@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Extensions;
+﻿namespace DRAMA.Extensions.TabularData;
 
 public static class RowExtensions
 {

@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Extensions;
+﻿namespace DRAMA.Extensions.TargetFramework;
 
 public static class TaskExtensions
 {

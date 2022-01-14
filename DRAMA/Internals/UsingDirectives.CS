@@ -1,5 +1,5 @@
 ﻿# region DRAMA Using Directives
-    global using DRAMA.Extensions;
+    global using DRAMA.Extensions.TargetFramework;
     global using DRAMA.Helpers.TabularData;
     global using DRAMA.Models.TabularData;
 # endregion
