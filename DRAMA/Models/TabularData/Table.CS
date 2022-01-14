@@ -1,7 +1,7 @@
 namespace DRAMA.Models.TabularData;
 
 /// <summary>
-///     A table with content of the specified type.
+///     The model for a table with content of the specified type.
 /// </summary>
 public class Table<TContent>
 {

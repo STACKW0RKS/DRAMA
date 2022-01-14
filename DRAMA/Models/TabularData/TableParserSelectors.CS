@@ -1,5 +1,8 @@
 namespace DRAMA.Models.TabularData;
 
+/// <summary>
+///     The model for the set of selectors that the table parser will use to read one or more tables from an HTML document.
+/// </summary>
 public class TableParserSelectors
 {
     /// <summary>

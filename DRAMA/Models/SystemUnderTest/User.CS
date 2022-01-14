@@ -1,7 +1,13 @@
 ﻿namespace DRAMA.Models.SystemUnderTest;
 
+/// <summary>
+///     The model for the a user of the system under test.
+/// </summary>
 public class User
 {
+    /// <summary>
+    ///     Instantiates a new user with the defined identifier and password.
+    /// </summary>
     public User(string identifier, string password)
     {
         Identifier = identifier;
