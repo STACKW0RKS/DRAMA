@@ -1,7 +1,7 @@
 ﻿namespace SPOTLIGHT.Tests;
 
 [TestFixture]
-public class PlaywrightTableParserTests
+public class TableParserTests
 {
     [TestFixture]
     public class ParseTable

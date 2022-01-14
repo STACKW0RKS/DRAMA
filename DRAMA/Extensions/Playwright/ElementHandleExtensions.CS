@@ -25,7 +25,7 @@ public static class ElementHandleExtensions
     ///     </para>
     /// </summary>
     public static async Task<Table<IElementHandle>> ParseHtmlTable(this IElementHandle parent, TableParserSelectors selectors = null)
-        => await PlaywrightTableParser.ParseTable(parent, selectors ?? new TableParserSelectors
+        => await TableParser.ParseTable(parent, selectors ?? new TableParserSelectors
         (
             "table",
             "thead > tr",
@@ -61,7 +61,7 @@ public static class ElementHandleExtensions
     ///     </para>
     /// </summary>
     public static async Task<Table<IElementHandle>> ParseAgGrid(this IElementHandle parent, TableParserSelectors selectors = null)
-        => await PlaywrightTableParser.ParseTable(parent, selectors ?? new TableParserSelectors
+        => await TableParser.ParseTable(parent, selectors ?? new TableParserSelectors
         (
             "div.ag-root-wrapper",
             "div.ag-header-container > div.ag-header-row",

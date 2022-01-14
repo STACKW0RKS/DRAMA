@@ -1,6 +1,6 @@
 namespace DRAMA.Helpers.TabularData;
 
-public static class PlaywrightTableParser
+public static class TableParser
 {
     /// <summary>
     ///     Parses an HTML table to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
