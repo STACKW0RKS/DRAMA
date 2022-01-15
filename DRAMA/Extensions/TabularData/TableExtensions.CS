@@ -1,9 +1,9 @@
 ﻿namespace DRAMA.Extensions.TabularData;
 
+// TODO: Write Unit Tests For These Methods
+
 public static class TableExtensions
 {
-    // TODO: Write Unit Tests For These Methods
-
     /// <summary>
     ///     Returns the collection of cells in the table.
     /// </summary>
