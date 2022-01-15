@@ -14,5 +14,6 @@
 
 # region System Using Directives
     global using System.Globalization;
+    global using System.Runtime.Serialization;
     global using System.Text.Json;
 # endregion

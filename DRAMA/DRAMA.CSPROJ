@@ -5,6 +5,7 @@
 		<IsPackable>TRUE</IsPackable>
 		<GeneratePackageOnBuild>TRUE</GeneratePackageOnBuild>
 		<ImplicitUsings>ENABLE</ImplicitUsings>
+		<Nullable>ENABLE</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup>
