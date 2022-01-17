@@ -6,7 +6,7 @@ public static class StringExtensions
     ///     Converts the input string to title case, except for words that are entirely in uppercase.
     /// </summary>
     public static string ToTitleCase(this string text, string culture = "en-GB")
-        => text is not null ? new CultureInfo(culture, false).TextInfo.ToTitleCase(text) : null;
+        => new CultureInfo(culture, false).TextInfo.ToTitleCase(text);
 
     /// <summary>
     ///     Trims leading and trailing white-space characters, and converts the text to uppercase.
@@ -14,7 +14,19 @@ public static class StringExtensions
     ///     The intended use of this method is string comparison operations.
     /// </summary>
     public static string Flatten(this string text)
-        => text?.Trim().ToUpper();
+        => text.Trim().ToUpper();
+
+    /// <summary>
+    ///     Returns TRUE if the source string is neither null nor empty. Otherwise, returns FALSE.
+    /// </summary>
+    public static bool NotNullOrEmpty(this string text)
+        => !string.IsNullOrEmpty(text);
+
+    /// <summary>
+    ///     Returns TRUE if the source string is neither null nor composed entirely of white space characters. Otherwise, returns FALSE.
+    /// </summary>
+    public static bool NotNullOrWhiteSpace(this string text)
+        => !string.IsNullOrWhiteSpace(text);
 
     /// <summary>
     ///     Returns TRUE if the source string does not contain the provided text. Otherwise, returns FALSE.
