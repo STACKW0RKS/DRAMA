@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Prototypes;
+namespace DRAMA.Prototypes;
 
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.
@@ -31,7 +31,7 @@ public abstract class ProtoElement
         ElementLocator = page.Locator(selector);
 
         if (initialiseElementHandle)
-            Task.Run(async () => await Initialise()).Wait();
+            Initialise().GetAwaiter().GetResult();
     }
 
     /// <summary>
@@ -39,10 +39,10 @@ public abstract class ProtoElement
     /// </summary>
     protected ProtoElement(IElementHandle parentElement, string selector)
     {
-        Page = Task.Run(async () => await parentElement.OwnerFrameAsync()).GetAwaiter().GetResult()?.Page;
+        Page = parentElement.OwnerFrameAsync().GetAwaiter().GetResult()?.Page;
         ElementSelector = selector;
         ElementLocator = Page?.Locator(selector);
-        ElementHandle = Task.Run(async () => await parentElement.QuerySelectorAsync(selector)).GetAwaiter().GetResult();
+        ElementHandle = parentElement.QuerySelectorAsync(selector).GetAwaiter().GetResult();
     }
 
     /// <summary>
