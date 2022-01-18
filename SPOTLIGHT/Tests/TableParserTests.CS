@@ -22,7 +22,7 @@ public class TableParserTests
             _driver = await Playwright.CreateAsync();
             _browser = await _driver.Firefox.LaunchAsync();
             _page = await _browser.NewPageAsync();
-            _playground = new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "PROPS", "TableParserPlayground", "Table-Parser-Unit-Testing-Playground.HTML"));
+            _playground = new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Resources", "Table-Parser-Unit-Testing-Playground.HTML"));
 
             await _page.GotoAsync(_playground.AbsoluteUri);
         }

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.SDK">
+
+	<PropertyGroup>
+		<TargetFramework>NET6.0</TargetFramework>
+		<IsPackable>FALSE</IsPackable>
+		<ImplicitUsings>ENABLE</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ContentWithTargetPath Include="Resources\**\*.*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>Resources\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
+
+</Project>

@@ -14,7 +14,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
-		<ProjectReference Include="..\PROPS\PROPS.CSPROJ" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\Table-Parser-Unit-Testing-Playground.HTML">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
