@@ -12,7 +12,7 @@
 
 	<ItemGroup>
 		<ContentWithTargetPath Include="Resources\**\*.*">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>Resources\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</ContentWithTargetPath>
 	</ItemGroup>

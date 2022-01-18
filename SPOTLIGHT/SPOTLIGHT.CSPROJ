@@ -17,9 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\Table-Parser-Unit-Testing-Playground.HTML">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<None Update="Resources\Table-Parser-Unit-Testing-Playground.HTML">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
