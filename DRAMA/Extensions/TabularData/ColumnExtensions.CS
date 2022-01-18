@@ -7,7 +7,7 @@ public static class ColumnExtensions
     /// <summary>
     ///     Returns the column with the defined index. If the column with the defined index does not exist, returns null.
     /// </summary>
-    public static Column<TContent> ColumnByIndex<TContent>(this List<Column<TContent>> columns, int index)
+    public static Column<TContent>? ColumnByIndex<TContent>(this List<Column<TContent>> columns, int index)
     {
         if (columns.None()) return null;
 
@@ -20,6 +20,6 @@ public static class ColumnExtensions
     /// <summary>
     ///     Returns the column with the defined name. If the column with the defined name does not exist, returns null.
     /// </summary>
-    public static Column<TContent> ColumnByName<TContent>(this List<Column<TContent>> columns, string name)
+    public static Column<TContent>? ColumnByName<TContent>(this List<Column<TContent>> columns, string name)
         => columns.None() ? null : columns.SingleOrDefault(column => column.Name.Equals(name));
 }

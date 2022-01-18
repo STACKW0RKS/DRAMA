@@ -7,7 +7,7 @@ public static class RowExtensions
     /// <summary>
     ///     Returns the row with the defined index. If the row with the defined index does not exist, returns null.
     /// </summary>
-    public static Row<TContent> RowByIndex<TContent>(this List<Row<TContent>> rows, int index)
+    public static Row<TContent>? RowByIndex<TContent>(this List<Row<TContent>> rows, int index)
     {
         if (rows.None()) return null;
 

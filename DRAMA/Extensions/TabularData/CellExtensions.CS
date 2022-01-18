@@ -19,7 +19,7 @@ public static class CellExtensions
     /// <summary>
     ///     Returns the cell with the defined row index. If the cell with the defined row index does not exist, returns null.
     /// </summary>
-    public static Cell<TContent> CellByRowIndex<TContent>(this List<Cell<TContent>> cells, int rowIndex)
+    public static Cell<TContent>? CellByRowIndex<TContent>(this List<Cell<TContent>> cells, int rowIndex)
     {
         if (cells.None()) return null;
 
@@ -43,7 +43,7 @@ public static class CellExtensions
     /// <summary>
     ///     Returns the cell with the defined column index. If the cell with the defined column index does not exist, returns null.
     /// </summary>
-    public static Cell<TContent> CellByColumnIndex<TContent>(this List<Cell<TContent>> cells, int columnIndex)
+    public static Cell<TContent>? CellByColumnIndex<TContent>(this List<Cell<TContent>> cells, int columnIndex)
     {
         if (cells.None()) return null;
 
@@ -67,7 +67,7 @@ public static class CellExtensions
     /// <summary>
     ///     Returns the cell with a relationship to the column with the defined name. If the cell with a relationship to the column with the defined name does not exist, returns null.
     /// </summary>
-    public static Cell<TContent> CellByColumnName<TContent>(this List<Cell<TContent>> cells, string columnName)
+    public static Cell<TContent>? CellByColumnName<TContent>(this List<Cell<TContent>> cells, string columnName)
         => cells.None() ? null : cells.SingleOrDefault(cell => cell.Column.Name.Equals(columnName));
 
     /// <summary>
@@ -79,7 +79,7 @@ public static class CellExtensions
     /// <summary>
     ///     Returns the cell with the defined index. If the cell with the defined index does not exist, returns null.
     /// </summary>
-    public static Cell<TContent> CellByIndex<TContent>(this List<Cell<TContent>> cells, int rowIndex, int columnIndex)
+    public static Cell<TContent>? CellByIndex<TContent>(this List<Cell<TContent>> cells, int rowIndex, int columnIndex)
     {
         if (cells.None()) return null;
 
@@ -93,7 +93,7 @@ public static class CellExtensions
     ///     Returns the cell with the defined row index and with a relationship to the column with the defined name.
     ///     If the cell with the defined row index and with a relationship to the column with the defined name does not exist, returns null.
     /// </summary>
-    public static Cell<TContent> CellByRowIndexAndColumnName<TContent>(this List<Cell<TContent>> cells, int rowIndex, string columnName)
+    public static Cell<TContent>? CellByRowIndexAndColumnName<TContent>(this List<Cell<TContent>> cells, int rowIndex, string columnName)
     {
         if (cells.None()) return null;
 

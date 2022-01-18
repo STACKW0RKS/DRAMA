@@ -47,7 +47,7 @@ public class Column<TContent>
     /// <summary>
     ///     The header cell of the column.
     /// </summary>
-    public Cell<TContent> Header { get; private set; }
+    public Cell<TContent>? Header { get; private set; }
 
     /// <summary>
     ///     The collection of cells in the column.

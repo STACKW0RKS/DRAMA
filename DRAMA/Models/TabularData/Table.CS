@@ -34,7 +34,7 @@ public class Table<TContent>
     /// <summary>
     ///     The table's header row.
     /// </summary>
-    public Row<TContent> Header { get; private set; }
+    public Row<TContent>? Header { get; private set; }
 
     /// <summary>
     ///     The collection of rows in the table's body.
@@ -44,7 +44,7 @@ public class Table<TContent>
     /// <summary>
     ///     The table's footer row.
     /// </summary>
-    public Row<TContent> Footer { get; private set; }
+    public Row<TContent>? Footer { get; private set; }
 
     /// <summary>
     ///     The collection of columns in the table.

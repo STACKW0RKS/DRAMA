@@ -1,4 +1,4 @@
-namespace DRAMA.Prototypes;
+﻿namespace DRAMA.Prototypes;
 
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.
@@ -49,7 +49,7 @@ public abstract class ProtoElement
     ///     The parent Playwright page of the element.
     ///     More information on the Playwright page API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-page"></a>.
     /// </summary>
-    public IPage Page { get; init; }
+    public IPage? Page { get; init; }
 
     /// <summary>
     ///     The selector of the element.
@@ -61,13 +61,13 @@ public abstract class ProtoElement
     ///     The locator of the element.
     ///     More information on element locators can be found at <a href="https://playwright.dev/dotnet/docs/next/locators"></a>.
     /// </summary>
-    public ILocator ElementLocator { get; init; }
+    public ILocator? ElementLocator { get; init; }
 
     /// <summary>
     ///     The handle of the element.
     ///     More information on the Playwright element handle API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-elementhandle/"></a>.
     /// </summary>
-    public IElementHandle ElementHandle { get; private set; }
+    public IElementHandle? ElementHandle { get; private set; }
 
     /// <summary>
     ///     Initialises a dynamic element.
@@ -77,8 +77,13 @@ public abstract class ProtoElement
     /// </summary>
     public async Task Initialise()
     {
-        await Page.WaitForSelectorAsync(ElementSelector);
-        ElementHandle = await Page.QuerySelectorAsync(ElementSelector);
+        if (Page is not null)
+        {
+            await Page.WaitForSelectorAsync(ElementSelector);
+            ElementHandle = await Page.QuerySelectorAsync(ElementSelector);
+        }
+
+        else ElementHandle = null;
     }
 
     /// <summary>
@@ -86,5 +91,7 @@ public abstract class ProtoElement
     ///     The element can be reinitialised, if it still exists in the DOM (including the shadow DOM).
     /// </summary>
     public async Task Dispose()
-        => await ElementHandle.DisposeAsync();
+    {
+        if (ElementHandle is not null) await ElementHandle.DisposeAsync();
+    }
 }

@@ -27,5 +27,5 @@ public class User
     /// <summary>
     ///     A store for domain-specific user data, e.g. user roles or permissions.
     /// </summary>
-    public Dictionary<string, string> Context { get; set; }
+    public Dictionary<string, string>? Context { get; set; }
 }

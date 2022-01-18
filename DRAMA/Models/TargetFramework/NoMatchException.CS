@@ -15,12 +15,12 @@ public class NoMatchException : SystemException
     /// <summary>
     ///     Initialises a NoMatchException that takes a nullable exception message argument.
     /// </summary>
-    public NoMatchException(string message) : base(message) { }
+    public NoMatchException(string? message) : base(message) { }
 
     /// <summary>
     ///     Initialises a NoMatchException that takes a nullable exception message and a nullable inner exception for arguments.
     /// </summary>
-    public NoMatchException(string message, Exception innerException) : base(message, innerException) { }
+    public NoMatchException(string? message, Exception? innerException) : base(message, innerException) { }
 
     /// <summary>
     ///     Initialises a NoMatchException that takes serialisation information and a streaming context for arguments.

@@ -26,7 +26,7 @@ public static class TableParser
     private static async Task<Table<IElementHandle>> ParseHeader(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
     {
         // Query The Table Element's Parent For The Header Row Element
-        IElementHandle headerRow = await parent.QuerySelectorAsync(selectors.HeaderRowSelector);
+        IElementHandle? headerRow = await parent.QuerySelectorAsync(selectors.HeaderRowSelector);
 
         // If No Header Element Is Found, Stop Parsing And Return The Output Table As Is
         if (headerRow is null) return table;
@@ -150,7 +150,7 @@ public static class TableParser
     private static async Task<Table<IElementHandle>> ParseFooter(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
     {
         // Query The Table Element's Parent For The Footer Row Element
-        IElementHandle footerRow = await parent.QuerySelectorAsync(selectors.FooterRowSelector);
+        IElementHandle? footerRow = await parent.QuerySelectorAsync(selectors.FooterRowSelector);
 
         // If No Footer Element Is Found, Stop Parsing And Return The Output Table As Is
         if (footerRow is null) return table;

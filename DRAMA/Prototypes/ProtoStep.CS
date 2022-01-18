@@ -34,5 +34,5 @@ public abstract class ProtoStep
     ///     The SpecFlow scenario context.
     ///     More information can be found at <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/ScenarioContext.html"></a>.
     /// </summary>
-    protected ScenarioContext ScenarioContext { get; init; }
+    protected ScenarioContext? ScenarioContext { get; init; }
 }
