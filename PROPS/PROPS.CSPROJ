@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.SDK">
+
+	<PropertyGroup>
+		<TargetFramework>NET6.0</TargetFramework>
+		<IsPackable>FALSE</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ContentWithTargetPath Include="TableParserPlayground\*.*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>PROPS\TableParserPlayground\%(Filename)%(Extension)</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ContentWithTargetPath Include="BrowserDriverPlayground\**\*.*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>PROPS\BrowserDriverPlayground\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
+
+</Project>
