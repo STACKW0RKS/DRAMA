@@ -67,10 +67,10 @@ public static class TableExtensions
                 Cell<IElementHandle> cell = table.Header.Cells[columnIndex];
 
                 // Add A Parsed Cell To The Parsed Header Row Of The Output Table
-                headerRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, textTable.Header, textTable.Columns[columnIndex]));
+                headerRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, headerRow, textTable.Columns[columnIndex]));
 
                 // Set The Parsed Cell As The Header Of The Output Table Column With The Same Horizontal Index
-                textTable.Columns[columnIndex].SetHeader(textTable.Header.Cells[columnIndex]);
+                textTable.Columns[columnIndex].SetHeader(headerRow.Cells[columnIndex]);
             }
 
             // Set The Parsed Header Row To Be The Output Table's Header
@@ -113,7 +113,7 @@ public static class TableExtensions
                 Cell<IElementHandle> cell = table.Footer.Cells[columnIndex];
 
                 // Add A Parsed Cell To The Parsed Footer Row Of The Output Table
-                footerRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, textTable.Footer, textTable.Columns[columnIndex]));
+                footerRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, footerRow, textTable.Columns[columnIndex]));
             }
 
             // Set The Parsed Footer Row To Be The Output Table's Header
