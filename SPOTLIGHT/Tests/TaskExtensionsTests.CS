@@ -29,13 +29,7 @@ public class TaskExtensionsTests
         [Test]
         public async Task Task_With_Return_Type_Completes_Before_It_Times_Out()
         {
-            Task<bool> task = Task.Run(async () =>
-            {
-                await Task.Delay(250);
-
-                return true;
-            });
-
+            Task<bool> task = Task.Run(async () => { await Task.Delay(250); return true; });
             bool result = await task.TimeoutAfter(new TimeSpan(00, 00, 05));
             Assert.IsTrue(result, "Task With Return Type Has Completed Successfully");
         }
@@ -46,12 +40,7 @@ public class TaskExtensionsTests
             bool result;
             CancellationTokenSource timeoutCancellationTokenSource = new();
 
-            Task<bool> task = Task.Run(async () =>
-            {
-                await Task.Delay(1250, timeoutCancellationTokenSource.Token);
-
-                return true;
-            }, timeoutCancellationTokenSource.Token);
+            Task<bool> task = Task.Run(async () => { await Task.Delay(1250, timeoutCancellationTokenSource.Token); return true; }, timeoutCancellationTokenSource.Token);
 
             try { result = await task.TimeoutAfter(new TimeSpan(00, 00, 01)); }
 
