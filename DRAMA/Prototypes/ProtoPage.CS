@@ -22,7 +22,7 @@ public abstract class ProtoPage
     /// <summary>
     ///     The title of the page.
     /// </summary>
-    public string Title => Page.TitleAsync().GetAwaiter().GetResult();
+    public string Title => Page.TitleAsync().Get();
 
     /// <summary>
     ///     The URL of the page.

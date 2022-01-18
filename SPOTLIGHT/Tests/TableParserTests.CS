@@ -7,10 +7,10 @@ public class TableParserTests
     public class ParseTable
     {
         public ParseTable()
-            => InitialisePlaywrightDriver().GetAwaiter().GetResult();
+            => InitialisePlaywrightDriver().Run();
 
         ~ParseTable()
-            => TerminatePlaywrightDriver().GetAwaiter().GetResult();
+            => TerminatePlaywrightDriver().Run();
 
         private IPlaywright _driver;
         private IBrowser _browser;

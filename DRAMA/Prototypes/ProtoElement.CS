@@ -31,7 +31,7 @@ public abstract class ProtoElement
         ElementLocator = page.Locator(selector);
 
         if (initialiseElementHandle)
-            Initialise().GetAwaiter().GetResult();
+            Initialise().Run();
     }
 
     /// <summary>
@@ -39,10 +39,10 @@ public abstract class ProtoElement
     /// </summary>
     protected ProtoElement(IElementHandle parentElement, string selector)
     {
-        Page = parentElement.OwnerFrameAsync().GetAwaiter().GetResult()?.Page;
+        Page = parentElement.OwnerFrameAsync().Get()?.Page;
         ElementSelector = selector;
         ElementLocator = Page?.Locator(selector);
-        ElementHandle = parentElement.QuerySelectorAsync(selector).GetAwaiter().GetResult();
+        ElementHandle = parentElement.QuerySelectorAsync(selector).Get();
     }
 
     /// <summary>
