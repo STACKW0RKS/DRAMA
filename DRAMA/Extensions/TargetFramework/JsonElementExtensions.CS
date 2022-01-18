@@ -8,7 +8,7 @@ public static class JsonElementExtensions
     ///     EXAMPLE USAGE: response?.Get("one")?.Get("two")?.Get("three")?.GetString();
     /// </summary>
     public static JsonElement? Get(this JsonElement element, string name)
-        => element.ValueKind != JsonValueKind.Null && element.ValueKind != JsonValueKind.Undefined && element.TryGetProperty(name, out JsonElement value) ? value : null;
+        => element.ValueKind is not JsonValueKind.Null && element.ValueKind is not JsonValueKind.Undefined && element.TryGetProperty(name, out JsonElement value) ? value : null;
 
     /// <summary>
     ///     Traverses a JsonElement and returns the sub-element with the specified array index.
@@ -21,6 +21,6 @@ public static class JsonElementExtensions
 
         JsonElement value = element.EnumerateArray().ElementAtOrDefault(index);
 
-        return value.ValueKind != JsonValueKind.Undefined ? value : null;
+        return value.ValueKind is not JsonValueKind.Undefined ? value : null;
     }
 }
