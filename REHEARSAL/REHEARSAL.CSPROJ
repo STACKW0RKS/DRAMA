@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.SDK">
 
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
@@ -10,11 +10,12 @@
 		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ContentWithTargetPath Include="Resources\**\*.*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<TargetPath>Resources\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
-		</ContentWithTargetPath>
-	</ItemGroup>
+	<Target Name="UnzipArchive" BeforeTargets="Build">
+		<Unzip
+			SourceFiles="Resources\Browser-Driver-Playground.ZIP"
+			DestinationFolder="$(OutputPath)\Resources"
+			OverwriteReadOnlyFiles="TRUE"
+		/>
+	</Target>
 
 </Project>
