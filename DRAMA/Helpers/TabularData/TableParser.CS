@@ -7,7 +7,7 @@ public static class TableParser
     ///     <br />
     ///     More information on the element handle API can be found at <a href="https://playwright.dev/dotnet/docs/next/api/class-elementhandle/"></a>.
     /// </summary>
-    public static async Task<Table<IElementHandle>> ParseTable(IElementHandle parent, TableParserSelectors selectors)
+    public static async Task<Table<IElementHandle>> ParseTable(IElementHandle? parent, TableParserSelectors selectors)
     {
         Table<IElementHandle> table = new();
 
@@ -23,8 +23,11 @@ public static class TableParser
     ///     <br />
     ///     Preferably, this table header parser should be called before both the table body parser and the table footer parser.
     /// </summary>
-    private static async Task<Table<IElementHandle>> ParseHeader(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+    private static async Task<Table<IElementHandle>> ParseHeader(IElementHandle? parent, Table<IElementHandle> table, TableParserSelectors selectors)
     {
+        // If The Table Element's Parent Is NULL, Stop Parsing And Return The Output Table As Is
+        if (parent is null) return table;
+
         // Query The Table Element's Parent For The Header Row Element
         IElementHandle? headerRow = await parent.QuerySelectorAsync(selectors.HeaderRowSelector);
 
@@ -82,8 +85,11 @@ public static class TableParser
     ///     <br />
     ///     Preferably, this table body parser should be called after the table header parser and before the table footer parser.
     /// </summary>
-    private static async Task<Table<IElementHandle>> ParseRows(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+    private static async Task<Table<IElementHandle>> ParseRows(IElementHandle? parent, Table<IElementHandle> table, TableParserSelectors selectors)
     {
+        // If The Table Element's Parent Is NULL, Stop Parsing And Return The Output Table As Is
+        if (parent is null) return table;
+
         // Query The Table Element's Parent For The Body Row Elements
         IReadOnlyList<IElementHandle> bodyRows = await parent.QuerySelectorAllAsync(selectors.BodyRowSelector);
 
@@ -147,8 +153,11 @@ public static class TableParser
     ///     <br />
     ///     Preferably, this table footer parser should be called after both the table header parser and the table body parser.
     /// </summary>
-    private static async Task<Table<IElementHandle>> ParseFooter(IElementHandle parent, Table<IElementHandle> table, TableParserSelectors selectors)
+    private static async Task<Table<IElementHandle>> ParseFooter(IElementHandle? parent, Table<IElementHandle> table, TableParserSelectors selectors)
     {
+        // If The Table Element's Parent Is NULL, Stop Parsing And Return The Output Table As Is
+        if (parent is null) return table;
+
         // Query The Table Element's Parent For The Footer Row Element
         IElementHandle? footerRow = await parent.QuerySelectorAsync(selectors.FooterRowSelector);
 

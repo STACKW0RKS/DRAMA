@@ -24,7 +24,7 @@ public static class ElementHandleExtensions
     ///         Footer Cell Selector: <c>"th, td"</c>
     ///     </para>
     /// </summary>
-    public static async Task<Table<IElementHandle>> ParseHtmlTable(this IElementHandle parent, TableParserSelectors? selectors = null)
+    public static async Task<Table<IElementHandle>> ParseHtmlTable(this IElementHandle? parent, TableParserSelectors? selectors = null)
         => await TableParser.ParseTable(parent, selectors ?? new TableParserSelectors
         (
             "table",
@@ -60,7 +60,7 @@ public static class ElementHandleExtensions
     ///         Footer Cell Selector: <c>"div.ag-cell"</c>
     ///     </para>
     /// </summary>
-    public static async Task<Table<IElementHandle>> ParseAgGrid(this IElementHandle parent, TableParserSelectors? selectors = null)
+    public static async Task<Table<IElementHandle>> ParseAgGrid(this IElementHandle? parent, TableParserSelectors? selectors = null)
         => await TableParser.ParseTable(parent, selectors ?? new TableParserSelectors
         (
             "div.ag-root-wrapper",
