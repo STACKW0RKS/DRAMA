@@ -103,6 +103,18 @@ public static class CellExtensions
     }
 
     /// <summary>
+    ///     Returns the cell with the defined text. If the cell with the defined text does not exist, returns null.
+    /// </summary>
+    public static Cell<TContent>? CellByText<TContent>(this List<Cell<TContent>> cells, string cellText)
+        => cells.None() ? null : cells.SingleOrDefault(cell => cell.Text.Equals(cellText));
+
+    /// <summary>
+    ///     Returns the cells with the defined text. If no cells with the defined text exist, returns an empty collection.
+    /// </summary>
+    public static List<Cell<TContent>> CellsByText<TContent>(this List<Cell<TContent>> cells, string cellText)
+        => cells.None() ? new List<Cell<TContent>>() : cells.Where(cell => cell.Text.Equals(cellText)).ToList();
+
+    /// <summary>
     ///     Validates whether the provided row index is within the range of valid row indices.
     ///     An exception is thrown if row index validation fails.
     /// </summary>
