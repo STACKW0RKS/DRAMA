@@ -1,4 +1,4 @@
-﻿namespace DRAMA.Prototypes;
+namespace DRAMA.Prototypes;
 
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.
@@ -30,8 +30,7 @@ public abstract class ProtoElement
         ElementSelector = selector;
         ElementLocator = page.Locator(selector);
 
-        if (initialiseElementHandle)
-            Initialise().Run();
+        if (initialiseElementHandle) Task.Run(async () => await Initialise()).Run();
     }
 
     /// <summary>
@@ -76,15 +75,7 @@ public abstract class ProtoElement
     ///     Can also be used to reinitialise either a static or a dynamic element after it's been disposed of.
     /// </summary>
     public async Task Initialise()
-    {
-        if (Page is not null)
-        {
-            await Page.WaitForSelectorAsync(ElementSelector);
-            ElementHandle = await Page.QuerySelectorAsync(ElementSelector);
-        }
-
-        else ElementHandle = null;
-    }
+        => ElementHandle = Page is not null ? await Page.WaitForSelectorAsync(ElementSelector) : null;
 
     /// <summary>
     ///     Disposes of the element.
