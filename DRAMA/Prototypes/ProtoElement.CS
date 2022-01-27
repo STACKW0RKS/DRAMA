@@ -1,5 +1,7 @@
 namespace DRAMA.Prototypes;
 
+// TODO: Deprecate The Concept Of Dynamic Elements And Instead Use ElementAttribute(string selector) For Defining Elements
+
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.
 ///     <br />
@@ -41,7 +43,7 @@ public abstract class ProtoElement
         Page = parentElement.OwnerFrameAsync().Get()?.Page;
         ElementSelector = selector;
         ElementLocator = Page?.Locator(selector);
-        ElementHandle = parentElement.QuerySelectorAsync(selector).Get();
+        ElementHandle = parentElement.WaitForSelectorAsync(selector).Get();
     }
 
     /// <summary>
