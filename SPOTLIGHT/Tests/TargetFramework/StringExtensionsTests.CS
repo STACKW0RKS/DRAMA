@@ -1,4 +1,4 @@
-﻿namespace SPOTLIGHT.Tests;
+﻿namespace SPOTLIGHT.Tests.TargetFramework;
 
 [TestFixture]
 public class StringExtensionsTests
