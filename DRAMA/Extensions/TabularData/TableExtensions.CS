@@ -39,14 +39,14 @@ public static class TableExtensions
     /// <summary>
     ///     Parses a table of element handles to a table of text values.
     /// </summary>
-    public static async Task<Table<string>> ToTextTable(this Table<IElementHandle> table)
+    public static async Task<Table<string>> ToTextTable(this Table<IElementHandle>? table)
     {
         // Create A New Text Table
         Table<string> textTable = new();
 
-        // If The Source Table Contains No Columns, Stop Parsing And Return The Output Table As Is
+        // If The Source Table Is NULL Or Contains No Columns, Stop Parsing And Return The Output Table As Is
         // Each Table Parser (Header/Body/Footer) Can Create Columns, So If Columns Still Do Not Exist After Full Table Parsing Then Something Has Gone Wrong
-        if (table.Columns.None()) return textTable;
+        if (table is null || table.Columns.None()) return textTable;
 
         // For Each Column In The Source Table...
         foreach (Column<IElementHandle> column in table.Columns)
