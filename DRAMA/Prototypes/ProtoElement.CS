@@ -1,6 +1,7 @@
 namespace DRAMA.Prototypes;
 
-// TODO: Deprecate The Concept Of Dynamic Elements And Instead Use ElementAttribute(string selector) For Defining Elements
+// TODO: Deprecate The Concept Of Dynamic Elements
+// TODO: Instead Use Element SomeElement => Page.Get("selector") / Element.Get("selector") And IEnumerable<Element> SomeElements => Page.Get("selector") / Element.Get("selector")
 
 /// <summary>
 ///     Architecturally, this class is intended to be the base class of all complex elements, complex meaning that the element is implemented as a class rather than an element handle.

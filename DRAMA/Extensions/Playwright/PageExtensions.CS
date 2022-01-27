@@ -1,7 +1,5 @@
 ﻿namespace DRAMA.Extensions.Playwright;
 
-// TODO: Write Unit Tests For These Methods
-
 public static class PageExtensions
 {
     /// <summary>
