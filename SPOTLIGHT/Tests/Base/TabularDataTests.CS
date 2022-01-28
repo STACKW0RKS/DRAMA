@@ -1,8 +1,8 @@
-﻿namespace SPOTLIGHT.Tests.TabularData;
+﻿namespace SPOTLIGHT.Tests.Base;
 
-public class TabularDataTestsBase
+public abstract class TabularDataTests
 {
-    protected TabularDataTestsBase()
+    protected TabularDataTests()
         => InitialisePlaywrightDriver().Run();
 
     private IPlaywright? Driver { get; set; }
@@ -10,7 +10,7 @@ public class TabularDataTestsBase
     protected IPage? Page { get; set; }
     private Uri? Playground { get; set; }
 
-    ~TabularDataTestsBase()
+    ~TabularDataTests()
         => TerminatePlaywrightDriver().Run();
 
     private async Task InitialisePlaywrightDriver()

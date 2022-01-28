@@ -4,7 +4,7 @@
 public class TableParserTests
 {
     [TestFixture]
-    public class ParseTable : TabularDataTestsBase
+    public class ParseTable : TabularDataTests
     {
         [Test]
         public async Task Parsing_A_Complete_Table_Generates_All_The_Correct_Cells()

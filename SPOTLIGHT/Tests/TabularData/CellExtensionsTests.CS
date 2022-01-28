@@ -4,7 +4,7 @@
 public class CellExtensionsTests
 {
     [TestFixture]
-    public class Content : TabularDataTestsBase
+    public class Content : TabularDataTests
     {
         [Test]
         public async Task Row_Content_Returns_Content_Of_All_Cells_In_The_Row()
@@ -46,7 +46,7 @@ public class CellExtensionsTests
     }
 
     [TestFixture]
-    public class InnerText : TabularDataTestsBase
+    public class InnerText : TabularDataTests
     {
         [Test]
         public async Task Row_Inner_Text_Returns_Inner_Text_Of_All_Cells_In_The_Row()
@@ -88,7 +88,7 @@ public class CellExtensionsTests
     }
 
     [TestFixture]
-    public class CellQuery : TabularDataTestsBase
+    public class CellQuery : TabularDataTests
     {
         // TODO: Add Tests For All Cell(s)ByIndex/Name Methods
 

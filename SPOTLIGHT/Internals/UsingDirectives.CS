@@ -13,6 +13,10 @@
     global using NUnit.Framework;
 # endregion
 
+# region SPOTLIGHT Using Directives
+    global using SPOTLIGHT.Tests.Base;
+# endregion
+
 # region System Using Directives
     global using System.Reflection;
     global using System.Text.Json;
