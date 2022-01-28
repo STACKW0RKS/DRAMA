@@ -90,18 +90,21 @@ public class CellExtensionsTests
     [TestFixture]
     public class CellQuery : TabularDataTests
     {
-        // TODO: Add Tests For All Cell(s)ByIndex/Name Methods
-
         [Test]
-        public async Task _01()
+        public async Task Cell_By_Row_Index_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
                 Table<IElementHandle> table = await(await Page.QuerySelectorAsync("#complete"))!.ParseHtmlTable();
+                int randomColumnIndex = table.Columns.RandomElement().Index;
 
                 Assert.Multiple(() =>
                 {
-
+                    Assert.AreEqual(table.Columns.ColumnByIndex(randomColumnIndex)?.Header, table.Columns.ColumnByIndex(randomColumnIndex)?.Cells.CellByRowIndex(0), $"Header Cell Of Column {randomColumnIndex} Is On Row Index 0");
+                    Assert.AreEqual(table.Columns.ColumnByIndex(randomColumnIndex)?.Cells[0], table.Columns.ColumnByIndex(randomColumnIndex)?.Cells.CellByRowIndex(1), $"First Row Cell Of Column {randomColumnIndex} Is On Row Index 1");
+                    Assert.AreEqual(table.Columns.ColumnByIndex(randomColumnIndex)?.Cells[1], table.Columns.ColumnByIndex(randomColumnIndex)?.Cells.CellByRowIndex(2), $"Second Row Cell Of Column {randomColumnIndex} Is On Row Index 2");
+                    Assert.AreEqual(table.Columns.ColumnByIndex(randomColumnIndex)?.Cells[2], table.Columns.ColumnByIndex(randomColumnIndex)?.Cells.CellByRowIndex(3), $"Third Row Cell Of Column {randomColumnIndex} Is On Row Index 3");
+                    Assert.AreEqual(table.Columns.ColumnByIndex(randomColumnIndex)?.Footer, table.Columns.ColumnByIndex(randomColumnIndex)?.Cells.CellByRowIndex(4), $"Footer Cell Of Column {randomColumnIndex} Is On Row Index 4");
                 });
             }
 
@@ -109,7 +112,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _02()
+        public async Task Cells_By_Row_Index_Returns_The_Expected_Cells()
         {
             if (Page is not null)
             {
@@ -125,7 +128,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _03()
+        public async Task Cell_By_Column_Index_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
@@ -141,7 +144,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _04()
+        public async Task Cells_By_Column_Index_Returns_The_Expected_Cells()
         {
             if (Page is not null)
             {
@@ -157,7 +160,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _05()
+        public async Task Cell_By_Column_Name_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
@@ -173,7 +176,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _06()
+        public async Task Cells_By_Column_Name_Returns_The_Expected_Cells()
         {
             if (Page is not null)
             {
@@ -189,7 +192,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _07()
+        public async Task Cell_By_Index_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
@@ -205,7 +208,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _08()
+        public async Task Cell_By_Row_Index_And_Column_Name_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
@@ -221,7 +224,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _09()
+        public async Task Cell_By_Text_Returns_The_Expected_Cell()
         {
             if (Page is not null)
             {
@@ -237,7 +240,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task _10()
+        public async Task Cells_By_Text_Returns_The_Expected_Cells()
         {
             if (Page is not null)
             {
