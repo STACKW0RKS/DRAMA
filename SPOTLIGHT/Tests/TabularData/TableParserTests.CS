@@ -25,11 +25,14 @@ public class TableParserTests
 
                     # region Assert Vertical Integrity Of Text Content
                     Assert.AreEqual("0-1", table.Columns.ColumnByIndex(1)?.Header?.Text, "First Column Header Cell Text");
-                    Assert.AreEqual(new[] { "1-1", "2-1", "3-1", "4-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
                     Assert.AreEqual("0-2", table.Columns.ColumnByIndex(2)?.Header?.Text, "Second Column Header Cell Text");
-                    Assert.AreEqual(new[] { "1-2", "2-2", "3-2", "4-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
                     Assert.AreEqual("0-3", table.Columns.ColumnByIndex(3)?.Header?.Text, "Third Column Header Cell Text");
-                    Assert.AreEqual(new[] { "1-3", "2-3", "3-3", "4-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-1", "2-1", "3-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-2", "2-2", "3-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-3", "2-3", "3-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual("4-1", table.Columns.ColumnByIndex(1)?.Footer?.Text, "First Column Footer Cell Text");
+                    Assert.AreEqual("4-2", table.Columns.ColumnByIndex(2)?.Footer?.Text, "Second Column Footer Cell Text");
+                    Assert.AreEqual("4-3", table.Columns.ColumnByIndex(3)?.Footer?.Text, "Third Column Footer Cell Text");
                     # endregion
 
                     # region Assert Integrity Of Row Indices
@@ -165,9 +168,12 @@ public class TableParserTests
                     # endregion
 
                     # region Assert Vertical Integrity Of Text Content
-                    Assert.AreEqual(new[] { "1-1", "2-1", "3-1", "4-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
-                    Assert.AreEqual(new[] { "1-2", "2-2", "3-2", "4-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
-                    Assert.AreEqual(new[] { "1-3", "2-3", "3-3", "4-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-1", "2-1", "3-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-2", "2-2", "3-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
+                    Assert.AreEqual(new[] { "1-3", "2-3", "3-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual("4-1", table.Columns.ColumnByIndex(1)?.Footer?.Text, "First Column Footer Cell Text");
+                    Assert.AreEqual("4-2", table.Columns.ColumnByIndex(2)?.Footer?.Text, "Second Column Footer Cell Text");
+                    Assert.AreEqual("4-3", table.Columns.ColumnByIndex(3)?.Footer?.Text, "Third Column Footer Cell Text");
                     # endregion
 
                     # region Assert Cell Count
@@ -201,9 +207,9 @@ public class TableParserTests
                     Assert.AreEqual("0-1", table.Columns.ColumnByIndex(1)?.Header?.Text, "First Column Header Cell Text");
                     Assert.AreEqual("0-2", table.Columns.ColumnByIndex(2)?.Header?.Text, "Second Column Header Cell Text");
                     Assert.AreEqual("0-3", table.Columns.ColumnByIndex(3)?.Header?.Text, "Third Column Header Cell Text");
-                    Assert.AreEqual(new[] { "4-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
-                    Assert.AreEqual(new[] { "4-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
-                    Assert.AreEqual(new[] { "4-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual("4-1", table.Columns.ColumnByIndex(1)?.Footer?.Text, "First Column Footer Cell Text");
+                    Assert.AreEqual("4-2", table.Columns.ColumnByIndex(2)?.Footer?.Text, "Second Column Footer Cell Text");
+                    Assert.AreEqual("4-3", table.Columns.ColumnByIndex(3)?.Footer?.Text, "Third Column Footer Cell Text");
                     # endregion
 
                     # region Assert Cell Count
@@ -340,9 +346,9 @@ public class TableParserTests
                     # endregion
 
                     # region Assert Vertical Integrity Of Text Content
-                    Assert.AreEqual(new[] { "4-1" }, table.Columns.ColumnByIndex(1)?.Cells.InnerText().ToArray(), "First Columns Cells Text");
-                    Assert.AreEqual(new[] { "4-2" }, table.Columns.ColumnByIndex(2)?.Cells.InnerText().ToArray(), "Second Columns Cells Text");
-                    Assert.AreEqual(new[] { "4-3" }, table.Columns.ColumnByIndex(3)?.Cells.InnerText().ToArray(), "Third Columns Cells Text");
+                    Assert.AreEqual("4-1", table.Columns.ColumnByIndex(1)?.Footer?.Text, "First Column Footer Cell Text");
+                    Assert.AreEqual("4-2", table.Columns.ColumnByIndex(2)?.Footer?.Text, "Second Column Footer Cell Text");
+                    Assert.AreEqual("4-3", table.Columns.ColumnByIndex(3)?.Footer?.Text, "Third Column Footer Cell Text");
                     # endregion
 
                     # region Assert Cell Count

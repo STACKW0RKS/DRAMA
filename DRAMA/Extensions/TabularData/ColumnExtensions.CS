@@ -22,4 +22,18 @@ public static class ColumnExtensions
     /// </summary>
     public static Column<TContent>? ColumnByName<TContent>(this List<Column<TContent>> columns, string name)
         => columns.None() ? null : columns.SingleOrDefault(column => column.Name.Equals(name));
+
+    /// <summary>
+    ///     Returns the collection of all cells in the column, including any cells in the column's header and footer, if these exist.
+    /// </summary>
+    public static List<Cell<TContent>> HeaderBodyFooterCells<TContent>(this Column<TContent> column)
+    {
+        List<Cell<TContent>> cells = new();
+
+        if (column.Header is not null) cells.Add(column.Header);
+        if (column.Cells.Any()) cells.AddRange(column.Cells);
+        if (column.Footer is not null) cells.Add(column.Footer);
+
+        return cells;
+    }
 }

@@ -39,14 +39,14 @@ public static class TableExtensions
     /// <summary>
     ///     Parses a table of element handles to a table of text values.
     /// </summary>
-    public static async Task<Table<string>> ToTextTable(this Table<IElementHandle>? table)
+    public static async Task<Table<string>> ToTextTable(this Table<IElementHandle> table)
     {
         // Create A New Text Table
         Table<string> textTable = new();
 
-        // If The Source Table Is NULL Or Contains No Columns, Stop Parsing And Return The Output Table As Is
+        // If The Source Table Contains No Columns, Stop Parsing And Return The Output Table As Is
         // Each Table Parser (Header/Body/Footer) Can Create Columns, So If Columns Still Do Not Exist After Full Table Parsing Then Something Has Gone Wrong
-        if (table is null || table.Columns.None()) return textTable;
+        if (table.Columns.None()) return textTable;
 
         // For Each Column In The Source Table...
         foreach (Column<IElementHandle> column in table.Columns)
@@ -94,6 +94,9 @@ public static class TableExtensions
 
                     // Add A Parsed Cell To The Parsed Body Row Of The Output Table
                     bodyRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, bodyRow, textTable.Columns[columnIndex]));
+
+                    // Add The Parsed Cell To The Output Table Column With The Same Horizontal Index
+                    textTable.Columns[columnIndex].AddCell(bodyRow.Cells[columnIndex]);
                 }
 
                 // Attach The Parsed Body Row To The Output Table
@@ -114,9 +117,12 @@ public static class TableExtensions
 
                 // Add A Parsed Cell To The Parsed Footer Row Of The Output Table
                 footerRow.AddCell(new Cell<string>(await cell.Content.InnerHTMLAsync(), await cell.Content.InnerTextAsync(), textTable, footerRow, textTable.Columns[columnIndex]));
+
+                // Set The Parsed Cell As The Footer Of The Output Table Column With The Same Horizontal Index
+                textTable.Columns[columnIndex].SetFooter(footerRow.Cells[columnIndex]);
             }
 
-            // Set The Parsed Footer Row To Be The Output Table's Header
+            // Set The Parsed Footer Row To Be The Output Table's Footer
             textTable.SetFooter(footerRow);
         }
 

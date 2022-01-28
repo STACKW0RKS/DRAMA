@@ -199,7 +199,7 @@ public static class TableParser
             parsedFooterRow.AddCell(parsedFooterCell);
 
             // Add The Parsed Cell To The Table Column With The Same Horizontal Index
-            table.Columns[columnIndex].AddCell(parsedFooterCell);
+            table.Columns[columnIndex].SetFooter(parsedFooterCell);
         }
 
         // Set The Parsed Footer Row To Be The Output Table's Footer
