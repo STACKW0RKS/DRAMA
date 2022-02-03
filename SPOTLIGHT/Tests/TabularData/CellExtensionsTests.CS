@@ -1,4 +1,4 @@
-namespace SPOTLIGHT.Tests.TabularData;
+﻿namespace SPOTLIGHT.Tests.TabularData;
 
 [TestFixture]
 public class CellExtensionsTests
@@ -277,7 +277,21 @@ public class CellExtensionsTests
 
                 Assert.Multiple(() =>
                 {
-
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(0).Intersect(table.Cells().CellsByColumnIndex(1)).Single(), table.Cells().CellByText("0-1"), @"Cell With Text ""0-1"" Is At The Intersection Of Row Index 0 And Column Index 1");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(0).Intersect(table.Cells().CellsByColumnIndex(2)).Single(), table.Cells().CellByText("0-2"), @"Cell With Text ""0-2"" Is At The Intersection Of Row Index 0 And Column Index 2");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(0).Intersect(table.Cells().CellsByColumnIndex(3)).Single(), table.Cells().CellByText("0-3"), @"Cell With Text ""0-3"" Is At The Intersection Of Row Index 0 And Column Index 3");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(1).Intersect(table.Cells().CellsByColumnIndex(1)).Single(), table.Cells().CellByText("1-1"), @"Cell With Text ""1-1"" Is At The Intersection Of Row Index 1 And Column Index 1");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(1).Intersect(table.Cells().CellsByColumnIndex(2)).Single(), table.Cells().CellByText("1-2"), @"Cell With Text ""1-2"" Is At The Intersection Of Row Index 1 And Column Index 2");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(1).Intersect(table.Cells().CellsByColumnIndex(3)).Single(), table.Cells().CellByText("1-3"), @"Cell With Text ""1-3"" Is At The Intersection Of Row Index 1 And Column Index 3");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(2).Intersect(table.Cells().CellsByColumnIndex(1)).Single(), table.Cells().CellByText("2-1"), @"Cell With Text ""2-1"" Is At The Intersection Of Row Index 2 And Column Index 1");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(2).Intersect(table.Cells().CellsByColumnIndex(2)).Single(), table.Cells().CellByText("2-2"), @"Cell With Text ""2-2"" Is At The Intersection Of Row Index 2 And Column Index 2");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(2).Intersect(table.Cells().CellsByColumnIndex(3)).Single(), table.Cells().CellByText("2-3"), @"Cell With Text ""2-3"" Is At The Intersection Of Row Index 2 And Column Index 3");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(3).Intersect(table.Cells().CellsByColumnIndex(1)).Single(), table.Cells().CellByText("3-1"), @"Cell With Text ""3-1"" Is At The Intersection Of Row Index 3 And Column Index 1");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(3).Intersect(table.Cells().CellsByColumnIndex(2)).Single(), table.Cells().CellByText("3-2"), @"Cell With Text ""3-2"" Is At The Intersection Of Row Index 3 And Column Index 2");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(3).Intersect(table.Cells().CellsByColumnIndex(3)).Single(), table.Cells().CellByText("3-3"), @"Cell With Text ""3-3"" Is At The Intersection Of Row Index 3 And Column Index 3");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(4).Intersect(table.Cells().CellsByColumnIndex(1)).Single(), table.Cells().CellByText("4-1"), @"Cell With Text ""4-1"" Is At The Intersection Of Row Index 4 And Column Index 1");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(4).Intersect(table.Cells().CellsByColumnIndex(2)).Single(), table.Cells().CellByText("4-2"), @"Cell With Text ""4-2"" Is At The Intersection Of Row Index 4 And Column Index 2");
+                    Assert.AreEqual(table.Cells().CellsByRowIndex(4).Intersect(table.Cells().CellsByColumnIndex(3)).Single(), table.Cells().CellByText("4-3"), @"Cell With Text ""4-3"" Is At The Intersection Of Row Index 4 And Column Index 3");
                 });
             }
 
@@ -293,7 +307,15 @@ public class CellExtensionsTests
 
                 Assert.Multiple(() =>
                 {
+                    Assert.AreEqual(table.Header?.Cells, table.Cells().CellsByText("0-", true), @"Header Cells Are Identical To Cells Containing The Text ""0-""");
+                    Assert.AreEqual(table.Rows.First().Cells, table.Cells().CellsByText("1-", true), @"First Row Cells Are Identical To Cells Containing The Text ""1-""");
+                    Assert.AreEqual(table.Rows.Skip(1).Take(1).Single().Cells, table.Cells().CellsByText("2-", true), @"Second Row Cells Are Identical To Cells Containing The Text ""2-""");
+                    Assert.AreEqual(table.Rows.Last().Cells, table.Cells().CellsByText("3-", true), @"Third Row Cells Are Identical To Cells Containing The Text ""3-""");
+                    Assert.AreEqual(table.Footer?.Cells, table.Cells().CellsByText("4-", true), @"Footer Cells Are Identical To Cells Containing The Text ""4-""");
 
+                    Assert.AreEqual(table.Columns.First().HeaderBodyFooterCells(), table.Cells().CellsByText("-1", true), @"First Column Cells Are Identical To Cells Containing The Text ""-1""");
+                    Assert.AreEqual(table.Columns.Skip(1).Take(1).Single().HeaderBodyFooterCells(), table.Cells().CellsByText("-2", true), @"Second Column Cells Are Identical To Cells Containing The Text ""-2""");
+                    Assert.AreEqual(table.Columns.Last().HeaderBodyFooterCells(), table.Cells().CellsByText("-3", true), @"Third Column Cells Are Identical To Cells Containing The Text ""-3""");
                 });
             }
 
