@@ -7,7 +7,7 @@ public class CellExtensionsTests
     public class Content : TabularDataTests
     {
         [Test]
-        public async Task Row_Content_Returns_Content_Of_All_Cells_In_The_Row()
+        public async Task ROW_CONTENT_RETURNS_CONTENT_OF_ALL_CELLS_IN_THE_ROW()
         {
             if (Page is not null)
             {
@@ -27,7 +27,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Column_Content_Returns_Content_Of_All_Cells_In_The_Column()
+        public async Task COLUMN_CONTENT_RETURNS_CONTENT_OF_ALL_CELLS_IN_THE_COLUMN()
         {
             if (Page is not null)
             {
@@ -49,7 +49,7 @@ public class CellExtensionsTests
     public class InnerText : TabularDataTests
     {
         [Test]
-        public async Task Row_Inner_Text_Returns_Inner_Text_Of_All_Cells_In_The_Row()
+        public async Task ROW_INNER_TEXT_RETURNS_INNER_TEXT_OF_ALL_CELLS_IN_THE_ROW()
         {
             if (Page is not null)
             {
@@ -69,7 +69,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Column_Inner_Text_Returns_Inner_Text_Of_All_Cells_In_The_Column()
+        public async Task COLUMN_INNER_TEXT_RETURNS_INNER_TEXT_OF_ALL_CELLS_IN_THE_COLUMN()
         {
             if (Page is not null)
             {
@@ -91,7 +91,7 @@ public class CellExtensionsTests
     public class CellQuery : TabularDataTests
     {
         [Test]
-        public async Task Cell_By_Row_Index_Returns_The_Expected_Cell()
+        public async Task CELL_BY_ROW_INDEX_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -113,7 +113,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cells_By_Row_Index_Returns_The_Expected_Cells()
+        public async Task CELLS_BY_ROW_INDEX_RETURNS_THE_EXPECTED_CELLS()
         {
             if (Page is not null)
             {
@@ -133,7 +133,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cell_By_Column_Index_Returns_The_Expected_Cell()
+        public async Task CELL_BY_COLUMN_INDEX_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -153,7 +153,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cells_By_Column_Index_Returns_The_Expected_Cells()
+        public async Task CELLS_BY_COLUMN_INDEX_RETURNS_THE_EXPECTED_CELLS()
         {
             if (Page is not null)
             {
@@ -171,7 +171,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cell_By_Column_Name_Returns_The_Expected_Cell()
+        public async Task CELL_BY_COLUMN_NAME_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -191,7 +191,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cells_By_Column_Name_Returns_The_Expected_Cells()
+        public async Task CELLS_BY_COLUMN_NAME_RETURNS_THE_EXPECTED_CELLS()
         {
             if (Page is not null)
             {
@@ -209,7 +209,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cell_By_Index_Returns_The_Expected_Cell()
+        public async Task CELL_BY_INDEX_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -239,7 +239,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cell_By_Row_Index_And_Column_Name_Returns_The_Expected_Cell()
+        public async Task CELL_BY_ROW_INDEX_AND_COLUMN_NAME_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -269,7 +269,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cell_By_Text_Returns_The_Expected_Cell()
+        public async Task CELL_BY_TEXT_RETURNS_THE_EXPECTED_CELL()
         {
             if (Page is not null)
             {
@@ -299,7 +299,7 @@ public class CellExtensionsTests
         }
 
         [Test]
-        public async Task Cells_By_Text_Returns_The_Expected_Cells()
+        public async Task CELLS_BY_TEXT_RETURNS_THE_EXPECTED_CELLS()
         {
             if (Page is not null)
             {

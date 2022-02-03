@@ -7,11 +7,11 @@ public class IntegerExtensionsTests
     public class IncrementBy
     {
         [Test]
-        public void Increment_By_Correct_Amount_Outputs_Correct_Value()
+        public void INCREMENT_BY_CORRECT_AMOUNT_OUTPUTS_CORRECT_VALUE()
             => Assert.AreEqual(75, 50.IncrementBy(25), "50 + 25");
 
         [Test]
-        public void Increment_By_Incorrect_Amount_Outputs_Incorrect_Value()
+        public void INCREMENT_BY_INCORRECT_AMOUNT_OUTPUTS_INCORRECT_VALUE()
             => Assert.AreNotEqual(25, 50.IncrementBy(25), "50 + 25");
     }
 
@@ -19,11 +19,11 @@ public class IntegerExtensionsTests
     public class DecrementBy
     {
         [Test]
-        public void Decrement_By_Correct_Amount_Outputs_Correct_Value()
+        public void DECREMENT_BY_CORRECT_AMOUNT_OUTPUTS_CORRECT_VALUE()
             => Assert.AreEqual(25, 50.DecrementBy(25), "50 - 25");
 
         [Test]
-        public void Decrement_By_Incorrect_Amount_Outputs_Incorrect_Value()
+        public void DECREMENT_BY_INCORRECT_AMOUNT_OUTPUTS_INCORRECT_VALUE()
             => Assert.AreNotEqual(75, 50.DecrementBy(25), "50 - 25");
     }
 }

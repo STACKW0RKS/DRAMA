@@ -7,7 +7,7 @@ public class TableParserTests
     public class ParseTable : TabularDataTests
     {
         [Test]
-        public async Task Parsing_A_Complete_Table_Generates_All_The_Correct_Cells()
+        public async Task PARSING_A_COMPLETE_TABLE_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -90,7 +90,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_A_Table_With_No_Rows_Generates_No_Cells()
+        public async Task PARSING_A_TABLE_WITH_NO_ROWS_GENERATES_NO_CELLS()
         {
             if (Page is not null)
             {
@@ -119,7 +119,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_A_Table_With_No_Sections_Generates_No_Cells()
+        public async Task PARSING_A_TABLE_WITH_NO_SECTIONS_GENERATES_NO_CELLS()
         {
             if (Page is not null)
             {
@@ -148,7 +148,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_With_No_Header_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_WITH_NO_HEADER_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -186,7 +186,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_With_No_Body_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_WITH_NO_BODY_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -222,7 +222,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_With_No_Footer_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_WITH_NO_FOOTER_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -260,7 +260,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_Just_With_Header_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_JUST_WITH_HEADER_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -293,7 +293,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_Just_With_Body_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_JUST_WITH_BODY_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {
@@ -328,7 +328,7 @@ public class TableParserTests
         }
 
         [Test]
-        public async Task Parsing_Table_Just_With_Footer_Generates_All_The_Correct_Cells()
+        public async Task PARSING_TABLE_JUST_WITH_FOOTER_GENERATES_ALL_THE_CORRECT_CELLS()
         {
             if (Page is not null)
             {

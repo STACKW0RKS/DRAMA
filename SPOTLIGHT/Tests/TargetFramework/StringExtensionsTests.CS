@@ -7,7 +7,7 @@ public class StringExtensionsTests
     public class ToTitleCase
     {
         [Test]
-        public void Text_Is_Converted_To_Title_Case()
+        public void TEXT_IS_CONVERTED_TO_TITLE_CASE()
         {
             const string text = "Why did the programmer listen to the UNIX shell? So he could hear the C.";
             const string comparisonText = "Why Did The Programmer Listen To The UNIX Shell? So He Could Hear The C.";
@@ -20,7 +20,7 @@ public class StringExtensionsTests
     public class Flatten
     {
         [Test]
-        public void Flattened_Text_Has_Leading_And_Trailing_White_Spaces_Removed()
+        public void FLATTENED_TEXT_HAS_LEADING_AND_TRAILING_WHITE_SPACES_REMOVED()
         {
             string text = $"{string.Empty} Why Do Java Programmers Have to Wear Glasses? Because They Can’t C#. {string.Empty}";
             const string comparisonText = "WHY DO JAVA PROGRAMMERS HAVE TO WEAR GLASSES? BECAUSE THEY CAN’T C#.";
@@ -29,7 +29,7 @@ public class StringExtensionsTests
         }
 
         [Test]
-        public void Flattened_Text_Is_Uppercase()
+        public void FLATTENED_TEXT_IS_UPPERCASE()
         {
             const string text = "Why do programmers always mix up Christmas and Halloween? Because Dec 25 is Oct 31.";
             const string comparisonText = "WHY DO PROGRAMMERS ALWAYS MIX UP CHRISTMAS AND HALLOWEEN? BECAUSE DEC 25 IS OCT 31.";
@@ -42,19 +42,19 @@ public class StringExtensionsTests
     public class ContainsNot
     {
         [Test]
-        public void String_Containing_Text_Returns_False()
+        public void STRING_CONTAINING_TEXT_RETURNS_FALSE()
             => Assert.IsFalse("SLAUGHTER".ContainsNot("LAUGHTER"), "String Does Not Contain Text");
 
         [Test]
-        public void String_Not_Containing_Text_Returns_True()
+        public void STRING_NOT_CONTAINING_TEXT_RETURNS_TRUE()
             => Assert.IsTrue("COFFEE".ContainsNot("GLUTEN"), "String Does Not Contain Text");
 
         [Test]
-        public void String_Containing_Character_Returns_False()
+        public void STRING_CONTAINING_CHARACTER_RETURNS_FALSE()
             => Assert.IsFalse("DRAMA".ContainsNot('A'), "String Does Not Contain Character");
 
         [Test]
-        public void String_Not_Containing_Character_Returns_True()
+        public void STRING_NOT_CONTAINING_CHARACTER_RETURNS_TRUE()
             => Assert.IsTrue("DRAMA".ContainsNot('V'), "String Does Not Contain Character");
     }
 }

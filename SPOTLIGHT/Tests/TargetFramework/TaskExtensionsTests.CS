@@ -7,7 +7,7 @@ public class TaskExtensionsTests
     public class TimeoutAfter
     {
         [Test]
-        public async Task Task_With_No_Return_Type_Completes_Before_It_Times_Out()
+        public async Task TASK_WITH_NO_RETURN_TYPE_COMPLETES_BEFORE_IT_TIMES_OUT()
         {
             Task task = Task.Delay(250);
             await task.TimeoutAfter(new TimeSpan(00, 00, 05));
@@ -15,7 +15,7 @@ public class TaskExtensionsTests
         }
 
         [Test]
-        public async Task Task_With_No_Return_Type_Throws_Exception_After_It_Times_Out()
+        public async Task TASK_WITH_NO_RETURN_TYPE_THROWS_EXCEPTION_AFTER_IT_TIMES_OUT()
         {
             CancellationTokenSource timeoutCancellationTokenSource = new();
             Task task = Task.Delay(1250, timeoutCancellationTokenSource.Token);
@@ -27,7 +27,7 @@ public class TaskExtensionsTests
         }
 
         [Test]
-        public async Task Task_With_Return_Type_Completes_Before_It_Times_Out()
+        public async Task TASK_WITH_RETURN_TYPE_COMPLETES_BEFORE_IT_TIMES_OUT()
         {
             Task<bool> task = Task.Run(async () => { await Task.Delay(250); return true; });
             bool result = await task.TimeoutAfter(new TimeSpan(00, 00, 05));
@@ -35,7 +35,7 @@ public class TaskExtensionsTests
         }
 
         [Test]
-        public async Task Task_With_Return_Type_Throws_Exception_After_It_Times_Out()
+        public async Task TASK_WITH_RETURN_TYPE_THROWS_EXCEPTION_AFTER_IT_TIMES_OUT()
         {
             bool result;
             CancellationTokenSource timeoutCancellationTokenSource = new();
