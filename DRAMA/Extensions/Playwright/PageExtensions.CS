@@ -8,7 +8,7 @@ public static class PageExtensions
     /// </summary>
     public static async Task ClickElementAndWaitForResponse(this IPage page, string clickableElementSelector, string endpointSubstring, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(page.ClickAsync(clickableElementSelector), page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 
     /// <summary>
     ///     Clicks the element with the defined selector and waits for the calls to the endpoints that contain all the respective defined substrings to complete.
@@ -16,7 +16,7 @@ public static class PageExtensions
     /// </summary>
     public static async Task ClickElementAndWaitForResponses(this IPage page, string clickableElementSelector, string[] endpointSubstrings, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(endpointSubstrings.Select(endpointSubstring => page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .Prepend(page.ClickAsync(clickableElementSelector))).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .Prepend(page.ClickAsync(clickableElementSelector))).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 
     /// <summary>
     ///     Clicks the defined element and waits for the call to the endpoint that contains the defined substring to complete.
@@ -24,7 +24,7 @@ public static class PageExtensions
     /// </summary>
     public static async Task ClickElementAndWaitForResponse(this IPage page, IElementHandle clickableElement, string endpointSubstring, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(clickableElement.ClickAsync(), page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 
     /// <summary>
     ///     Clicks the defined element and waits for the calls to the endpoints that contain all the respective defined substrings to complete.
@@ -32,7 +32,7 @@ public static class PageExtensions
     /// </summary>
     public static async Task ClickElementAndWaitForResponses(this IPage page, IElementHandle clickableElement, string[] endpointSubstrings, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(endpointSubstrings.Select(endpointSubstring => page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .Prepend(clickableElement.ClickAsync())).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .Prepend(clickableElement.ClickAsync())).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 
     /// <summary>
     ///     <para>
@@ -47,7 +47,7 @@ public static class PageExtensions
     /// </summary>
     public static async Task RunTaskAndWaitForResponse(this IPage page, Task apiCallingTask, string endpointSubstring, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(apiCallingTask, page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 
     /// <summary>
     ///     <para>
@@ -62,5 +62,5 @@ public static class PageExtensions
     /// </summary>
     public static async Task RunTaskAndWaitForResponses(this IPage page, Task apiCallingTask, string[] endpointSubstrings, int additionalWaitInMilliseconds = 0)
         => await Task.WhenAll(endpointSubstrings.Select(endpointSubstring => page.WaitForResponseAsync(response => response.Url.Contains(endpointSubstring)))
-            .Prepend(apiCallingTask)).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds));
+            .Prepend(apiCallingTask)).ContinueWith(task => Task.Delay(additionalWaitInMilliseconds)).Unwrap();
 }
