@@ -1,0 +1,41 @@
+{
+	"language": {
+		"feature": "en-GB",
+		"tool": "en-GB"
+	},
+	
+	"bindingCulture": {
+		"name": "en-GB"
+	},
+	
+	"generator": {
+		"allowDebugGeneratedFiles": true,
+		"allowRowTests": true,
+		"addNonParallelizableMarkerForTags": [
+			"Non-Parallelisable",
+			"Non-Parallelizable"
+		]
+	},
+	
+	"runtime": {
+		"missingOrPendingStepsOutcome": "Pending",
+		"obsoleteBehavior": "Warn",
+		"stopAtFirstError": true
+	},
+	
+	"trace": {
+		"traceSuccessfulSteps": true,
+		"traceTimings": true,
+		"minTracedDuration": "0:0:0.001",
+		"stepDefinitionSkeletonStyle": "RegexAttribute"
+	},
+	
+	"stepAssemblies": [
+		{
+			"assembly": "DRAMA"
+		},
+		{
+			"assembly": "REHEARSAL"
+		}
+	]
+}

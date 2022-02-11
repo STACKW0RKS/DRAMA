@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.SDK">
+
+	<PropertyGroup>
+		<TargetFramework>NET6.0</TargetFramework>
+		<IsPackable>FALSE</IsPackable>
+		<ImplicitUsings>ENABLE</ImplicitUsings>
+		<Nullable>ENABLE</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
+		<ProjectReference Include="..\REHEARSAL\REHEARSAL.CSPROJ" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="SPECFLOW.JSON">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
