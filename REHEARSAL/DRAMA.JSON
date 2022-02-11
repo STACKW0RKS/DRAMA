@@ -1,0 +1,23 @@
+{
+	"DRAMA Default": {
+		"ResultsPath": "default",
+		"Host": "127.0.0.1",
+		"Protocol": "http",
+		"Port": 666,
+		"LoginEndpoint": "auth/login",
+		"Browser": "chromium",
+		"BrowserOptions": {
+			"Headless": false,
+			"Devtools": false,
+			"SlowMo": 0,
+			"Proxy": {
+				"Server": "127.0.0.1:2468",
+				"Bypass": "127.0.0.1:3579"
+			}
+		}
+	},
+	
+	"SQLite Tests": {
+		"ConnectionString": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+	}
+}
