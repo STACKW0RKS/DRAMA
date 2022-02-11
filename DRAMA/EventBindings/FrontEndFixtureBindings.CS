@@ -9,8 +9,7 @@ public class FrontEndFixtureBindings
 {
     private ExtentTest CurrentScenario;
 
-    [BeforeFeature("End-To-End")]
-    [BeforeFeature("Front-End")]
+    [BeforeFeature("Front-End", "End-To-End", Order = 0)]
     public static async Task BeforeUIFeature(FeatureContext featureContext)
     {
         PlaywrightDriver playwrightDriver = new();
@@ -19,8 +18,7 @@ public class FrontEndFixtureBindings
         featureContext.SetPageInstance(Page);
     }
 
-    [AfterStep("End-To-End")]
-    [AfterStep("Front-End")]
+    [AfterStep("Front-End", "End-To-End", Order = 0)]
     public async Task AfterUIStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -46,8 +44,7 @@ public class FrontEndFixtureBindings
         }
     }
 
-    [AfterFeature("End-To-End")]
-    [AfterFeature("Front-End")]
+    [AfterFeature("Front-End", "End-To-End", Order = 0)]
     public static async Task AfterUIFeature(FeatureContext featureContext)
         => await featureContext.GetBrowserInstance().Contexts.Single().Tracing.StopAsync(new TracingStopOptions
         { Path = Path.Combine(Z34.TestResultsDirectory, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });

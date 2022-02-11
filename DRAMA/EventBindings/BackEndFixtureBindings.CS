@@ -9,7 +9,7 @@ public class BackEndFixtureBindings
 {
     private ExtentTest CurrentScenario;
 
-    [BeforeFeature("Back-End")]
+    [BeforeFeature("Back-End", Order = 0)]
     public static void BeforeBackEndFeature()
     {
         if (Z34.TestRunProfile.Contains("SQLite"))
@@ -19,7 +19,7 @@ public class BackEndFixtureBindings
             Z34.DatabaseConnection = new OracleConnection(Z34.ConnectionStringBuilder); // ¯\_(ヅ)_/¯
     }
 
-    [AfterStep("Back-End")]
+    [AfterStep("Back-End", Order = 0)]
     public void AfterBackEndStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -40,7 +40,7 @@ public class BackEndFixtureBindings
             };
     }
 
-    [AfterFeature("Back-End")]
+    [AfterFeature("Back-End", Order = 0)]
     public static async Task AfterBackEndFeature()
     {
         if (Z34.DatabaseConnection is not null) await Z34.DatabaseConnection.CloseAsync();

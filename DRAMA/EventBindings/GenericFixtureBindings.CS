@@ -15,7 +15,7 @@ public class GenericFixtureBindings
 
     public SpecFlowEventBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
 
-    [BeforeTestRun]
+    [BeforeTestRun(Order = 0)]
     public static void BeforeTestRun()
     {
         ConfigurationReader.SetFrameworkSettings(Z34.TestRunProfile);
@@ -27,15 +27,15 @@ public class GenericFixtureBindings
         Extent.AttachReporter(reporter);
     }
 
-    [BeforeFeature]
+    [BeforeFeature(Order = 0)]
     public static void BeforeFeature(FeatureContext featureContext)
         => Features.Add(Extent.CreateTest<Feature>(featureContext.FeatureInfo.Title));
 
-    [BeforeScenario]
+    [BeforeScenario(Order = 0)]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
         => CurrentScenario = Features.Single(feature => feature.Model.Name == featureContext.FeatureInfo.Title).CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
 
-    [AfterStep]
+    [AfterStep(Order = 0)]
     public void AfterStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -68,7 +68,7 @@ public class GenericFixtureBindings
             };
     }
 
-    [AfterTestRun]
+    [AfterTestRun(Order = 0)]
     public static void AfterTestRun()
         => Extent.Flush();
 }

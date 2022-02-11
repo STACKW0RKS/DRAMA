@@ -1,23 +1,28 @@
 {
 	"DRAMA Default": {
-		"ResultsPath": "default",
-		"Host": "127.0.0.1",
-		"Protocol": "http",
-		"Port": 666,
-		"LoginEndpoint": "auth/login",
-		"Browser": "chromium",
-		"BrowserOptions": {
-			"Headless": false,
-			"Devtools": false,
-			"SlowMo": 0,
-			"Proxy": {
-				"Server": "127.0.0.1:2468",
-				"Bypass": "127.0.0.1:3579"
+		"Test Run": {
+			"Results Path": "default"
+		},
+		
+		"System Under Test": {
+			"Host": "127.0.0.1",
+			"Protocol": "https",
+			"Port": 666,
+			"Origin": "auth/login"
+		},
+		
+		"Browser Driver": {
+			"Browser": "chromium",
+			"Browser Options": {
+				"Headless": false,
+				"Devtools": false
 			}
 		}
 	},
 	
 	"SQLite Tests": {
-		"ConnectionString": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+		"System Under Test": {
+			"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+		}
 	}
 }
