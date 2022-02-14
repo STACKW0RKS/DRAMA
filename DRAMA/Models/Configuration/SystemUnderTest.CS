@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace DRAMA.Models.Configuration;
 
-[Serializable]
+[JsonObject]
 internal class SystemUnderTest
 {
-    [JsonPropertyName("Connection String")]
+    [JsonProperty("Connection String")]
     internal string? ConnectionString { get; set; }
 
-    [JsonPropertyName("Host")]
+    [JsonProperty("Host")]
     internal string? Host { get; set; }
 
-    [JsonPropertyName("Protocol")]
+    [JsonProperty("Protocol")]
     internal string? Protocol { get; set; }
 
-    [JsonPropertyName("Port")]
+    [JsonProperty("Port")]
     internal int? Port { get; set; }
 
-    [JsonPropertyName("Origin")]
+    [JsonProperty("Origin")]
     internal string? Origin { get; set; }
 }

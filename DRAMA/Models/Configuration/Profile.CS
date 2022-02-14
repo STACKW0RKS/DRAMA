@@ -1,16 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace DRAMA.Models.Configuration;
 
-[Serializable]
+[JsonObject]
 internal class Profile
 {
-    [JsonPropertyName("Test Run")]
+    [JsonProperty("Test Run")]
     internal TestRun? TestRun { get; set; }
 
-    [JsonPropertyName("System Under Test")]
+    [JsonProperty("System Under Test")]
     internal SystemUnderTest? SystemUnderTest { get; set; }
 
-    [JsonPropertyName("Browser Driver")]
+    [JsonProperty("Browser Driver")]
     internal BrowserDriver? BrowserDriver { get; set; }
 }

@@ -1,11 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace DRAMA.Models.Configuration;
 
-[Serializable]
+[JsonObject]
 internal class TestRun
 {
-    [JsonPropertyName("Results Path")]
+    [JsonProperty("Results Path")]
     internal string? ResultsPath { get; set; }
 
     // TODO: See What "stopAtFirstError" Does & Implement Option To Skip All Step Runs After A Failed Step Run

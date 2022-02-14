@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using DRAMA.Models.Configuration;
+using Newtonsoft.Json;
 
 namespace DRAMA.Helpers.Configuration;
 
@@ -7,9 +8,11 @@ internal static class ConfigurationParser
 {
     public static Profile ParseConfiguration(string configurationFile = "DRAMA.JSON")
     {
-        Dictionary<string, Profile>? testRunProfiles = JsonSerializer.Deserialize<Dictionary<string, Profile>>(configurationFile);
+        string configurationFileContent = File.ReadAllText(configurationFile);
 
-        if (testRunProfiles is null) throw new ConfigurationErrorsException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
+        Dictionary<string, Profile> testRunProfiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(configurationFileContent);
+
+        if (testRunProfiles.None()) throw new ConfigurationErrorsException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
 
         return testRunProfiles.Where(profile => profile.Key.Equals("DRAMA Default")).Select(profile => profile.Value).Single();
     }

@@ -17,7 +17,6 @@ public class GenericFixtureBindings
     public static void BeforeTestRun()
     {
         Profile testRunProfile = ConfigurationParser.ParseConfiguration();
-        Profile debug = testRunProfile;
     }
 
     /*

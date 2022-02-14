@@ -1,13 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace DRAMA.Models.Configuration;
 
-[Serializable]
+[JsonObject]
 internal class BrowserDriver
 {
-    [JsonPropertyName("Browser")]
+    [JsonProperty("Browser")]
     internal string? Browser { get; set; }
 
-    [JsonPropertyName("Browser Options")]
+    [JsonProperty("Browser Options")]
     internal BrowserTypeLaunchOptions? BrowserOptions { get; set; }
 }
