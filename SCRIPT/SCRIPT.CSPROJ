@@ -8,6 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.0.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+		<PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.52" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
 		<ProjectReference Include="..\REHEARSAL\REHEARSAL.CSPROJ" />
 	</ItemGroup>
