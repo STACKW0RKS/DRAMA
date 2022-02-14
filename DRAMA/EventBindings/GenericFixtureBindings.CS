@@ -2,6 +2,8 @@
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using DRAMA.Helpers.Configuration;
+using DRAMA.Models.Configuration;
 using TechTalk.SpecFlow.Bindings;
 
 namespace DRAMA.EventBindings;
@@ -9,12 +11,16 @@ namespace DRAMA.EventBindings;
 [Binding]
 public class GenericFixtureBindings
 {
-    private static ExtentReports Extent = new();
-    private static List<ExtentTest> Features = new();
-    private ExtentTest CurrentScenario;
+    public GenericFixtureBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
 
-    public SpecFlowEventBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
+    [BeforeTestRun(Order = 0)]
+    public static void BeforeTestRun()
+    {
+        Profile testRunProfile = ConfigurationParser.ParseConfiguration();
+        Profile debug = testRunProfile;
+    }
 
+    /*
     [BeforeTestRun(Order = 0)]
     public static void BeforeTestRun()
     {
@@ -71,4 +77,5 @@ public class GenericFixtureBindings
     [AfterTestRun(Order = 0)]
     public static void AfterTestRun()
         => Extent.Flush();
+    */
 }

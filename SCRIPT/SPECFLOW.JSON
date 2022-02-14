@@ -12,8 +12,7 @@
 		"allowDebugGeneratedFiles": true,
 		"allowRowTests": true,
 		"addNonParallelizableMarkerForTags": [
-			"Non-Parallelisable",
-			"Non-Parallelizable"
+			"Solo"
 		]
 	},
 	
@@ -26,7 +25,7 @@
 	"trace": {
 		"traceSuccessfulSteps": true,
 		"traceTimings": true,
-		"minTracedDuration": "0:0:0.001",
+		"minTracedDuration": "0:0:0.01",
 		"stepDefinitionSkeletonStyle": "RegexAttribute"
 	},
 	
@@ -36,6 +35,12 @@
 		},
 		{
 			"assembly": "REHEARSAL"
+		}
+	],
+	
+	"knowledgeBase": [
+		{
+			"specflowConfiguration": "https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html"
 		}
 	]
 }

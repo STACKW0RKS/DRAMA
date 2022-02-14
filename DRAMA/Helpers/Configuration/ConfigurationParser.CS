@@ -1,14 +1,20 @@
-﻿using System.Text;
+﻿using System.Configuration;
+using DRAMA.Models.Configuration;
 
 namespace DRAMA.Helpers.Configuration;
 
-internal class ConfigurationParser
+internal static class ConfigurationParser
 {
-    public ConfigurationParser(string configuration = "DRAMA.JSON")
+    public static Profile ParseConfiguration(string configurationFile = "DRAMA.JSON")
     {
-        
+        Dictionary<string, Profile>? testRunProfiles = JsonSerializer.Deserialize<Dictionary<string, Profile>>(configurationFile);
+
+        if (testRunProfiles is null) throw new ConfigurationErrorsException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
+
+        return testRunProfiles.Where(profile => profile.Key.Equals("DRAMA Default")).Select(profile => profile.Value).Single();
     }
 
+    /*
     public static void SetFrameworkSettings(string config)
     {
         string configurationFilePath = new StringBuilder(Directory.GetCurrentDirectory()).ToString();
@@ -56,4 +62,5 @@ internal class ConfigurationParser
         if (Z34.TestRunProfile.Contains("Oracle"))
             Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
     }
+    */
 }
