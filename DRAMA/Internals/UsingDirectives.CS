@@ -8,6 +8,10 @@
     global using Microsoft.Playwright;
 # endregion
 
+# region Newtonsoft Using Directives
+    global using Newtonsoft.Json;
+# endregion
+
 # region TechTalk Using Directives
     global using TechTalk.SpecFlow;
 # endregion

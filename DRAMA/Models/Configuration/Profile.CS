@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace DRAMA.Models.Configuration;
+﻿namespace DRAMA.Models.Configuration;
 
 [JsonObject]
 internal class Profile

@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using DRAMA.Models.Configuration;
-using Newtonsoft.Json;
 
 namespace DRAMA.Helpers.Configuration;
 
