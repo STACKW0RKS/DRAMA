@@ -1,14 +1,14 @@
 ﻿namespace DRAMA.Models.Configuration;
 
 [JsonObject]
-internal class Profile
+public class Profile
 {
     [JsonProperty("Test Run")]
-    internal TestRun? TestRun { get; set; }
+    public TestRun? TestRun { get; set; }
 
     [JsonProperty("System Under Test")]
-    internal SystemUnderTest? SystemUnderTest { get; set; }
+    public SystemUnderTest? SystemUnderTest { get; set; }
 
     [JsonProperty("Browser Driver")]
-    internal BrowserDriver? BrowserDriver { get; set; }
+    public BrowserDriver? BrowserDriver { get; set; }
 }

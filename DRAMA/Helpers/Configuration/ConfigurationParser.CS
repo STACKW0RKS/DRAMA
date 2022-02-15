@@ -1,63 +1,75 @@
 ﻿using System.Configuration;
 using DRAMA.Models.Configuration;
+using DRAMA.Models.TargetFramework;
 
 namespace DRAMA.Helpers.Configuration;
 
 internal static class ConfigurationParser
 {
-    public static Profile ParseConfiguration(string configurationFile = "DRAMA.JSON")
+    public static async Task<Profile> GetTestExecutionProfile(string profileName = "DRAMA Default")
     {
-        string configurationFileContent = File.ReadAllText(configurationFile);
+        string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").NotNullOrWhiteSpace() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
+
+        Profile? testRunProfile = (await ParseConfiguration()).Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
+
+        if (testRunProfile is null) throw new NoMatchException($@"Profile ""{profileName}"" Not Found In Configuration File");
+
+        return EnrichProfile(testRunProfile);
+    }
+
+    private static async Task<Dictionary<string, Profile>> ParseConfiguration(string configurationFile = "DRAMA.JSON")
+    {
+        string configurationFileContent = await File.ReadAllTextAsync(configurationFile);
 
         Dictionary<string, Profile> testRunProfiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(configurationFileContent);
 
         if (testRunProfiles.None()) throw new ConfigurationErrorsException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
 
-        return testRunProfiles.Where(profile => profile.Key.Equals("DRAMA Default")).Select(profile => profile.Value).Single();
+        return testRunProfiles;
     }
+
+    private static Profile EnrichProfile(Profile profile)
+    {
+        profile.TestRun ??= new TestRun();
+
+        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile);
+
+        if (profile.SystemUnderTest is not null)
+            profile.TestRun.Origin = SetTestRunOrigin(profile);
+
+        return profile;
+    }
+
+    private static string SetTestRunResultsPath(Profile profile)
+        => Environment.GetEnvironmentVariable("DRAMA Results Path").NotNullOrWhiteSpace()
+            ? Path.Combine(Environment.GetEnvironmentVariable("DRAMA Results Path")!, "DRAMA Results", profile.TestRun!.Name)
+            : profile.TestRun!.ResultsPath is null || profile.TestRun!.ResultsPath.Flatten().Equals("DEFAULT")
+                ? Path.Combine("DRAMA Results", profile.TestRun!.Name)
+                : Path.Combine(profile.TestRun!.ResultsPath, "DRAMA Results", profile.TestRun!.Name);
+
+    private static Uri SetTestRunOrigin(Profile profile)
+    {
+        SystemUnderTest SUT = profile.SystemUnderTest!;
+
+        if (SUT.Port is not null) return new UriBuilder(SUT.Protocol, SUT.Host, (int)SUT.Port, SUT.Origin).Uri;
+        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return new UriBuilder(SUT.Host).Uri;
+        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is not null) return new UriBuilder($@"{SUT.Host}\{SUT.Origin}").Uri;
+
+        string errorMessage = new StringBuilder("Unsupported System Under Test Configuration: ")
+            .Append($@"Host = ""{SUT.Host ?? "NULL"}""; ")
+            .Append($@"Protocol = ""{SUT.Protocol ?? "NULL"}""; ")
+            .Append($@"Port = ""{SUT.Port.ToString() ?? "NULL"}""; ")
+            .Append($@"Origin = ""{SUT.Origin ?? "NULL"}"";")
+            .ToString();
+
+        throw new ConfigurationErrorsException(errorMessage);
+    }
+
+
 
     /*
     public static void SetFrameworkSettings(string config)
     {
-        string configurationFilePath = new StringBuilder(Directory.GetCurrentDirectory()).ToString();
-
-        ConfigurationBindings configBindings = new ConfigurationBuilder()
-            .SetBasePath(configurationFilePath)
-            .AddJsonFile("Z34.JSON")
-            .Build()
-            .GetSection(config)
-            .Get<ConfigurationBindings>();
-
-        Z34.Host.Base = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Host"))
-            ? configBindings.Host
-            : Environment.GetEnvironmentVariable("Host");
-
-        Z34.Protocol = configBindings.Protocol;
-
-        Z34.Ports.QH = configBindings.Ports["QH"];
-        Z34.Ports.BI = configBindings.Ports["BI"];
-
-        if (Z34.Ports.QH.Equals(string.Empty)) Z34.Host.QH = new UriBuilder(Z34.Protocol, Z34.Host.Base).ToString();
-        else Z34.Host.QH = new UriBuilder(Z34.Protocol, Z34.Host.Base, int.Parse(Z34.Ports.QH)).ToString();
-
-        if (Z34.Ports.BI.Equals(string.Empty)) Z34.Host.BI = new UriBuilder(Z34.Protocol, Z34.Host.Base).ToString();
-        else Z34.Host.BI = new UriBuilder(Z34.Protocol, Z34.Host.Base, int.Parse(Z34.Ports.BI)).ToString();
-
-        Z34.LoginURL = new StringBuilder(Z34.Host.QH).Append(configBindings.LoginURL).ToString();
-
-        Z34.TestRunName = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TestRunName"))
-            ? $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}"
-            : Environment.GetEnvironmentVariable("TestRunName");
-
-        Z34.TestResultsDirectory = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TestResultsDirectory"))
-            ? configBindings.TestResultsDirectory.Equals("default")
-                ? Path.Combine(Environment.CurrentDirectory, "Z34 Test Results", Z34.TestRunName)
-                : Path.Combine(configBindings.TestResultsDirectory, Z34.TestRunName)
-            : Path.Combine(Environment.GetEnvironmentVariable("TestResultsDirectory"), Z34.TestRunName);
-
-        Z34.TestRunBrowser = configBindings.TestRunBrowser;
-        Z34.TestRunLaunchOptions = configBindings.TestRunLaunchOptions;
-
         if (Z34.TestRunProfile.Contains("SQLite"))
             Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
 

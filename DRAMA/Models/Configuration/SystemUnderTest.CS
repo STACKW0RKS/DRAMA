@@ -1,20 +1,20 @@
-﻿namespace DRAMA.Models.Configuration;
+namespace DRAMA.Models.Configuration;
 
 [JsonObject]
-internal class SystemUnderTest
+public class SystemUnderTest
 {
     [JsonProperty("Connection String")]
-    internal string? ConnectionString { get; set; }
+    public string? ConnectionString { get; set; }
 
     [JsonProperty("Host")]
-    internal string? Host { get; set; }
+    public string? Host { get; set; }
 
     [JsonProperty("Protocol")]
-    internal string? Protocol { get; set; }
+    public string? Protocol { get; set; }
 
     [JsonProperty("Port")]
-    internal int? Port { get; set; }
+    public int? Port { get; set; }
 
     [JsonProperty("Origin")]
-    internal string? Origin { get; set; }
+    public string? Origin { get; set; }
 }

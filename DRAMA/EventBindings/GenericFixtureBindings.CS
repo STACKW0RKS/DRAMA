@@ -14,9 +14,9 @@ public class GenericFixtureBindings
     public GenericFixtureBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
 
     [BeforeTestRun(Order = 0)]
-    public static void BeforeTestRun()
+    public static async Task BeforeTestRun()
     {
-        Profile testRunProfile = ConfigurationParser.ParseConfiguration();
+        Profile testRunProfile = await ConfigurationParser.GetTestExecutionProfile();
     }
 
     /*

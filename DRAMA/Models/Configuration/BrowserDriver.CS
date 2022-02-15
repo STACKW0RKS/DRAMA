@@ -1,11 +1,11 @@
 ﻿namespace DRAMA.Models.Configuration;
 
 [JsonObject]
-internal class BrowserDriver
+public class BrowserDriver
 {
     [JsonProperty("Browser")]
-    internal string? Browser { get; set; }
+    public string? Browser { get; set; }
 
     [JsonProperty("Browser Options")]
-    internal BrowserTypeLaunchOptions? BrowserOptions { get; set; }
+    public BrowserTypeLaunchOptions? BrowserOptions { get; set; }
 }

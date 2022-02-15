@@ -12,7 +12,7 @@
 		},
 		
 		"Browser Driver": {
-			"Browser": "chromium",
+			"Browser": "firefox",
 			"Browser Options": {
 				"Headless": false,
 				"Devtools": false
