@@ -58,5 +58,5 @@ public class StringExtensionsTests
             => Assert.IsTrue("DRAMA".ContainsNot('V'), "String Does Not Contain Character");
     }
 
-    // TODO: Add Unit Tests For NotNullOrEmpty And NotNullOrWhiteSpace
+    // TODO: Add Unit Tests For HasTextContent
 }
