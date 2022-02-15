@@ -68,15 +68,4 @@ internal static class ConfigurationParser
     }
 
     // TODO: Add Comments To All Of This
-
-    /*
-    public static void SetFrameworkSettings(string config)
-    {
-        if (Z34.TestRunProfile.Contains("SQLite"))
-            Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
-
-        if (Z34.TestRunProfile.Contains("Oracle"))
-            Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
-    }
-    */
 }

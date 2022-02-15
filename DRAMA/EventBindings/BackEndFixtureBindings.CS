@@ -13,6 +13,12 @@
 //    public static void BeforeBackEndFeature()
 //    {
 //        if (Z34.TestRunProfile.Contains("SQLite"))
+//            Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
+//
+//        if (Z34.TestRunProfile.Contains("Oracle"))
+//            Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
+
+//        if (Z34.TestRunProfile.Contains("SQLite"))
 //            Z34.DatabaseConnection = new SqliteConnection(Z34.ConnectionStringBuilder.ConnectionString);
 
 //        if (Z34.TestRunProfile.Contains("Oracle"))
