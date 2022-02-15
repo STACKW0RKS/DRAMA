@@ -17,16 +17,10 @@ public static class StringExtensions
         => text.Trim().ToUpper();
 
     /// <summary>
-    ///     Returns TRUE if the source string is neither null nor empty. Otherwise, returns FALSE.
+    ///     Returns TRUE if the source string is neither null, empty, nor composed entirely of white space characters. Otherwise, returns FALSE.
     /// </summary>
-    public static bool NotNullOrEmpty(this string? text)
-        => string.IsNullOrEmpty(text);
-
-    /// <summary>
-    ///     Returns TRUE if the source string is neither null nor composed entirely of white space characters. Otherwise, returns FALSE.
-    /// </summary>
-    public static bool NotNullOrWhiteSpace(this string? text)
-        => string.IsNullOrWhiteSpace(text);
+    public static bool HasTextContent(this string? text)
+        => !string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text);
 
     /// <summary>
     ///     Returns TRUE if the source string does not contain the provided text. Otherwise, returns FALSE.

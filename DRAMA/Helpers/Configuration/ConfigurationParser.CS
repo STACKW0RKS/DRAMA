@@ -8,11 +8,11 @@ internal static class ConfigurationParser
 {
     public static async Task<Profile> GetTestExecutionProfile(string profileName = "DRAMA Default")
     {
-        string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").NotNullOrWhiteSpace() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
+        string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").HasTextContent() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
 
         Profile? testRunProfile = (await ParseConfiguration()).Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
 
-        if (testRunProfile is null) throw new NoMatchException($@"Profile ""{profileName}"" Not Found In Configuration File");
+        if (testRunProfile is null) throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
 
         return EnrichProfile(testRunProfile);
     }
@@ -33,33 +33,35 @@ internal static class ConfigurationParser
         profile.TestRun ??= new TestRun();
 
         profile.TestRun.ResultsPath = SetTestRunResultsPath(profile);
-
-        if (profile.SystemUnderTest is not null)
-            profile.TestRun.Origin = SetTestRunOrigin(profile);
+        profile.TestRun.Origin = SetTestRunOrigin(profile);
 
         return profile;
     }
 
     private static string SetTestRunResultsPath(Profile profile)
-        => Environment.GetEnvironmentVariable("DRAMA Results Path").NotNullOrWhiteSpace()
+        => Environment.GetEnvironmentVariable("DRAMA Results Path").HasTextContent()
             ? Path.Combine(Environment.GetEnvironmentVariable("DRAMA Results Path")!, "DRAMA Results", profile.TestRun!.Name)
             : profile.TestRun!.ResultsPath is null || profile.TestRun!.ResultsPath.Flatten().Equals("DEFAULT")
                 ? Path.Combine("DRAMA Results", profile.TestRun!.Name)
                 : Path.Combine(profile.TestRun!.ResultsPath, "DRAMA Results", profile.TestRun!.Name);
 
-    private static Uri SetTestRunOrigin(Profile profile)
+    private static Uri? SetTestRunOrigin(Profile profile)
     {
         SystemUnderTest SUT = profile.SystemUnderTest!;
 
+        if (SUT.Origin is not null && !SUT.Origin.First().Equals('/')) SUT.Origin = '/' + SUT.Origin;
+
+        if (SUT.Host is null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return null;
         if (SUT.Port is not null) return new UriBuilder(SUT.Protocol, SUT.Host, (int)SUT.Port, SUT.Origin).Uri;
         if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return new UriBuilder(SUT.Host).Uri;
-        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is not null) return new UriBuilder($@"{SUT.Host}\{SUT.Origin}").Uri;
+        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is not null) return new UriBuilder($@"{SUT.Host + SUT.Origin}").Uri;
 
-        string errorMessage = new StringBuilder("Unsupported System Under Test Configuration: ")
-            .Append($@"Host = ""{SUT.Host ?? "NULL"}""; ")
-            .Append($@"Protocol = ""{SUT.Protocol ?? "NULL"}""; ")
-            .Append($@"Port = ""{SUT.Port.ToString() ?? "NULL"}""; ")
-            .Append($@"Origin = ""{SUT.Origin ?? "NULL"}"";")
+        string errorMessage = new StringBuilder("Unsupported System Under Test Configuration")
+            .AppendLine($@"Connection String: ""{SUT.ConnectionString ?? "NULL"}""")
+            .AppendLine($@"Host: ""{SUT.Host ?? "NULL"}""")
+            .AppendLine($@"Protocol: ""{SUT.Protocol ?? "NULL"}""")
+            .AppendLine($@"Port: ""{SUT.Port.ToString() ?? "NULL"}""")
+            .AppendLine($@"Origin: ""{SUT.Origin ?? "NULL"}""")
             .ToString();
 
         throw new ConfigurationErrorsException(errorMessage);
