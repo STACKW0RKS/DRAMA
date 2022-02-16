@@ -2,13 +2,13 @@
 
 public static class StringHelpers
 {
-    public static string GenerateWhiteSpaces(int amount)
+    public static string GenerateCharacters(int amount, char character = ' ')
     {
-        StringBuilder spaces = new();
+        StringBuilder characters = new();
 
-        for (int i = 0; i < amount; i++) spaces.Append(' ');
+        for (int i = 0; i < amount; i++) characters.Append(character);
 
-        return spaces.ToString();
+        return characters.ToString();
     }
 
     // TODO: Add Unit Test And Summary
