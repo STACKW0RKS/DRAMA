@@ -2,21 +2,24 @@
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using DRAMA.Contexts;
 using DRAMA.Helpers.Configuration;
 using DRAMA.Models.Configuration;
 using TechTalk.SpecFlow.Bindings;
+using TechTalk.SpecFlow.Infrastructure;
+using TechTalk.SpecFlow.TestFramework;
 
 namespace DRAMA.EventBindings;
 
 [Binding]
-public class GenericFixtureBindings
+public class CommonFixtureBindings
 {
-    public GenericFixtureBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
+    public CommonFixtureBindings(FeatureContext featureContext, ScenarioContext scenarioContext) { }
 
     [BeforeTestRun(Order = 0)]
     public static async Task BeforeTestRun()
     {
-        Profile testRunProfile = await ConfigurationParser.GetTestExecutionProfile();
+        TestRunContext.Profile = await ConfigurationParser.GetTestExecutionProfile();
     }
 
     /*

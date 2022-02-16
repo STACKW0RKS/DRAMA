@@ -3,9 +3,6 @@ namespace DRAMA.Models.Configuration;
 [JsonObject]
 public class SystemUnderTest
 {
-    [JsonProperty("Connection String")]
-    public string? ConnectionString { get; set; }
-
     [JsonProperty("Host")]
     public string? Host { get; set; }
 
@@ -17,4 +14,7 @@ public class SystemUnderTest
 
     [JsonProperty("Origin")]
     public string? Origin { get; set; }
+
+    [JsonProperty("Connection String")]
+    public string? ConnectionString { get; set; }
 }

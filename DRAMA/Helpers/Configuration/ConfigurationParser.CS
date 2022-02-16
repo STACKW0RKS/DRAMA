@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using DRAMA.Models.Configuration;
 using DRAMA.Models.TargetFramework;
 
@@ -6,13 +6,15 @@ namespace DRAMA.Helpers.Configuration;
 
 internal static class ConfigurationParser
 {
-    public static async Task<Profile> GetTestExecutionProfile(string profileName = "DRAMA Default")
+    internal static async Task<Profile> GetTestExecutionProfile(string profileName = "DRAMA Default")
     {
         string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").HasTextContent() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
 
         Profile? testRunProfile = (await ParseConfiguration()).Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
 
         if (testRunProfile is null) throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
+
+        testRunProfile.Name = testRunProfileName;
 
         return EnrichProfile(testRunProfile);
     }
@@ -32,29 +34,24 @@ internal static class ConfigurationParser
     {
         profile.TestRun ??= new TestRun();
 
-        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile);
-        profile.TestRun.Origin = SetTestRunOrigin(profile);
+        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun);
+        profile.TestRun.Origin = SetTestRunOrigin(profile.SystemUnderTest ?? throw new ConfigurationErrorsException($@"System Under Test Configuration Not Found In Profile ""{profile.Name}"""));
 
         return profile;
     }
 
-    private static string SetTestRunResultsPath(Profile profile)
+    private static string SetTestRunResultsPath(TestRun run)
         => Environment.GetEnvironmentVariable("DRAMA Results Path").HasTextContent()
-            ? Path.Combine(Environment.GetEnvironmentVariable("DRAMA Results Path")!, "DRAMA Results", profile.TestRun!.Name)
-            : profile.TestRun!.ResultsPath is null || profile.TestRun!.ResultsPath.Flatten().Equals("DEFAULT")
-                ? Path.Combine("DRAMA Results", profile.TestRun!.Name)
-                : Path.Combine(profile.TestRun!.ResultsPath, "DRAMA Results", profile.TestRun!.Name);
+            ? Path.Combine(Environment.GetEnvironmentVariable("DRAMA Results Path")!, "DRAMA Results", run.Name)
+            : run.ResultsPath is null || run.ResultsPath.Flatten().Equals("DEFAULT")
+                ? Path.Combine("DRAMA Results", run.Name)
+                : Path.Combine(run.ResultsPath, "DRAMA Results", run.Name);
 
-    private static Uri? SetTestRunOrigin(Profile profile)
+    private static Uri? SetTestRunOrigin(SystemUnderTest SUT)
     {
-        SystemUnderTest SUT = profile.SystemUnderTest!;
-
-        if (SUT.Origin is not null && !SUT.Origin.First().Equals('/')) SUT.Origin = '/' + SUT.Origin;
-
         if (SUT.Host is null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return null;
+        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null) return new UriBuilder($@"{SUT.Host}/{SUT.Origin?.TrimStart('/')}").Uri;
         if (SUT.Port is not null) return new UriBuilder(SUT.Protocol, SUT.Host, (int)SUT.Port, SUT.Origin).Uri;
-        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return new UriBuilder(SUT.Host).Uri;
-        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is not null) return new UriBuilder($@"{SUT.Host + SUT.Origin}").Uri;
 
         string errorMessage = new StringBuilder("Unsupported System Under Test Configuration")
             .AppendLine($@"Connection String: ""{SUT.ConnectionString ?? "NULL"}""")
