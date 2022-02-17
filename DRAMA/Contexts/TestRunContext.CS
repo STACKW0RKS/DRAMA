@@ -1,8 +1,6 @@
-﻿using DRAMA.Models.Configuration;
-
-namespace DRAMA.Contexts;
+﻿namespace DRAMA.Contexts;
 
 public static class TestRunContext
 {
-    public static Profile? Profile { get; set; }
+    public static readonly Profile Profile = ConfigurationParser.GetTestExecutionProfile();
 }

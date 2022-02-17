@@ -1,16 +1,12 @@
-using System.Configuration;
-using DRAMA.Models.Configuration;
-using DRAMA.Models.TargetFramework;
-
 namespace DRAMA.Helpers.Configuration;
 
 internal static class ConfigurationParser
 {
-    internal static async Task<Profile> GetTestExecutionProfile(string profileName = "DRAMA Default")
+    internal static Profile GetTestExecutionProfile(string profileName = "DRAMA Default")
     {
         string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").HasTextContent() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
 
-        Profile? testRunProfile = (await ParseConfiguration()).Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
+        Profile? testRunProfile = ParseConfiguration().Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
 
         if (testRunProfile is null) throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
 
@@ -19,9 +15,9 @@ internal static class ConfigurationParser
         return EnrichProfile(testRunProfile);
     }
 
-    private static async Task<Dictionary<string, Profile>> ParseConfiguration(string configurationFile = "DRAMA.JSON")
+    private static Dictionary<string, Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON")
     {
-        string configurationFileContent = await File.ReadAllTextAsync(configurationFile);
+        string configurationFileContent = File.ReadAllText(configurationFile);
 
         Dictionary<string, Profile> testRunProfiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(configurationFileContent);
 
