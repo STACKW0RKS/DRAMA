@@ -34,7 +34,7 @@ internal static class ConfigurationParser
     {
         profile.TestRun ??= new TestRun();
 
-        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun);
+        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun) + Path.DirectorySeparatorChar;
         profile.TestRun.Origin = SetTestRunOrigin(profile.SystemUnderTest ?? throw new ConfigurationErrorsException($@"System Under Test Configuration Not Found In Profile ""{profile.Name}"""));
 
         return profile;
