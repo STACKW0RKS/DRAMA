@@ -1,54 +1,46 @@
-﻿//using AventStack.ExtentReports;
-//using AventStack.ExtentReports.Gherkin.Model;
-//using TechTalk.SpecFlow.Bindings;
+﻿using System.Data;
+using System.Data.Common;
+using DRAMA.Extensions.Specflow;
+using Microsoft.Data.Sqlite;
+using Oracle.ManagedDataAccess.Client;
 
-//namespace DRAMA.EventBindings;
+namespace DRAMA.EventBindings;
 
-//[Binding]
-//public class BackEndFixtureBindings
-//{
-//    private ExtentTest CurrentScenario;
+[Binding]
+public class BackEndFixtureBindings
+{
+    private ExtentTest CurrentScenario;
 
-//    [BeforeFeature("Back-End", Order = 0)]
-//    public static void BeforeBackEndFeature()
-//    {
-//        if (Z34.TestRunProfile.Contains("SQLite"))
-//            Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
-//
-//        if (Z34.TestRunProfile.Contains("Oracle"))
-//            Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
+    [BeforeFeature("Back-End", Order = 0)]
+    public static void BeforeBackEndFeature(TestThreadContext testThreadContext)
+    {
+        DbConnectionStringBuilder connectionStringBuilder = new()
+        { ConnectionString = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd?.ConnectionString };
 
-//        if (Z34.TestRunProfile.Contains("SQLite"))
-//            Z34.DatabaseConnection = new SqliteConnection(Z34.ConnectionStringBuilder.ConnectionString);
+        dynamic databaseConnection = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd?.DatabaseEngine?.ToTextValue() switch
+        {
+            "Oracle" => new OracleConnection(connectionStringBuilder.ConnectionString),
+            "SQLite" => new SqliteConnection(connectionStringBuilder.ConnectionString)
+        };
 
-//        if (Z34.TestRunProfile.Contains("Oracle"))
-//            Z34.DatabaseConnection = new OracleConnection(Z34.ConnectionStringBuilder); // ¯\_(ヅ)_/¯
-//    }
+        if (Z34.TestRunProfile.Contains("SQLite"))
+            Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
 
-//    [AfterStep("Back-End", Order = 0)]
-//    public void AfterBackEndStep(ScenarioContext scenarioContext)
-//    {
-//        StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
+        if (Z34.TestRunProfile.Contains("Oracle"))
+            Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
 
-//        if (scenarioContext.TestError is not null)
-//            _ = stepType switch
-//            {
-//                StepDefinitionType.Given => CurrentScenario
-//                    .CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text)
-//                    .Fail(scenarioContext.TestError.Message),
-//                StepDefinitionType.When => CurrentScenario
-//                    .CreateNode<When>(scenarioContext.StepContext.StepInfo.Text)
-//                    .Fail(scenarioContext.TestError.Message),
-//                StepDefinitionType.Then => CurrentScenario
-//                    .CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text)
-//                    .Fail(scenarioContext.TestError.Message),
-//                _ => throw new ArgumentOutOfRangeException(nameof(stepType), stepType, $"Invalid Step Type: {stepType}")
-//            };
-//    }
+        if (Z34.TestRunProfile.Contains("SQLite"))
+            Z34.DatabaseConnection = new SqliteConnection(Z34.ConnectionStringBuilder.ConnectionString);
 
-//    [AfterFeature("Back-End", Order = 0)]
-//    public static async Task AfterBackEndFeature()
-//    {
-//        if (Z34.DatabaseConnection is not null) await Z34.DatabaseConnection.CloseAsync();
-//    }
-//}
+        if (Z34.TestRunProfile.Contains("Oracle"))
+            Z34.DatabaseConnection = new OracleConnection(Z34.ConnectionStringBuilder); // ¯\_(ヅ)_/¯
+    }
+
+
+
+    [AfterFeature("Back-End", Order = 0)]
+    public static async Task AfterBackEndFeature()
+    {
+        if (Z34.DatabaseConnection is not null) await Z34.DatabaseConnection.CloseAsync();
+    }
+}

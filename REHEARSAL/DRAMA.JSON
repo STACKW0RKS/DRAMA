@@ -5,10 +5,12 @@
 		},
 		
 		"System Under Test": {
-			"Host": "127.0.0.1",
-			"Protocol": "https",
-			"Port": 666,
-			"Origin": "/auth/login"
+			"Front-End": {
+				"Host": "127.0.0.1",
+				"Protocol": "https",
+				"Port": 666,
+				"Origin": "/auth/login"
+			}
 		},
 		
 		"Browser Driver": {
@@ -22,7 +24,10 @@
 	
 	"SQLite Tests": {
 		"System Under Test": {
-			"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+			"Back-End": {
+				"Database Engine": "SQLite",
+				"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+			}
 		}
 	}
 }

@@ -42,18 +42,12 @@ public class ExtentReportBindings
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
-        if (scenarioContext.ScenarioExecutionStatus.ToString().Equals("StepDefinitionPending"))
+        if (scenarioContext.ScenarioExecutionStatus.Equals(ScenarioExecutionStatus.StepDefinitionPending))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?
-                    .CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text)
-                    .Skip("Step Definition Pending"),
-                StepDefinitionType.When => CurrentScenario?
-                    .CreateNode<When>(scenarioContext.StepContext.StepInfo.Text)
-                    .Skip("Step Definition Pending"),
-                StepDefinitionType.Then => CurrentScenario?
-                    .CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text)
-                    .Skip("Step Definition Pending"),
+                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Definition Pending"),
+                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Definition Pending"),
+                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Definition Pending"),
                 _ => throw new ArgumentOutOfRangeException(nameof(stepType), stepType, $"Invalid Step Type: {stepType}")
             };
 
@@ -68,7 +62,7 @@ public class ExtentReportBindings
     }
 
     [AfterStep("Front-End", "End-To-End", Order = 0)]
-    public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
+    public async Task AfterFrontEndStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
@@ -86,6 +80,21 @@ public class ExtentReportBindings
                 _ => throw new ArgumentOutOfRangeException(nameof(stepType), stepType, $"Invalid Step Type: {stepType}")
             };
         }
+    }
+
+    [AfterStep("Back-End", Order = 0)]
+    public void AfterBackEndStep(ScenarioContext scenarioContext)
+    {
+        StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
+
+        if (scenarioContext.TestError is not null)
+            _ = stepType switch
+            {
+                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message),
+                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message),
+                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message),
+                _ => throw new ArgumentOutOfRangeException(nameof(stepType), stepType, $"Invalid Step Type: {stepType}")
+            };
     }
 
     [AfterTestRun(Order = 0)]

@@ -31,7 +31,9 @@ internal static class ConfigurationParser
         profile.TestRun ??= new TestRun();
 
         profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun) + Path.DirectorySeparatorChar;
-        profile.TestRun.Origin = SetTestRunOrigin(profile.SystemUnderTest ?? throw new ConfigurationErrorsException($@"System Under Test Configuration Not Found In Profile ""{profile.Name}"""));
+
+        // TODO: The Origin Only Applies To Front-End And API Tests, So Maybe It Should Not Be In The Test Run Object
+        profile.TestRun.Origin = SetTestRunOrigin(profile.SystemUnderTest?.FrontEnd ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{profile.Name}"""));
 
         return profile;
     }
@@ -43,18 +45,17 @@ internal static class ConfigurationParser
                 ? Path.Combine("DRAMA Results", run.Name)
                 : Path.Combine(run.ResultsPath, "DRAMA Results", run.Name);
 
-    private static Uri? SetTestRunOrigin(SystemUnderTest SUT)
+    private static Uri? SetTestRunOrigin(FrontEnd layer)
     {
-        if (SUT.Host is null && SUT.Protocol is null && SUT.Port is null && SUT.Origin is null) return null;
-        if (SUT.Host is not null && SUT.Protocol is null && SUT.Port is null) return new UriBuilder($@"{SUT.Host}/{SUT.Origin?.TrimStart('/')}").Uri;
-        if (SUT.Port is not null) return new UriBuilder(SUT.Protocol, SUT.Host, (int)SUT.Port, SUT.Origin).Uri;
+        if (layer.Host is null && layer.Protocol is null && layer.Port is null && layer.Origin is null) return null;
+        if (layer.Host is not null && layer.Protocol is null && layer.Port is null) return new UriBuilder($@"{layer.Host}/{layer.Origin?.TrimStart('/')}").Uri;
+        if (layer.Port is not null) return new UriBuilder(layer.Protocol, layer.Host, (int)layer.Port, layer.Origin).Uri;
 
-        string errorMessage = new StringBuilder("Unsupported System Under Test Configuration")
-            .AppendLine($@"Connection String: ""{SUT.ConnectionString ?? "NULL"}""")
-            .AppendLine($@"Host: ""{SUT.Host ?? "NULL"}""")
-            .AppendLine($@"Protocol: ""{SUT.Protocol ?? "NULL"}""")
-            .AppendLine($@"Port: ""{SUT.Port.ToString() ?? "NULL"}""")
-            .AppendLine($@"Origin: ""{SUT.Origin ?? "NULL"}""")
+        string errorMessage = new StringBuilder("Unsupported Front-End Test Configuration")
+            .AppendLine($@"Host: ""{layer.Host ?? "NULL"}""")
+            .AppendLine($@"Protocol: ""{layer.Protocol ?? "NULL"}""")
+            .AppendLine($@"Port: ""{layer.Port.ToString() ?? "NULL"}""")
+            .AppendLine($@"Origin: ""{layer.Origin ?? "NULL"}""")
             .ToString();
 
         throw new ConfigurationErrorsException(errorMessage);

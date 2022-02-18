@@ -47,8 +47,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExtentReports" Version="4.1.0" /> <!-- TODO: Remove This After Migrating Away From Extent Reports -->
+		<PackageReference Include="ExtentReports" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.2" /> <!-- TODO: Remove This After Migrating Away From Extent Reports -->
 		<PackageReference Include="Microsoft.Playwright" Version="1.18.1" />
+		<PackageReference Include="Oracle.ManagedDataAccess" Version="21.5.0" />
 		<PackageReference Include="SpecFlow" Version="3.9.52" />
 	</ItemGroup>
 
