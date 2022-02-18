@@ -1,5 +1,5 @@
-﻿using System.Data;
-using System.Data.Common;
+﻿using System.Data.Common;
+using System.Data.SqlClient;
 using DRAMA.Extensions.Specflow;
 using Microsoft.Data.Sqlite;
 using Oracle.ManagedDataAccess.Client;
@@ -9,38 +9,32 @@ namespace DRAMA.EventBindings;
 [Binding]
 public class BackEndFixtureBindings
 {
-    private ExtentTest CurrentScenario;
-
     [BeforeFeature("Back-End", Order = 0)]
-    public static void BeforeBackEndFeature(TestThreadContext testThreadContext)
+    public static void BeforeFeature(TestThreadContext testThreadContext, FeatureContext featureContext)
     {
-        DbConnectionStringBuilder connectionStringBuilder = new()
-        { ConnectionString = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd?.ConnectionString };
+        BackEnd? configuration = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd;
 
-        dynamic databaseConnection = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd?.DatabaseEngine?.ToTextValue() switch
+        DbConnectionStringBuilder connectionStringBuilder = new()
+        { ConnectionString = configuration?.ConnectionString };
+
+        // TODO: Think Of How To Not Use A Dynamic Or An Object Type (https://stackoverflow.com/questions/981330/instantiate-an-object-with-a-runtime-determined-type)
+        // Maybe Just Store To The Feature Context Straight From The Switch Statement
+        object databaseConnection = configuration?.DatabaseEngine switch
         {
-            "Oracle" => new OracleConnection(connectionStringBuilder.ConnectionString),
-            "SQLite" => new SqliteConnection(connectionStringBuilder.ConnectionString)
+            // TODO: Add Support For All Database Engines Defined By The DatabaseEngine Class
+            DatabaseEngine.MSSQLServer => new SqlConnection(connectionStringBuilder.ConnectionString),
+            DatabaseEngine.Oracle => new OracleConnection(connectionStringBuilder.ConnectionString),
+            DatabaseEngine.SQLite => new SqliteConnection(connectionStringBuilder.ConnectionString),
+            _ => throw new NoMatchException($@"Invalid Database Engine Type ""{configuration?.DatabaseEngine}"" (Inspect The DatabaseEngine Type For Information On Supported Values)")
         };
 
-        if (Z34.TestRunProfile.Contains("SQLite"))
-            Z34.ConnectionStringBuilder = new SqliteConnectionStringBuilder(configBindings.ConnectionString);
-
-        if (Z34.TestRunProfile.Contains("Oracle"))
-            Z34.ConnectionStringBuilder = configBindings.ConnectionString; // ¯\_(ヅ)_/¯
-
-        if (Z34.TestRunProfile.Contains("SQLite"))
-            Z34.DatabaseConnection = new SqliteConnection(Z34.ConnectionStringBuilder.ConnectionString);
-
-        if (Z34.TestRunProfile.Contains("Oracle"))
-            Z34.DatabaseConnection = new OracleConnection(Z34.ConnectionStringBuilder); // ¯\_(ヅ)_/¯
+        featureContext.SetProperty("Database Connection", databaseConnection); // TODO: Create Dedicated Extension Method For This
     }
 
-
-
     [AfterFeature("Back-End", Order = 0)]
-    public static async Task AfterBackEndFeature()
+    public static void AfterFeature(FeatureContext featureContext)
     {
-        if (Z34.DatabaseConnection is not null) await Z34.DatabaseConnection.CloseAsync();
+        // TODO: Implement This
+        // if (connection is not null) await connection.CloseAsync();
     }
 }

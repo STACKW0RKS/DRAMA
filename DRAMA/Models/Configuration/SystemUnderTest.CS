@@ -1,5 +1,3 @@
-using DRAMA.Attributes;
-
 namespace DRAMA.Models.Configuration;
 
 [JsonObject]
@@ -19,7 +17,7 @@ public class SystemUnderTest
 public class BackEnd
 {
     [JsonProperty("Database Engine")]
-    public DatabaseEngine? DatabaseEngine { get; set; }
+    public string? DatabaseEngine { get; set; }
 
     [JsonProperty("Connection String")]
     public string? ConnectionString { get; set; }
@@ -47,14 +45,16 @@ public class FrontEnd
     public string? Origin { get; set; }
 }
 
-public enum DatabaseEngine
+public static class DatabaseEngine
 {
-    [TextValue("MariaDB")] MariaDB,
-    [TextValue("Microsoft Azure SQL Database")] MSAzure,
-    [TextValue("Microsoft SQL Server")] MSSQLServer,
-    [TextValue("MongoDB")] MongoDB,
-    [TextValue("MySQL")] MySQL,
-    [TextValue("Oracle")] Oracle,
-    [TextValue("PostgreSQL")] PostgreSQL,
-    [TextValue("SQLite")] SQLite
+    public const string MariaDB = "MariaDB";
+    public const string MSAzure = "Microsoft Azure SQL Database";
+    public const string MSSQLServer = "Microsoft SQL Server";
+    public const string MongoDB = "MongoDB";
+    public const string MySQL = "MySQL";
+    public const string Oracle = "Oracle";
+    public const string PostgreSQL = "PostgreSQL";
+    public const string SQLite = "SQLite";
 }
+
+// TODO: Restructure This Section
