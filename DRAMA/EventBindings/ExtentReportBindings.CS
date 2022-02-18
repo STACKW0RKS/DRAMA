@@ -1,5 +1,7 @@
 ﻿// TODO: Remove This Type After Migrating Away From Extent Reports
 
+using DRAMA.Extensions.Specflow;
+
 namespace DRAMA.EventBindings;
 
 [Binding]
@@ -10,13 +12,15 @@ public class ExtentReportBindings
     private static ExtentTest? CurrentScenario { get; set; }
 
     [BeforeTestRun(Order = 0)]
-    public static void BeforeTestRun()
+    public static void BeforeTestRun(TestThreadContext testThreadContext)
     {
-        ExtentHtmlReporter reporter = new(TestRunContext.Profile?.TestRun?.ResultsPath, ViewStyle.SPA);
+        Profile profile = testThreadContext.GetTestRunProfile();
+
+        ExtentHtmlReporter reporter = new(profile.TestRun?.ResultsPath, ViewStyle.SPA);
 
         reporter.Config.EnableTimeline = true;
-        reporter.Config.ReportName = TestRunContext.Profile?.TestRun?.Name;
-        reporter.Config.DocumentTitle = TestRunContext.Profile?.TestRun?.Name;
+        reporter.Config.ReportName = profile.TestRun?.Name;
+        reporter.Config.DocumentTitle = profile.TestRun?.Name;
         reporter.Config.Theme = Theme.Dark;
 
         Report = new ExtentReports();
@@ -70,8 +74,9 @@ public class ExtentReportBindings
 
         if (scenarioContext.TestError is not null)
         {
-            MediaEntityModelProvider mediaEntity = await featureContext.GetPageInstance()
-                .CaptureScreenshotAndReturnModel(scenarioContext.ScenarioInfo.Title.Trim());
+            MediaEntityModelProvider mediaEntity =
+                    MediaEntityBuilder.CreateScreenCaptureFromBase64String
+                        (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build();
 
             _ = stepType switch
             {

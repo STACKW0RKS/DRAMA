@@ -2,7 +2,7 @@ namespace DRAMA.Helpers.Configuration;
 
 internal static class ConfigurationParser
 {
-    internal static Profile GetTestExecutionProfile(string profileName = "DRAMA Default")
+    internal static Profile GetTestRunProfile(string profileName = "DRAMA Default")
     {
         string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").HasTextContent() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
 

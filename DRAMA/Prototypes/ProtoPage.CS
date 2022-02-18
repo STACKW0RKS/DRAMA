@@ -28,4 +28,6 @@ public abstract class ProtoPage
     ///     The URL of the page.
     /// </summary>
     public string URL => Page.Url;
+
+    // TODO: Try To Inject The Current Page In Here, Maybe By Using The Binding Attribute And Then Injecting The Feature Context
 }
