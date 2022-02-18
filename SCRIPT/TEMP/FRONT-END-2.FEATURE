@@ -6,7 +6,7 @@ Feature: Navigate To Hacker News
 
     Scenario:   [01/02] Navigate To Website
         When    I NAVIGATE TO "https://news.ycombinator.com/"
-        Then    I CONFIRM THAT THE PAGE TITLE IS "Hacker News"
+        Then    I CONFIRM THAT THE PAGE TITLE CONTAINS "Hacker News"
 
     Scenario:   [02/02] Take A Screenshot
         Then    I TAKE A SCREENSHOT

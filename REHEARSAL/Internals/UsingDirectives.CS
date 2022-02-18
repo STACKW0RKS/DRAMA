@@ -1,6 +1,7 @@
 ﻿global using AventStack.ExtentReports.Gherkin.Model;
 
 global using DRAMA.Models.SystemUnderTest;
+global using DRAMA.Extensions.Specflow;
 global using DRAMA.Extensions.TargetFramework;
 global using DRAMA.Prototypes;
 
