@@ -24,7 +24,7 @@ public class FrontEndFixtureBindings
         {
             ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }, // TODO: Make Configurable
             IgnoreHTTPSErrors = true,
-            RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title),
+            RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title), // TODO: Sanitise Feature Name So It Can Be Used As Path
             RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
         };
 
