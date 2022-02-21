@@ -1,4 +1,5 @@
-﻿using DRAMA.Extensions.Specflow;
+﻿using DRAMA.Contexts;
+using DRAMA.Extensions.Specflow;
 
 namespace DRAMA.EventBindings;
 
@@ -6,9 +7,9 @@ namespace DRAMA.EventBindings;
 public class FrontEndFixtureBindings
 {
     [BeforeFeature("Front-End", "End-To-End", Order = 0)]
-    public static async Task BeforeFeature(TestThreadContext testThreadContext, FeatureContext featureContext)
+    public static async Task BeforeFeature(FeatureContext featureContext)
     {
-        Profile profile = testThreadContext.GetTestRunProfile();
+        Profile profile = TestRunContext.Profile;
 
         IPlaywright playwright = await Playwright.CreateAsync();
 
@@ -43,7 +44,7 @@ public class FrontEndFixtureBindings
     }
 
     [AfterFeature("Front-End", "End-To-End", Order = 0)]
-    public static async Task AfterFeature(TestThreadContext testThreadContext, FeatureContext featureContext)
+    public static async Task AfterFeature(FeatureContext featureContext)
         => await featureContext.GetProperty<IBrowser>("Browser").Contexts.Single().Tracing.StopAsync(new TracingStopOptions
-            { Path = Path.Combine(testThreadContext.GetTestRunProfile().TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
+            { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
 }

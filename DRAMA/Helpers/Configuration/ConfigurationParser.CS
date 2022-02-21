@@ -29,6 +29,7 @@ internal static class ConfigurationParser
     private static Profile EnrichProfile(Profile profile)
     {
         profile.TestRun ??= new TestRun();
+        profile.TestRun.Name = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
 
         profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun) + Path.DirectorySeparatorChar;
 

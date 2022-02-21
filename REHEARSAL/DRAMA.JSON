@@ -9,7 +9,7 @@
 				"Host": "127.0.0.1",
 				"Protocol": "https",
 				"Port": 666,
-				"Origin": "/auth/login"
+				"Path": "/auth/login"
 			}
 		},
 		

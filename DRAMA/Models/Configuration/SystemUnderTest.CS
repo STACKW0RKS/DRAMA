@@ -41,8 +41,11 @@ public class FrontEnd
     [JsonProperty("Port")]
     public int? Port { get; set; }
 
-    [JsonProperty("Origin")]
-    public string? Origin { get; set; }
+    [JsonProperty("Path")]
+    public string? Path { get; set; }
+
+    [Newtonsoft.Json.JsonIgnore]
+    public Uri? StartingURI { get; set; }
 }
 
 public static class DatabaseEngine

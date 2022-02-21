@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using System.Data.SqlClient;
+using DRAMA.Contexts;
 using DRAMA.Extensions.Specflow;
 using Microsoft.Data.Sqlite;
 using Oracle.ManagedDataAccess.Client;
@@ -10,9 +11,9 @@ namespace DRAMA.EventBindings;
 public class BackEndFixtureBindings
 {
     [BeforeFeature("Back-End", Order = 0)]
-    public static void BeforeFeature(TestThreadContext testThreadContext, FeatureContext featureContext)
+    public static void BeforeFeature(FeatureContext featureContext)
     {
-        BackEnd? configuration = testThreadContext.GetTestRunProfile().SystemUnderTest?.BackEnd;
+        BackEnd? configuration = TestRunContext.Profile.SystemUnderTest?.BackEnd;
 
         DbConnectionStringBuilder connectionStringBuilder = new()
         { ConnectionString = configuration?.ConnectionString };

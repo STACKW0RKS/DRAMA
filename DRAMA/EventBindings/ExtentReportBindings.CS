@@ -1,5 +1,6 @@
 ﻿// TODO: Remove This Type After Migrating Away From Extent Reports
 
+using DRAMA.Contexts;
 using DRAMA.Extensions.Specflow;
 
 namespace DRAMA.EventBindings;
@@ -12,12 +13,9 @@ public class ExtentReportBindings
     private static ExtentTest? CurrentScenario { get; set; }
 
     [BeforeTestRun(Order = 0)]
-    public static void BeforeTestRun(TestThreadContext testThreadContext)
+    public static void BeforeTestRun()
     {
-        // TODO: This Is Needed For Execution On Other Machines; Probably Has Something To Do With Multi-Threading; Sort It Out!
-        while (testThreadContext.TryGetValue<Profile>("Test Run Profile", out Profile _).Equals(false)) Thread.Sleep(2500);
-
-        Profile profile = testThreadContext.GetTestRunProfile();
+        Profile profile = TestRunContext.Profile;
 
         ExtentHtmlReporter reporter = new(profile.TestRun?.ResultsPath, ViewStyle.SPA);
 
