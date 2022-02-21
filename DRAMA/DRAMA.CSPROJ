@@ -10,7 +10,7 @@
 
 	<PropertyGroup>
 		<PackageID>DRAMA</PackageID>
-		<Version>0.2.6</Version>
+		<Version>0.3.0</Version>
 		<Title>DRAMA</Title>
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
@@ -25,8 +25,8 @@
 		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
 		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
 		<NeutralLanguage>en-GB</NeutralLanguage>
-		<AssemblyVersion>0.2.6.0</AssemblyVersion>
-		<FileVersion>0.2.6.0</FileVersion>
+		<AssemblyVersion>0.3.0.0</AssemblyVersion>
+		<FileVersion>0.3.0.0</FileVersion>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>TRUE</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
