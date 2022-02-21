@@ -11,9 +11,12 @@ public class ExtentReportBindings
     private static List<ExtentTest>? Features { get; set; }
     private static ExtentTest? CurrentScenario { get; set; }
 
-    [BeforeTestRun(Order = 1)]
+    [BeforeTestRun(Order = 0)]
     public static void BeforeTestRun(TestThreadContext testThreadContext)
     {
+        // TODO: This Is Needed For Execution On Other Machines; Probably Has Something To Do With Multi-Threading; Sort It Out!
+        while (testThreadContext.TryGetValue<Profile>("Test Run Profile", out Profile _).Equals(false)) Thread.Sleep(2500);
+
         Profile profile = testThreadContext.GetTestRunProfile();
 
         ExtentHtmlReporter reporter = new(profile.TestRun?.ResultsPath, ViewStyle.SPA);
@@ -29,15 +32,15 @@ public class ExtentReportBindings
         Features = new List<ExtentTest>();
     }
 
-    [BeforeFeature(Order = 1)]
+    [BeforeFeature(Order = 0)]
     public static void BeforeFeature(FeatureContext featureContext)
         => Features?.Add(Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised"));
 
-    [BeforeScenario(Order = 1)]
+    [BeforeScenario(Order = 0)]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
         => CurrentScenario = Features?.Single(feature => feature.Model.Name == featureContext.FeatureInfo.Title).CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
 
-    [AfterStep(Order = 1)]
+    [AfterStep(Order = 0)]
     public void AfterStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -61,7 +64,7 @@ public class ExtentReportBindings
             };
     }
 
-    [AfterStep("Front-End", "End-To-End", Order = 1)]
+    [AfterStep("Front-End", "End-To-End", Order = 0)]
     public async Task AfterFrontEndStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -82,7 +85,7 @@ public class ExtentReportBindings
         }
     }
 
-    [AfterStep("Back-End", Order = 1)]
+    [AfterStep("Back-End", Order = 0)]
     public void AfterBackEndStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -97,7 +100,7 @@ public class ExtentReportBindings
             };
     }
 
-    [AfterTestRun(Order = 1)]
+    [AfterTestRun(Order = 0)]
     public static void AfterTestRun()
         => Report?.Flush();
 }
