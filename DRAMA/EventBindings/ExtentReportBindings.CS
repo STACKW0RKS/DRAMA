@@ -11,7 +11,7 @@ public class ExtentReportBindings
     private static List<ExtentTest>? Features { get; set; }
     private static ExtentTest? CurrentScenario { get; set; }
 
-    [BeforeTestRun(Order = 0)]
+    [BeforeTestRun(Order = 1)]
     public static void BeforeTestRun(TestThreadContext testThreadContext)
     {
         Profile profile = testThreadContext.GetTestRunProfile();
@@ -29,15 +29,15 @@ public class ExtentReportBindings
         Features = new List<ExtentTest>();
     }
 
-    [BeforeFeature(Order = 0)]
+    [BeforeFeature(Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
         => Features?.Add(Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised"));
 
-    [BeforeScenario(Order = 0)]
+    [BeforeScenario(Order = 1)]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
         => CurrentScenario = Features?.Single(feature => feature.Model.Name == featureContext.FeatureInfo.Title).CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
 
-    [AfterStep(Order = 0)]
+    [AfterStep(Order = 1)]
     public void AfterStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -61,7 +61,7 @@ public class ExtentReportBindings
             };
     }
 
-    [AfterStep("Front-End", "End-To-End", Order = 0)]
+    [AfterStep("Front-End", "End-To-End", Order = 1)]
     public async Task AfterFrontEndStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -82,7 +82,7 @@ public class ExtentReportBindings
         }
     }
 
-    [AfterStep("Back-End", Order = 0)]
+    [AfterStep("Back-End", Order = 1)]
     public void AfterBackEndStep(ScenarioContext scenarioContext)
     {
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
@@ -97,7 +97,7 @@ public class ExtentReportBindings
             };
     }
 
-    [AfterTestRun(Order = 0)]
+    [AfterTestRun(Order = 1)]
     public static void AfterTestRun()
         => Report?.Flush();
 }
