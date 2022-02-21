@@ -17,7 +17,7 @@ public class FrontEndFixtureBindings
             BrowserType.Chromium => await playwright.Chromium.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
             BrowserType.Firefox => await playwright.Firefox.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
             BrowserType.Webkit => await playwright.Webkit.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
-            _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.BrowserDriver?.Browser}"" (Expected: Chromium\Firefox\WebKit)")
+            _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.BrowserDriver?.Browser}"" (Expected: chromium\firefox\webkit)")
         };
 
         BrowserNewContextOptions browserNewContextOptions = new()
