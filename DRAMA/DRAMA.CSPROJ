@@ -10,7 +10,7 @@
 
 	<PropertyGroup>
 		<PackageID>DRAMA</PackageID>
-		<Version>0.3.1</Version>
+		<Version>0.3.2</Version>
 		<Title>DRAMA</Title>
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
