@@ -25,9 +25,11 @@ public abstract class ProtoPage
     public string Title => Page.TitleAsync().Get();
 
     /// <summary>
-    ///     The URL of the page.
+    ///     The URI at which this page is located.
+    ///     This property is set by decorating the page model with the URI attribute.
+    ///     If the page model has not been decorated with the URI attribute, the value of this property is the current URL of the page.
     /// </summary>
-    public string URL => Page.Url;
+    public Uri URI => GetType().GetCustomAttribute<URIAttribute>(false)?.URI ?? new Uri(Page.Url);
 
     // TODO: Try To Inject The Current Page In Here, Maybe By Using The Binding Attribute And Then Injecting The Feature Context
 }

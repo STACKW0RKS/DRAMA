@@ -6,6 +6,7 @@
 # endregion
 
 # region DRAMA Using Directives
+    global using DRAMA.Attributes;
     global using DRAMA.Contexts;
     global using DRAMA.Enumerations;
     global using DRAMA.Extensions.Specflow;
@@ -40,6 +41,7 @@
     global using System.Data.SqlClient;
     global using System.Configuration;
     global using System.Globalization;
+    global using System.Reflection;
     global using System.Runtime.Serialization;
     global using System.Text;
     global using System.Text.Json;

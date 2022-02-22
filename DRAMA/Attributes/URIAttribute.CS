@@ -4,19 +4,22 @@
 public sealed class URIAttribute : Attribute
 {
     public URIAttribute(string path)
-        => URI = SetURI();
+        => URI = SetURI(path);
 
-    public Uri? URI { get; init; }
+    public Uri URI { get; init; }
 
-    private Uri? SetURI()
+    private static Uri SetURI(string path)
     {
-        Profile profile = TestRunContext.Profile;
-        FrontEnd configuration = profile.SystemUnderTest?.FrontEnd
-                                  ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{profile.Name}""");
+        FrontEnd configuration = TestRunContext.Profile.SystemUnderTest?.FrontEnd
+                                 ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
 
-        if (configuration.Host is null && configuration.Protocol is null && configuration.Port is null && configuration.Path is null) return null;
-        if (configuration.Host is not null && configuration.Protocol is null && configuration.Port is null) return new UriBuilder($@"{configuration.Host}/{configuration.Path?.TrimStart('/')}").Uri;
-        if (configuration.Port is not null) return new UriBuilder(configuration.Protocol, configuration.Host, (int)configuration.Port, configuration.Path).Uri;
+        if (configuration.Port is null && configuration.Host is not null)
+            return configuration.Protocol is null
+                ? new UriBuilder($@"{configuration.Host.TrimEnd('/')}/{configuration.Path?.Trim('/')}/{path.TrimStart('/')}").Uri
+                : new UriBuilder($@"{configuration.Protocol}://{configuration.Host.TrimEnd('/')}/{configuration.Path?.Trim('/')}/{path.TrimStart('/')}").Uri;
+
+        if (configuration.Port is not null)
+            return new UriBuilder(configuration.Protocol, configuration.Host, (int)configuration.Port, $@"{configuration.Path?.TrimEnd('/')}/{path.TrimStart('/')}").Uri;
 
         string errorMessage = new StringBuilder("Unsupported Front-End Test Configuration")
             .AppendLine($@"Host: ""{configuration.Host ?? "NULL"}""")
