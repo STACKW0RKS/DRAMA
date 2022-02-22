@@ -2,48 +2,77 @@ namespace DRAMA.Helpers.Configuration;
 
 internal static class ConfigurationParser
 {
-    internal static Profile GetTestRunProfile(string profileName = "DRAMA Default")
+    /// <summary>
+    ///     Returns a test run profile by name from the collection of test run profiles present in the configuration file.
+    ///     The default profile which will be returned is "DRAMA Default", however, this can be overridden by setting the "DRAMA Profile" environment variable.
+    ///     If no test run profile names in the configuration file match the value of the environment variable or the default value, then a NoMatchException is thrown.
+    /// </summary>
+    internal static Profile GetTestRunProfile(string environmentVariable = "DRAMA Profile", string profileName = "DRAMA Default")
     {
-        string testRunProfileName = Environment.GetEnvironmentVariable("DRAMA Profile").HasTextContent() ? Environment.GetEnvironmentVariable("DRAMA Profile")! : profileName;
+        // If the environment variable is set, then use the environment variable for the test run profile name, otherwise use the default value.
+        string testRunProfileName = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
+            ? Environment.GetEnvironmentVariable(environmentVariable) ?? profileName
+            : profileName;
 
-        Profile? testRunProfile = ParseConfiguration().Where(profile => profile.Key.Equals(testRunProfileName)).Select(profile => profile.Value).SingleOrDefault();
+        // Return the test run profile by name, or throw a NoMatchException if no test run profile with that name are present in the configuration file.
+        Profile testRunProfile = ParseConfiguration().SingleOrDefault(profile => profile.Key.Equals(testRunProfileName)).Value
+                                 ?? throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
 
-        if (testRunProfile is null) throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
-
+        // Set the name of the test run profile from the key under which the profile was stored in the dictionary of test run profiles.
+        // This is the more elegant approach, as the entire configuration for a single profile can be the value of the key with the profile's name.
+        // The alternative would be to have a list of unnamed profile objects, each having a "Profile Name" (or similar) key-value pair to identify the profile by.
         testRunProfile.Name = testRunProfileName;
 
-        return EnrichProfile(testRunProfile);
+        // If the profile's test run configuration is NULL, then create a new test run configuration for the profile.
+        // This is needed because defining the profile's test run configuration in the configuration file is not mandatory. 
+        testRunProfile.TestRun ??= new TestRun();
+
+        // Set the name of the test run. A timestamp is used so that multiple test runs in the same directory can be ordered in a logical sequence.
+        testRunProfile.TestRun.Name = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
+
+        // Set the path to the directory in which the test results will be stored.
+        testRunProfile.TestRun.ResultsPath = testRunProfile.TestRun.SetTestRunResultsPath();
+
+        // Return the test run profile, after having set values for the profile's mandatory properties.
+        return testRunProfile;
     }
 
+    /// <summary>
+    ///     Returns the collection of test run profiles discovered in the configuration file, or throws a NoMatchException if no test run profiles are discovered.
+    ///     The default configuration file name that this method looks for is "DRAMA.JSON", which needs to exist in the solution's output directory.
+    /// </summary>
     private static Dictionary<string, Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON")
     {
+        // Read the configuration file and store the content in memory.
         string configurationFileContent = File.ReadAllText(configurationFile);
 
+        // Deserialise the in-memory content of the configuration file to a dictionary of test run profiles, the keys of which are the profile names.
         Dictionary<string, Profile> testRunProfiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(configurationFileContent);
 
-        if (testRunProfiles.None()) throw new ConfigurationErrorsException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
+        // If no test run profiles have been discovered in the in-memory content of the configuration file, throw an exception.
+        if (testRunProfiles.None()) throw new NoMatchException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
 
+        // Return the dictionary of test run profiles.
         return testRunProfiles;
     }
 
-    private static Profile EnrichProfile(Profile profile)
+    /// <summary>
+    ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA Results" directory.
+    ///     The default base path is the solution's output directory, however, this can be overridden by setting the "DRAMA Results Path" environment variable.
+    /// </summary>
+    private static string SetTestRunResultsPath(this TestRun run, string environmentVariable = "DRAMA Results Path", string directoryName = "DRAMA Results")
     {
-        profile.TestRun ??= new TestRun();
-        profile.TestRun.Name = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
-
-        profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun) + Path.DirectorySeparatorChar;
-
-        return profile;
-    }
-
-    private static string SetTestRunResultsPath(TestRun run)
-        => Environment.GetEnvironmentVariable("DRAMA Results Path").HasTextContent()
-            ? Path.Combine(Environment.GetEnvironmentVariable("DRAMA Results Path")!, "DRAMA Results", run.Name)
+        // If the environment variable is set, then use the environment variable for the path.
+        // Otherwise, if the value of the key in the configuration file is either NULL or "DEFAULT" (case insensitive), then use the solution's output directory.
+        // Otherwise, use the value of the key in the configuration file for the path.
+        string resultsPath = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
+            ? Path.Combine(Environment.GetEnvironmentVariable(environmentVariable) ?? string.Empty, directoryName, run.Name ?? string.Empty)
             : run.ResultsPath is null || run.ResultsPath.Flatten().Equals("DEFAULT")
-                ? Path.Combine("DRAMA Results", run.Name)
-                : Path.Combine(run.ResultsPath, "DRAMA Results", run.Name);
+                ? Path.Combine(directoryName, run.Name ?? string.Empty)
+                : Path.Combine(run.ResultsPath, directoryName, run.Name ?? string.Empty);
 
-
-
-    // TODO: Add Comments To All Of This
+        // Append a directory separator character to the path before returning it.
+        // The directory separator character is "\" on Windows and "/" on UNIX-based systems.
+        return resultsPath + Path.DirectorySeparatorChar;
+    }
 }
