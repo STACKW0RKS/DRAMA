@@ -33,9 +33,6 @@ internal static class ConfigurationParser
 
         profile.TestRun.ResultsPath = SetTestRunResultsPath(profile.TestRun) + Path.DirectorySeparatorChar;
 
-        // TODO: The Origin Only Applies To Front-End And API Tests, So Maybe It Should Not Be In The Test Run Object
-        profile.TestRun.Origin = SetTestRunOrigin(profile.SystemUnderTest?.FrontEnd ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{profile.Name}"""));
-
         return profile;
     }
 
@@ -46,21 +43,7 @@ internal static class ConfigurationParser
                 ? Path.Combine("DRAMA Results", run.Name)
                 : Path.Combine(run.ResultsPath, "DRAMA Results", run.Name);
 
-    private static Uri? SetTestRunOrigin(FrontEnd layer)
-    {
-        if (layer.Host is null && layer.Protocol is null && layer.Port is null && layer.Origin is null) return null;
-        if (layer.Host is not null && layer.Protocol is null && layer.Port is null) return new UriBuilder($@"{layer.Host}/{layer.Origin?.TrimStart('/')}").Uri;
-        if (layer.Port is not null) return new UriBuilder(layer.Protocol, layer.Host, (int)layer.Port, layer.Origin).Uri;
 
-        string errorMessage = new StringBuilder("Unsupported Front-End Test Configuration")
-            .AppendLine($@"Host: ""{layer.Host ?? "NULL"}""")
-            .AppendLine($@"Protocol: ""{layer.Protocol ?? "NULL"}""")
-            .AppendLine($@"Port: ""{layer.Port.ToString() ?? "NULL"}""")
-            .AppendLine($@"Origin: ""{layer.Origin ?? "NULL"}""")
-            .ToString();
-
-        throw new ConfigurationErrorsException(errorMessage);
-    }
 
     // TODO: Add Comments To All Of This
 }

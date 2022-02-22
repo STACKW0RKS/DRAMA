@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data.SqlClient;
 using DRAMA.Contexts;
+using DRAMA.Enumerations;
 using DRAMA.Extensions.Specflow;
 using Microsoft.Data.Sqlite;
 using Oracle.ManagedDataAccess.Client;
