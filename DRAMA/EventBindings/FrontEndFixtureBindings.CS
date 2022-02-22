@@ -22,8 +22,8 @@ public sealed class FrontEndFixtureBindings
         {
             ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }, // TODO: Make Configurable
             IgnoreHTTPSErrors = true,
-            RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title), // TODO: Sanitise Feature Name So It Can Be Used As Path
-            RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
+            RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible()),
+            RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
         };
 
         IBrowserContext browserContext = await browser.NewContextAsync(browserNewContextOptions);
@@ -43,5 +43,5 @@ public sealed class FrontEndFixtureBindings
     [AfterFeature("Front-End", "End-To-End", Order = 0)]
     public static async Task AfterFeature(FeatureContext featureContext)
         => await featureContext.GetProperty<IBrowser>("Browser").Contexts.Single().Tracing.StopAsync(new TracingStopOptions
-            { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
+            { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
 }

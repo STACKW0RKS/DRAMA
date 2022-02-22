@@ -9,6 +9,17 @@ public static class StringExtensions
         => new CultureInfo(culture, false).TextInfo.ToTitleCase(text);
 
     /// <summary>
+    ///     Converts the input string to a string which can be used to name files or directories inside the operating system.
+    ///     Works for both Windows and UNIX-based systems.
+    ///     Does not handle reserved names, which means that an exception will still be thrown when attempting to name a file "NUL", "CON", "AUX", etc.
+    /// </summary>
+    public static string ToPathCompatible(this string text)
+        => text.Trim().Trim('.')
+            .Replace('<', '-').Replace('>', '-').Replace(":", "-").Replace('"', '-')
+            .Replace('\\', '-').Replace('/', '-').Replace('|', '-')
+            .Replace("?", string.Empty).Replace("*", string.Empty);
+
+    /// <summary>
     ///     Trims leading and trailing white-space characters, and converts the text to uppercase.
     ///     <br />
     ///     The intended use of this method is string comparison operations.
