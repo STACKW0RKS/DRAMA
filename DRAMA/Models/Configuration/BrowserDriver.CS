@@ -8,4 +8,7 @@ public class BrowserDriver
 
     [JsonProperty("Browser Options")]
     public BrowserTypeLaunchOptions? BrowserOptions { get; set; }
+
+    [JsonProperty("Debug Logging")]
+    public bool? DebugLogging { get; set; }
 }

@@ -18,7 +18,8 @@
 			"Browser Options": {
 				"Headless": false,
 				"Devtools": false
-			}
+			},
+			"Debug Logging": true
 		}
 	},
 	
