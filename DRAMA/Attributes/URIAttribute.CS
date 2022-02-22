@@ -1,6 +1,4 @@
-﻿using DRAMA.Contexts;
-
-namespace DRAMA.Attributes;
+﻿namespace DRAMA.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 public sealed class URIAttribute : Attribute
@@ -30,5 +28,3 @@ public sealed class URIAttribute : Attribute
         throw new ConfigurationErrorsException(errorMessage);
     }
 }
-
-// TODO: Make Most Classes Sealed?

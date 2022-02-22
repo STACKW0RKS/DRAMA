@@ -1,10 +1,7 @@
-﻿using DRAMA.Contexts;
-using DRAMA.Extensions.Specflow;
-
-namespace DRAMA.EventBindings;
+﻿namespace DRAMA.EventBindings;
 
 [Binding]
-public class FrontEndFixtureBindings
+public sealed class FrontEndFixtureBindings
 {
     [BeforeFeature("Front-End", "End-To-End", Order = 0)]
     public static async Task BeforeFeature(FeatureContext featureContext)

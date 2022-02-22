@@ -1,12 +1,7 @@
-﻿// TODO: Remove This Type After Migrating Away From Extent Reports
-
-using DRAMA.Contexts;
-using DRAMA.Extensions.Specflow;
-
-namespace DRAMA.EventBindings;
+﻿namespace DRAMA.EventBindings;
 
 [Binding]
-public class ExtentReportBindings
+public sealed class ExtentReportBindings // TODO: Remove This Type After Migrating Away From Extent Reports
 {
     private static ExtentReports? Report { get; set; }
     private static List<ExtentTest>? Features { get; set; }

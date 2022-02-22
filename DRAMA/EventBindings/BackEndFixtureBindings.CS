@@ -1,15 +1,7 @@
-﻿using System.Data.Common;
-using System.Data.SqlClient;
-using DRAMA.Contexts;
-using DRAMA.Enumerations;
-using DRAMA.Extensions.Specflow;
-using Microsoft.Data.Sqlite;
-using Oracle.ManagedDataAccess.Client;
-
-namespace DRAMA.EventBindings;
+﻿namespace DRAMA.EventBindings;
 
 [Binding]
-public class BackEndFixtureBindings
+public sealed class BackEndFixtureBindings
 {
     [BeforeFeature("Back-End", Order = 0)]
     public static void BeforeFeature(FeatureContext featureContext)
