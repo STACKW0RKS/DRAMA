@@ -31,5 +31,11 @@ public abstract class ProtoPage
     /// </summary>
     public Uri URI => GetType().GetCustomAttribute<URIAttribute>(false)?.URI ?? new Uri(Page.Url);
 
+    /// <summary>
+    ///     The unescaped URI at which this page is located.
+    ///     Using this is preferred over URI.AbsoluteUri when escaped characters are not expected in the path (e.g. "#" will be used instead of "%23").
+    /// </summary>
+    public string UnescapedURI => Uri.UnescapeDataString(URI.AbsoluteUri);
+
     // TODO: Try To Inject The Current Page In Here, Maybe By Using The Binding Attribute And Then Injecting The Feature Context
 }

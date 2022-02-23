@@ -3,6 +3,12 @@ namespace DRAMA.Helpers.Configuration;
 internal static class ConfigurationParser
 {
     /// <summary>
+    ///     The name of the test run.
+    ///     The value of this property is generated at runtime.
+    /// </summary>
+    private static string TestRunName => $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
+
+    /// <summary>
     ///     Returns a test run profile by name from the collection of test run profiles present in the configuration file.
     ///     The default profile which will be returned is "DRAMA Default", however, this can be overridden by setting the "DRAMA Profile" environment variable.
     ///     If no test run profile names in the configuration file match the value of the environment variable or the default value, then a NoMatchException is thrown.
@@ -28,7 +34,7 @@ internal static class ConfigurationParser
         testRunProfile.TestRun ??= new TestRun();
 
         // Set the name of the test run. A timestamp is used so that multiple test runs in the same directory can be ordered in a logical sequence.
-        testRunProfile.TestRun.Name = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
+        testRunProfile.TestRun.Name = TestRunName;
 
         // Set the path to the directory in which the test results will be stored.
         testRunProfile.TestRun.ResultsPath = testRunProfile.TestRun.SetTestRunResultsPath();
@@ -60,16 +66,28 @@ internal static class ConfigurationParser
     ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA Results" directory.
     ///     The default base path is the solution's output directory, however, this can be overridden by setting the "DRAMA Results Path" environment variable.
     /// </summary>
-    private static string SetTestRunResultsPath(this TestRun run, string environmentVariable = "DRAMA Results Path", string directoryName = "DRAMA Results")
+    private static string SetTestRunResultsPath
+        (this TestRun run, string resultsPathEnvironmentVariable = "DRAMA Results Path", string directoryName = "DRAMA Results", string testRunNameEnvironmentVariable = "DRAMA Test Run Name")
     {
-        // If the environment variable is set, then use the environment variable for the path.
-        // Otherwise, if the value of the key in the configuration file is either NULL or "DEFAULT" (case insensitive), then use the solution's output directory.
+        // If the test run name environment variable is set, then use that environment variable for the test run name.
+        // Otherwise, use the test run name generated at runtime.
+        // If the test run name is NULL, generate a new test run name and use that.
+        string testRunName = Environment.GetEnvironmentVariable(testRunNameEnvironmentVariable).HasTextContent()
+            ? Environment.GetEnvironmentVariable(testRunNameEnvironmentVariable)!
+            : run.Name ??= TestRunName;
+
+        // If the results path environment variable is set, then use that environment variable for the results path.
+        // Otherwise, if the value of the "Results Path" key in the configuration file is either NULL or "DEFAULT" (case insensitive), then use the solution's output directory.
         // Otherwise, use the value of the key in the configuration file for the path.
-        string resultsPath = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
-            ? Path.Combine(Environment.GetEnvironmentVariable(environmentVariable) ?? string.Empty, directoryName, run.Name ?? string.Empty)
+        string resultsPath = Environment.GetEnvironmentVariable(resultsPathEnvironmentVariable).HasTextContent()
+            ? Path.Combine(Environment.GetEnvironmentVariable(resultsPathEnvironmentVariable)!, directoryName, testRunName)
             : run.ResultsPath is null || run.ResultsPath.Flatten().Equals("DEFAULT")
-                ? Path.Combine(directoryName, run.Name ?? string.Empty)
-                : Path.Combine(run.ResultsPath, directoryName, run.Name ?? string.Empty);
+                ? Path.Combine(directoryName, testRunName)
+                : Path.Combine(
+                    Uri.IsWellFormedUriString(run.ResultsPath, UriKind.RelativeOrAbsolute)
+                        ? run.ResultsPath
+                        : throw new UriFormatException($@"""{run.ResultsPath} Is Not A Valid URI For The Results Path"""),
+                    directoryName, testRunName);
 
         // Append a directory separator character to the path before returning it.
         // The directory separator character is "\" on Windows and "/" on UNIX-based systems.
