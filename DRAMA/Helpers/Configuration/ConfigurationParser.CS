@@ -63,12 +63,12 @@ internal static class ConfigurationParser
     }
 
     /// <summary>
-    ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA Results" directory.
+    ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA-Results" directory.
     ///     The name of this directory can be overridden by setting the "DRAMA-Test-Run-Name" environment variable.
     ///     The default base path is the solution's output directory, however, this can be overridden by setting the "DRAMA-Results-Path" environment variable.
     /// </summary>
     private static string SetTestRunResultsPath
-        (this TestRun run, string resultsPathEnvironmentVariable = "DRAMA-Results-Path", string directoryName = "DRAMA Results", string testRunNameEnvironmentVariable = "DRAMA-Test-Run-Name")
+        (this TestRun run, string resultsPathEnvironmentVariable = "DRAMA-Results-Path", string directoryName = "DRAMA-Results", string testRunNameEnvironmentVariable = "DRAMA-Test-Run-Name")
     {
         // If the test run name environment variable is set, then use that environment variable for the test run name.
         // Otherwise, use the test run name generated at runtime.
