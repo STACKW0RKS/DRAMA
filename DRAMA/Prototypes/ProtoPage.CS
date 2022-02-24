@@ -25,17 +25,17 @@ public abstract class ProtoPage
     public string Title => Page.TitleAsync().Get();
 
     /// <summary>
-    ///     The URI at which this page is located.
+    ///     The URI which identifies this page.
     ///     This property is set by decorating the page model with the URI attribute.
     ///     If the page model has not been decorated with the URI attribute, the value of this property is the current URL of the page.
     /// </summary>
     public Uri URI => GetType().GetCustomAttribute<URIAttribute>(false)?.URI ?? new Uri(Page.Url);
 
     /// <summary>
-    ///     The unescaped URI at which this page is located.
-    ///     Using this is preferred over URI.AbsoluteUri when escaped characters are not expected in the path (e.g. "#" will be used instead of "%23").
+    ///     The URL at which this page is located.
+    ///     This can also be used as an unescaped version of URI.AbsoluteUri (e.g. "#" will be used instead of "%23").
     /// </summary>
-    public string UnescapedURI => Uri.UnescapeDataString(URI.AbsoluteUri);
+    public string URL => Uri.UnescapeDataString(URI.AbsoluteUri);
 
     // TODO: Try To Inject The Current Page In Here, Maybe By Using The Binding Attribute And Then Injecting The Feature Context
 }

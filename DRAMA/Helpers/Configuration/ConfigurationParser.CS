@@ -10,10 +10,10 @@ internal static class ConfigurationParser
 
     /// <summary>
     ///     Returns a test run profile by name from the collection of test run profiles present in the configuration file.
-    ///     The default profile which will be returned is "DRAMA Default", however, this can be overridden by setting the "DRAMA-Profile" environment variable.
+    ///     The default profile which will be returned is "DRAMA Default", however, this can be overridden by setting the "DRAMA_PROFILE" environment variable.
     ///     If no test run profile names in the configuration file match the value of the environment variable or the default value, then a NoMatchException is thrown.
     /// </summary>
-    internal static Profile GetTestRunProfile(string environmentVariable = "DRAMA-Profile", string profileName = "DRAMA Default")
+    internal static Profile GetTestRunProfile(string environmentVariable = "DRAMA_PROFILE", string profileName = "DRAMA Default")
     {
         // If the environment variable is set, then use the environment variable for the test run profile name, otherwise use the default value.
         string testRunProfileName = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
@@ -63,12 +63,12 @@ internal static class ConfigurationParser
     }
 
     /// <summary>
-    ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA-Results" directory.
-    ///     The name of this directory can be overridden by setting the "DRAMA-Test-Run-Name" environment variable.
-    ///     The default base path is the solution's output directory, however, this can be overridden by setting the "DRAMA-Results-Path" environment variable.
+    ///     Returns the path to the directory in which the test results will be stored. The parent of this directory is the "DRAMA_RESULTS" directory.
+    ///     The name of this directory can be overridden by setting the "DRAMA_TEST_RUN_NAME" environment variable.
+    ///     The default base path is the solution's output directory, however, this can be overridden by setting the "DRAMA_RESULTS_PATH" environment variable.
     /// </summary>
-    private static string SetTestRunResultsPath
-        (this TestRun run, string resultsPathEnvironmentVariable = "DRAMA-Results-Path", string directoryName = "DRAMA-Results", string testRunNameEnvironmentVariable = "DRAMA-Test-Run-Name")
+    private static string SetTestRunResultsPath // TODO: Make The Parameters Configurable
+        (this TestRun run, string resultsPathEnvironmentVariable = "DRAMA_RESULTS_PATH", string directoryName = "DRAMA_RESULTS", string testRunNameEnvironmentVariable = "DRAMA_TEST_RUN_NAME")
     {
         // If the test run name environment variable is set, then use that environment variable for the test run name.
         // Otherwise, use the test run name generated at runtime.
