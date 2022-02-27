@@ -18,9 +18,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Resources\Table-Parser-Unit-Testing-Playground.HTML">
+		<Content Include="Resources\Table-Parser-Unit-Testing-Playground.HTML">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		</Content>
 	</ItemGroup>
 
 </Project>

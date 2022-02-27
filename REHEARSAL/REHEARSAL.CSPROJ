@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.SDK">
 
 	<PropertyGroup>
 		<TargetFramework>NET6.0</TargetFramework>
@@ -17,15 +17,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="DRAMA.JSON">
+		<Content Include="DRAMA.JSON">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		</Content>
 	</ItemGroup>
 
 	<Target Name="UnzipArchive" BeforeTargets="Build">
 		<Unzip
 			SourceFiles="Resources\Browser-Driver-Playground.ZIP"
 			DestinationFolder="$(OutputPath)\Resources"
+			SkipUnchangedFiles="TRUE"
 			OverwriteReadOnlyFiles="TRUE"
 		/>
 	</Target>

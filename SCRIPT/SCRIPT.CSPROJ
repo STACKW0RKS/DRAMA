@@ -19,9 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="SPECFLOW.JSON">
+		<Content Include="SPECFLOW.JSON">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		</Content>
 	</ItemGroup>
 
 </Project>

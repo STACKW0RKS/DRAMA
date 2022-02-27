@@ -32,18 +32,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\ICON.PNG" Visible="FALSE">
+		<Content Include="..\ICON.PNG" Visible="FALSE">
 			<Pack>TRUE</Pack>
 			<PackagePath>\</PackagePath>
-		</None>
-		<None Include="..\README.MD" Visible="FALSE">
+		</Content>
+		<Content Include="..\README.MD" Visible="FALSE">
 			<Pack>TRUE</Pack>
 			<PackagePath>\</PackagePath>
-		</None>
-		<None Include="..\LICENSE" Visible="FALSE">
+		</Content>
+		<Content Include="..\LICENSE" Visible="FALSE">
 			<Pack>TRUE</Pack>
 			<PackagePath>\</PackagePath>
-		</None>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
