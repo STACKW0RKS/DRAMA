@@ -50,8 +50,7 @@
 		<!-- TODO: Remove ExtentReports After Migrating Away From Extent Reports -->
 		<PackageReference Include="ExtentReports" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.2" />
-		<!-- TODO: Update Playwright After NuGet Packaging Fix (v1.19.0 Currently Causes The NuGet Package To Be 50MB+) -->
-		<PackageReference Include="Microsoft.Playwright" Version="1.18.1" />
+		<PackageReference Include="Microsoft.Playwright" Version="1.19.1" />
 		<PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.50" />
 		<PackageReference Include="SpecFlow" Version="3.9.52" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
