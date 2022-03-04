@@ -11,8 +11,8 @@ internal sealed class FrontEndSteps : ProtoStep
     public async Task I_NAVIGATE_TO_STRING(string URI)
     {
         await FeatureContext.GetCurrentBrowserTab().GotoAsync(URI);
-        //Assert.Fail("QWERERT");
-        throw new NoMatchException("HFURIDHFUIDHUKJFDHN");
+        // Assert.Fail("FAIL");
+        throw new NoMatchException("EXCEPTION");
     }
 
     [Then(@"I CONFIRM THAT THE PAGE TITLE CONTAINS ""(.*)""")]

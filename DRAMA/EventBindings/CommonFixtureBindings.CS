@@ -4,13 +4,10 @@
 public class CommonFixtureBindings
 {
     [BeforeStep(Order = 1)]
-    public void BeforeStep(FeatureContext featureContext)
+    public void BeforeStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
-        ScenarioStepContext asd = ScenarioStepContext.Current;
-
         if ((TestRunContext.Profile.TestRun?.StopFeatureAtFirstError ?? false) && featureContext.GetErrorsHaveOccurred().Equals(true))
-            //scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
-            asd.Status = ScenarioExecutionStatus.Skipped;
+            scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
     }
 
     [AfterStep(Order = 1)]

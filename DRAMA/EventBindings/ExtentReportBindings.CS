@@ -33,10 +33,14 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
         => CurrentScenario = Features?.Single(feature => feature.Model.Name == featureContext.FeatureInfo.Title).CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
 
-    [BeforeStep(Order = 2)]
-    public void BeforeStep(FeatureContext featureContext, ScenarioContext scenarioContext)
+    [AfterStep(Order = 1)]
+    public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
-        //if ((CurrentScenario?.Model.NodeContext.All()?.Where(test => test.Name == scenarioContext.StepContext.StepInfo.Text).None() ?? true).Equals(false)) return;
+        MediaEntityModelProvider? mediaEntity = default;
+
+        if (featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End", "End-To-End" }).Any())
+            mediaEntity = MediaEntityBuilder.CreateScreenCaptureFromBase64String
+                    (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build();
 
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
@@ -67,18 +71,6 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
                 StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
-    }
-
-    [AfterStep(Order = 1)]
-    public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
-    {
-        MediaEntityModelProvider? mediaEntity = default;
-
-        if (featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End", "End-To-End" }).Any())
-            mediaEntity = MediaEntityBuilder.CreateScreenCaptureFromBase64String
-                    (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build();
-
-        StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.OK))
             _ = stepType switch
@@ -106,6 +98,13 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
                 StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
+    }
+
+    [AfterScenario(Order = 1)]
+    public void AfterScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
+    {
+        var asd = scenarioContext;
+        // TRY TO RECONSTRUCT THE REPORT HERE
     }
 
     [AfterTestRun(Order = 1)]
