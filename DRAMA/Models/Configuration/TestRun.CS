@@ -9,5 +9,8 @@ public class TestRun
     [JsonProperty("Results Path")]
     public string? ResultsPath { get; set; }
 
-    // TODO: See What "stopAtFirstError" Does & Implement Option To Skip All Step Runs After A Failed Step Run
+    [JsonProperty("Stop Feature At First Error")]
+    public bool? StopFeatureAtFirstError { get; set; }
+
+    // TODO: Create Schema For Configuration File
 }

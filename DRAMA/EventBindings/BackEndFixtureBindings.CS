@@ -3,7 +3,7 @@
 [Binding]
 public sealed class BackEndFixtureBindings
 {
-    [BeforeFeature("Back-End", Order = 0)]
+    [BeforeFeature("Back-End", Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
         BackEnd? configuration = TestRunContext.Profile.SystemUnderTest?.BackEnd;
@@ -25,7 +25,7 @@ public sealed class BackEndFixtureBindings
         featureContext.SetProperty("Database Connection", databaseConnection); // TODO: Create Dedicated Extension Method For This
     }
 
-    [AfterFeature("Back-End", Order = 0)]
+    [AfterFeature("Back-End", Order = 1)]
     public static void AfterFeature(FeatureContext featureContext)
     {
         // TODO: Implement This

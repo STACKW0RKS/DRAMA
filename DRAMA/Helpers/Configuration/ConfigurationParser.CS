@@ -39,6 +39,9 @@ internal static class ConfigurationParser
         // Set the path to the directory in which the test results will be stored.
         testRunProfile.TestRun.ResultsPath = testRunProfile.TestRun.SetTestRunResultsPath();
 
+        // If the "Stop Feature At First Error" option is not set, default to FALSE.
+        testRunProfile.TestRun.StopFeatureAtFirstError ??= false;
+
         // Return the test run profile, after having set values for the profile's mandatory properties.
         return testRunProfile;
     }

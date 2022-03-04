@@ -3,7 +3,7 @@
 [Binding]
 public sealed class FrontEndFixtureBindings
 {
-    [BeforeFeature("Front-End", "End-To-End", Order = 0)]
+    [BeforeFeature("Front-End", "End-To-End", Order = 1)]
     public static async Task BeforeFeature(FeatureContext featureContext)
     {
         Profile profile = TestRunContext.Profile;
@@ -44,7 +44,7 @@ public sealed class FrontEndFixtureBindings
         featureContext.SetCurrentBrowserTab(await browserContext.NewPageAsync());
     }
 
-    [AfterFeature("Front-End", "End-To-End", Order = 0)]
+    [AfterFeature("Front-End", "End-To-End", Order = 1)]
     public static async Task AfterFeature(FeatureContext featureContext)
         => await featureContext.GetProperty<IBrowser>("Browser").Contexts.Single().Tracing.StopAsync(new TracingStopOptions
             { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });

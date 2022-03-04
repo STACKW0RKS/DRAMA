@@ -1,7 +1,8 @@
 {
 	"DRAMA Default": {
 		"Test Run": {
-			"Results Path": "default"
+			"Results Path": "default",
+			"Stop Feature At First Error": true
 		},
 		
 		"System Under Test": {

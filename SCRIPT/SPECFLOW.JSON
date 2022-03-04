@@ -19,7 +19,7 @@
 	"runtime": {
 		"missingOrPendingStepsOutcome": "Pending",
 		"obsoleteBehavior": "Warn",
-		"stopAtFirstError": true
+		"stopAtFirstError": false
 	},
 	
 	"trace": {
