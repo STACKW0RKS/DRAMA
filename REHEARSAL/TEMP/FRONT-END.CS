@@ -1,6 +1,4 @@
-﻿using DRAMA.Models.TargetFramework;
-
-namespace REHEARSAL.TEMP;
+﻿namespace REHEARSAL.TEMP;
 
 [Binding]
 internal sealed class FrontEndSteps : ProtoStep
@@ -9,11 +7,7 @@ internal sealed class FrontEndSteps : ProtoStep
 
     [When(@"I NAVIGATE TO ""(.*)""")]
     public async Task I_NAVIGATE_TO_STRING(string URI)
-    {
-        await FeatureContext.GetCurrentBrowserTab().GotoAsync(URI);
-        // Assert.Fail("FAIL");
-        throw new NoMatchException("EXCEPTION");
-    }
+        => await FeatureContext.GetCurrentBrowserTab().GotoAsync(URI);
 
     [Then(@"I CONFIRM THAT THE PAGE TITLE CONTAINS ""(.*)""")]
     public async Task I_CONFIRM_THAT_THE_PAGE_TITLE_CONTAINS_STRING(string title)

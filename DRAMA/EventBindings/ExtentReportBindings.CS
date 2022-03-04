@@ -62,7 +62,6 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
-
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.Skipped))
             _ = stepType switch
             {
@@ -98,13 +97,6 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
                 StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
-    }
-
-    [AfterScenario(Order = 1)]
-    public void AfterScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
-    {
-        var asd = scenarioContext;
-        // TRY TO RECONSTRUCT THE REPORT HERE
     }
 
     [AfterTestRun(Order = 1)]
