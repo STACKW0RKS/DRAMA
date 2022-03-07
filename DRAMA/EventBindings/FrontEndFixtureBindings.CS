@@ -20,11 +20,13 @@ public sealed class FrontEndFixtureBindings
             _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.BrowserDriver?.Browser}"" (Expected: chromium\firefox\webkit)")
         };
 
+        // TODO: Make These Configurable
         BrowserNewContextOptions browserNewContextOptions = new()
         {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }, // TODO: Make Configurable
+            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
             IgnoreHTTPSErrors = true,
             RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible()),
+            RecordVideoSize = new RecordVideoSize() { Width = 1280, Height = 720 },
             RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
         }; // TODO: Find Out Why HAR Files Are Not Being Created Anymore (Maybe The Browser Type? Maybe The Path? Maybe Not Closing The Browser Context Properly?)
 
@@ -44,6 +46,13 @@ public sealed class FrontEndFixtureBindings
 
     [AfterFeature("Front-End", "End-To-End", Order = 1)]
     public static async Task AfterFeature(FeatureContext featureContext)
-        => await featureContext.GetProperty<IBrowser>("Browser").Contexts.Single().Tracing.StopAsync(new TracingStopOptions
+    {
+        IBrowserContext browserContext = featureContext.GetProperty<IBrowser>("Browser").Contexts.Single();
+
+        await browserContext.Tracing.StopAsync(new TracingStopOptions
             { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
+
+        // Required for the generation of HAR files.
+        await browserContext.CloseAsync();
+    }
 }
