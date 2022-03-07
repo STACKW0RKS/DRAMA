@@ -3,7 +3,7 @@
 [JsonObject]
 public class Profile
 {
-    [Newtonsoft.Json.JsonIgnore]
+    [JsonProperty("Name")]
     public string? Name { get; set; }
 
     [JsonProperty("Test Run")]

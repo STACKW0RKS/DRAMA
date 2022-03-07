@@ -11,6 +11,4 @@ public class TestRun
 
     [JsonProperty("Stop Feature At First Error")]
     public bool? StopFeatureAtFirstError { get; set; }
-
-    // TODO: Create Schema For Configuration File
 }

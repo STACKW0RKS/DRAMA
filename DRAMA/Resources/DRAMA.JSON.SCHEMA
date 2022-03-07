@@ -48,6 +48,27 @@
 										"Host"
 									]
 								},
+								"API": {
+									"type": "object",
+									"properties": {
+										"Host": {
+											"type": "string"
+										},
+										"Protocol": {
+											"type": "string"
+										},
+										"Port": {
+											"type": "integer"
+										},
+										"Path": {
+											"type": "string"
+										}
+									},
+									"additionalProperties": false,
+									"required": [
+										"Host"
+									]
+								},
 								"Back-End": {
 									"type": "object",
 									"properties": {
