@@ -42,6 +42,9 @@ internal static class ConfigurationParser
         // If the "Stop Feature At First Error" option is not set, default to FALSE.
         testRunProfile.TestRun.StopFeatureAtFirstError ??= true;
 
+        // If the test run profile specifies browser driver configuration, set whether Playwright outputs debug events to the log or not.
+        testRunProfile.BrowserDriver?.SetDebugLogging();
+
         // Return the test run profile, after having set values for the profile's mandatory properties.
         return testRunProfile;
     }
@@ -96,5 +99,17 @@ internal static class ConfigurationParser
         // Append a directory separator character to the path before returning it.
         // The directory separator character is "\" on Windows and "/" on UNIX-based systems.
         return resultsPath + Path.DirectorySeparatorChar;
+    }
+
+    /// <summary>
+    ///     Sets whether Playwright outputs debug events to the log or not.
+    ///     The default value is FALSE. Additional information can be found at <a href="https://playwright.dev/dotnet/docs/debug#verbose-api-logs"></a>.
+    /// </summary>
+    private static void SetDebugLogging(this BrowserDriver browserDriver)
+    {
+        foreach (EnvironmentVariableTarget target in new[] { EnvironmentVariableTarget.Machine, EnvironmentVariableTarget.User, EnvironmentVariableTarget.Process })
+            if (Environment.GetEnvironmentVariable("DEBUG", target) is not null) Environment.SetEnvironmentVariable("DEBUG", null);
+
+        if (browserDriver.DebugLogging ?? false) Environment.SetEnvironmentVariable("DEBUG", "pw:api", EnvironmentVariableTarget.Process);
     }
 }

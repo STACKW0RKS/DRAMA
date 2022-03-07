@@ -10,8 +10,6 @@ public sealed class FrontEndFixtureBindings
 
         // TODO: Throw An Exception If Browser Driver Is NULL
 
-        if (profile.BrowserDriver?.DebugLogging ?? false) Environment.SetEnvironmentVariable("DEBUG", "pw:api"); // https://playwright.dev/dotnet/docs/debug#verbose-api-logs
-
         IPlaywright playwright = await Playwright.CreateAsync();
 
         IBrowser browser = profile.BrowserDriver?.Browser?.ToLower() switch
