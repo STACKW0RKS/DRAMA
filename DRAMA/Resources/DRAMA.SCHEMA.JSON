@@ -1,0 +1,112 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"Test Run Profiles": {
+			"type": "array",
+			"items": [
+				{
+					"type": "object",
+					"properties": {
+						"Name": {
+							"type": "string"
+						},
+						"Test Run": {
+							"type": "object",
+							"properties": {
+								"Results Path": {
+									"type": "string"
+								},
+								"Stop Feature At First Error": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false,
+							"required": []
+						},
+						"System Under Test": {
+							"type": "object",
+							"properties": {
+								"Front-End": {
+									"type": "object",
+									"properties": {
+										"Host": {
+											"type": "string"
+										},
+										"Protocol": {
+											"type": "string"
+										},
+										"Port": {
+											"type": "integer"
+										},
+										"Path": {
+											"type": "string"
+										}
+									},
+									"additionalProperties": false,
+									"required": [
+										"Host"
+									]
+								},
+								"Back-End": {
+									"type": "object",
+									"properties": {
+										"Database Engine": {
+											"type": "string"
+										},
+										"Connection String": {
+											"type": "string"
+										}
+									},
+									"additionalProperties": false,
+									"required": [
+										"Database Engine",
+										"Connection String"
+									]
+								}
+							},
+							"additionalProperties": false,
+							"required": []
+						},
+						"Browser Driver": {
+							"type": "object",
+							"properties": {
+								"Browser": {
+									"type": "string"
+								},
+								"Browser Options": {
+									"type": "object",
+									"properties": {
+										"Headless": {
+											"type": "boolean"
+										},
+										"Devtools": {
+											"type": "boolean"
+										}
+									},
+									"additionalProperties": true,
+									"required": []
+								},
+								"Debug Logging": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false,
+							"required": []
+						}
+					},
+					"additionalProperties": false,
+					"required": [
+						"Name",
+						"System Under Test"
+					]
+				}
+			],
+			"additionalItems": true
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"Test Run Profiles"
+	]
+}

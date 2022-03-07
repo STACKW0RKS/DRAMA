@@ -1,35 +1,41 @@
 {
-	"DRAMA Default": {
-		"Test Run": {
-			"Results Path": "default",
-			"Stop Feature At First Error": true
-		},
-		
-		"System Under Test": {
-			"Front-End": {
-				"Host": "127.0.0.1",
-				"Protocol": "https",
-				"Port": 666,
-				"Path": "/auth/login"
-			}
-		},
-		
-		"Browser Driver": {
-			"Browser": "firefox",
-			"Browser Options": {
-				"Headless": false,
-				"Devtools": false
+	"Test Run Profiles": [
+		{
+			"Name": "DRAMA Default",
+
+			"Test Run": {
+				"Results Path": "default",
+				"Stop Feature At First Error": true
 			},
-			"Debug Logging": true
-		}
-	},
-	
-	"SQLite Tests": {
-		"System Under Test": {
-			"Back-End": {
-				"Database Engine": "SQLite",
-				"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+
+			"System Under Test": {
+				"Front-End": {
+					"Host": "127.0.0.1",
+					"Protocol": "https",
+					"Port": 666,
+					"Path": "/auth/login"
+				}
+			},
+
+			"Browser Driver": {
+				"Browser": "firefox",
+				"Browser Options": {
+					"Headless": false,
+					"Devtools": false
+				},
+				"Debug Logging": true
+			}
+		},
+
+		{
+			"Name": "SQLite Tests",
+
+			"System Under Test": {
+				"Back-End": {
+					"Database Engine": "SQLite",
+					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+				}
 			}
 		}
-	}
+	]
 }

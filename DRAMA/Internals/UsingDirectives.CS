@@ -25,6 +25,8 @@
 
 # region Newtonsoft Using Directives
     global using Newtonsoft.Json;
+    global using Newtonsoft.Json.Linq;
+    global using Newtonsoft.Json.Schema;
 # endregion
 
 # region Oracle Using Directives
