@@ -26,8 +26,8 @@ public abstract class ProtoPage
 
     /// <summary>
     ///     The URI which identifies this page.
-    ///     This property is set by decorating the page model with the URI attribute.
-    ///     If the page model has not been decorated with the URI attribute, the value of this property is the current URL of the page.
+    ///     This property is set by decorating the page object model with the URI attribute.
+    ///     If the page object model has not been decorated with the URI attribute, the value of this property is the current URL of the page.
     /// </summary>
     public Uri URI => GetType().GetCustomAttribute<URIAttribute>(false)?.URI ?? new Uri(Page.Url);
 
