@@ -50,6 +50,7 @@
 		<ContentWithTargetPath Include="Resources\DRAMA.JSON.SCHEMA">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>DRAMA.JSON.SCHEMA</TargetPath>
+			<PackageCopyToOutput>TRUE</PackageCopyToOutput>
 		</ContentWithTargetPath>
 	</ItemGroup>
 
