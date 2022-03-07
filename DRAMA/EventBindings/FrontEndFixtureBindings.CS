@@ -28,7 +28,7 @@ public sealed class FrontEndFixtureBindings
             RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible()),
             RecordVideoSize = new RecordVideoSize() { Width = 1280, Height = 720 },
             RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
-        }; // TODO: Find Out Why HAR Files Are Not Being Created Anymore (Maybe The Browser Type? Maybe The Path? Maybe Not Closing The Browser Context Properly?)
+        };
 
         IBrowserContext browserContext = await browser.NewContextAsync(browserNewContextOptions);
         browserContext.SetDefaultTimeout(30000);
