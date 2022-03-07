@@ -47,6 +47,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ContentWithTargetPath Include="Resources\DRAMA.JSON.SCHEMA">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>DRAMA.JSON.SCHEMA</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- TODO: Remove ExtentReports After Migrating Away From Extent Reports -->
 		<PackageReference Include="ExtentReports" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.2" />

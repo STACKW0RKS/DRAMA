@@ -53,7 +53,7 @@ internal static class ConfigurationParser
     ///     Returns the collection of test run profiles discovered in the configuration file, or throws a NoMatchException if no test run profiles are discovered.
     ///     The default configuration file name that this method looks for is "DRAMA.JSON", which needs to exist in the solution's output directory.
     /// </summary>
-    private static Dictionary<string, Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON", string configurationSchema = "DRAMA.SCHEMA.JSON")
+    private static Dictionary<string, Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON", string configurationSchema = "DRAMA.JSON.SCHEMA")
     {
         // Read the configuration file and store the content in memory.
         string configurationFileContent = File.ReadAllText(configurationFile);
@@ -63,7 +63,7 @@ internal static class ConfigurationParser
 
         // Validate JSON configuration file against schema.
         if (JObject.Parse(configurationFileContent).IsValid(JSchema.Parse(schemaContent)).Equals(false))
-            throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{configurationSchema}"" Schema");
+            throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{configurationSchema}"" Configuration File Schema");
 
         // Deserialise the in-memory content of the configuration file to a dictionary of test run profiles, the keys of which are the profile names.
         Dictionary<string, Profile> testRunProfiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(configurationFileContent);
