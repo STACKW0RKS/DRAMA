@@ -32,26 +32,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="..\ICON.PNG" Visible="FALSE">
-			<Pack>TRUE</Pack>
-			<PackagePath>\</PackagePath>
-		</Content>
-		<Content Include="..\README.MD" Visible="FALSE">
-			<Pack>TRUE</Pack>
-			<PackagePath>\</PackagePath>
-		</Content>
-		<Content Include="..\LICENSE" Visible="FALSE">
-			<Pack>TRUE</Pack>
-			<PackagePath>\</PackagePath>
-		</Content>
+		<Content PackagePath="" Visible="FALSE" Include="..\ICON.PNG" />
+		<Content PackagePath="" Visible="FALSE" Include="..\README.MD" />
+		<Content PackagePath="" Visible="FALSE" Include="..\LICENSE" />
 	</ItemGroup>
 
-	<ItemGroup Label="OutputConfigurationSchemaFromPackage">
-		<Content Include="Targets\DRAMA.TARGETS" PackagePath="build\DRAMA.TARGETS" />
-		<Content Include="Resources\DRAMA.JSON.SCHEMA" Pack="TRUE" PackagePath="build\DRAMA.JSON.SCHEMA" PackageCopyToOutput="TRUE"/>
+	<ItemGroup>
+		<Content PackagePath="build" Include="Targets\DRAMA.TARGETS" />
+		<Content PackagePath="build" Include="Resources\DRAMA.JSON.SCHEMA" />
 	</ItemGroup>
 
-	<ItemGroup Label="OutputConfigurationSchema">
+	<ItemGroup>
 		<ContentWithTargetPath Include="Resources\DRAMA.JSON.SCHEMA">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>DRAMA.JSON.SCHEMA</TargetPath>
