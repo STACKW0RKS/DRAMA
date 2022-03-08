@@ -1,0 +1,11 @@
+<Project>
+
+	<ItemGroup>
+		<ConfigurationSchema Include="$(MSBuildThisFileDirectory)DRAMA.JSON.SCHEMA" />
+	</ItemGroup>
+
+	<Target Name="CopyConfigurationSchema" BeforeTargets="Build">
+		<Copy SourceFiles="@(ConfigurationSchema)" DestinationFolder="$(TargetDir)" />
+	</Target>
+
+</Project>

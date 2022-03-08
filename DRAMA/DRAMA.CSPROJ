@@ -10,7 +10,7 @@
 
 	<PropertyGroup>
 		<PackageID>DRAMA</PackageID>
-		<Version>0.3.9</Version>
+		<Version>0.3.10</Version>
 		<Title>DRAMA</Title>
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
@@ -25,8 +25,8 @@
 		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
 		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
 		<NeutralLanguage>en-GB</NeutralLanguage>
-		<AssemblyVersion>0.3.9.0</AssemblyVersion>
-		<FileVersion>0.3.9.0</FileVersion>
+		<AssemblyVersion>0.3.10.0</AssemblyVersion>
+		<FileVersion>0.3.10.0</FileVersion>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>TRUE</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
@@ -46,11 +46,17 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup Label="OutputConfigurationSchemaFromPackage">
+		<Content Include="Targets\DRAMA.TARGETS" PackagePath="build\DRAMA.TARGETS" />
+		<Content Include="Resources\DRAMA.JSON.SCHEMA" Pack="TRUE" PackagePath="build\DRAMA.JSON.SCHEMA">
+			<PackageCopyToOutput>TRUE</PackageCopyToOutput>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup Label="OutputConfigurationSchema">
 		<ContentWithTargetPath Include="Resources\DRAMA.JSON.SCHEMA">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>DRAMA.JSON.SCHEMA</TargetPath>
-			<PackageCopyToOutput>TRUE</PackageCopyToOutput>
 		</ContentWithTargetPath>
 	</ItemGroup>
 
