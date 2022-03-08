@@ -48,9 +48,7 @@
 
 	<ItemGroup Label="OutputConfigurationSchemaFromPackage">
 		<Content Include="Targets\DRAMA.TARGETS" PackagePath="build\DRAMA.TARGETS" />
-		<Content Include="Resources\DRAMA.JSON.SCHEMA" Pack="TRUE" PackagePath="build\DRAMA.JSON.SCHEMA">
-			<PackageCopyToOutput>TRUE</PackageCopyToOutput>
-		</Content>
+		<Content Include="Resources\DRAMA.JSON.SCHEMA" Pack="TRUE" PackagePath="build\DRAMA.JSON.SCHEMA" PackageCopyToOutput="TRUE"/>
 	</ItemGroup>
 
 	<ItemGroup Label="OutputConfigurationSchema">
