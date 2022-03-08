@@ -36,6 +36,7 @@
 # region TechTalk Using Directives
     global using TechTalk.SpecFlow;
     global using TechTalk.SpecFlow.Bindings;
+    global using TechTalk.SpecFlow.UnitTestProvider;
 # endregion
 
 # region System Using Directives

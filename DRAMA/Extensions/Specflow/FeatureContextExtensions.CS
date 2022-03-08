@@ -22,4 +22,10 @@ public static class FeatureContextExtensions
 
     public static bool GetErrorsHaveOccurred(this FeatureContext context)
         => context.TryGetValue("Errors Have Occurred", out bool errorsHaveOccurred) && errorsHaveOccurred;
+
+    public static void SetSkipFeatureSteps(this FeatureContext context, bool skipFeatureSteps)
+        => context.SetProperty("Skip Feature Steps", skipFeatureSteps);
+
+    public static bool GetSkipFeatureSteps(this FeatureContext context)
+        => context.TryGetValue("Skip Feature Steps", out bool skipFeatureSteps) && skipFeatureSteps;
 }

@@ -4,10 +4,13 @@
 public class CommonFixtureBindings
 {
     [BeforeStep(Order = 1)]
-    public void BeforeStep(FeatureContext featureContext, ScenarioContext scenarioContext)
+    public void BeforeStep(IUnitTestRuntimeProvider unitTestRuntimeProvider, FeatureContext featureContext)
     {
         if ((TestRunContext.Profile.TestRun?.StopFeatureAtFirstError ?? false) && featureContext.GetErrorsHaveOccurred().Equals(true))
-            scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
+        {
+            featureContext.SetSkipFeatureSteps(true);
+            unitTestRuntimeProvider.TestIgnore("Step Has Been Skipped Due To An Error In A Previous Step");
+        }
     }
 
     [AfterStep(Order = 1)]

@@ -1,10 +1,12 @@
-﻿namespace DRAMA.EventBindings;
+namespace DRAMA.EventBindings;
 
 [Binding]
 public sealed class ExtentReportBindings // TODO: Remove This Type After Migrating Away From Extent Reports
 {
     private static ExtentReports? Report { get; set; }
     private static List<ExtentTest>? Features { get; set; }
+    private static List<ExtentTest>? Scenarios { get; set; }
+    private static ExtentTest? CurrentFeature { get; set; }
     private static ExtentTest? CurrentScenario { get; set; }
 
     [BeforeTestRun(Order = 1)]
@@ -23,24 +25,36 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
         Report.AttachReporter(reporter);
 
         Features = new List<ExtentTest>();
+        Scenarios = new List<ExtentTest>();
     }
 
     [BeforeFeature(Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
-        => Features?.Add(Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised"));
+    {
+        CurrentFeature = Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised");
+        Features?.Add(CurrentFeature);
+    }
 
     [BeforeScenario(Order = 1)]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
-        => CurrentScenario = Features?.Single(feature => feature.Model.Name == featureContext.FeatureInfo.Title).CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+    {
+        CurrentScenario = CurrentFeature?.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title) ?? throw new ConfigurationErrorsException("Extent Feature Has Not Been Initialised");
+        Scenarios?.Add(CurrentScenario);
+    }
 
     [AfterStep(Order = 1)]
     public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
-        MediaEntityModelProvider? mediaEntity = default;
+        if (featureContext.GetSkipFeatureSteps())
+        {
+            scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
+            return;
+        }
 
-        if (featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End", "End-To-End" }).Any())
-            mediaEntity = MediaEntityBuilder.CreateScreenCaptureFromBase64String
-                    (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build();
+        MediaEntityModelProvider? mediaEntity = featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End", "End-To-End", "UI", "GUI" }).Any() // TODO: Think Of A Better Trigger For Taking A Screenshot
+            ? MediaEntityBuilder.CreateScreenCaptureFromBase64String
+                (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build()
+            : null;
 
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
@@ -101,5 +115,11 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
 
     [AfterTestRun(Order = 1)]
     public static void AfterTestRun()
-        => Report?.Flush();
+    {
+        if (Scenarios is not null)
+            foreach (ExtentTest scenario in Scenarios.Where(scenario => scenario.Model.HasChildren.Equals(false)))
+                scenario.Skip("Scenario Has Been Skipped Due To An Error In A Previous Scenario");
+
+        Report?.Flush();
+    }
 }
