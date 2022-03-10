@@ -5,14 +5,10 @@ Feature: Navigate To Hacker News
 
 
     Scenario:   [01/02] Navigate To Website
-        When    I PASS THE STEP
+        When    I RANDOMLY EITHER PASS OR FAIL THE STEP
         And     I NAVIGATE TO "https://news.ycombinator.com/"
         Then    I CONFIRM THAT THE PAGE TITLE CONTAINS "Hacker News"
-        And     I CONFIRM THAT THE PAGE TITLE CONTAINS "Hacker News"
-        And     I CONFIRM THAT THE PAGE TITLE CONTAINS "Hacker News"
-        And     I CONFIRM THAT THE PAGE TITLE CONTAINS "Hacker News"
 
     Scenario:   [02/02] Take A Screenshot
         Then    I TAKE A SCREENSHOT
-        And     I TAKE A SCREENSHOT
-        And     I TAKE A SCREENSHOT
+        And     I RANDOMLY EITHER PASS OR FAIL THE STEP
