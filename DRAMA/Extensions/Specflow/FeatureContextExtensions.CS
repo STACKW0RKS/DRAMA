@@ -28,4 +28,10 @@ public static class FeatureContextExtensions
 
     public static bool GetSkipFeatureSteps(this FeatureContext context)
         => context.TryGetValue("Skip Feature Steps", out bool skipFeatureSteps) && skipFeatureSteps;
+
+    public static void SetDatabaseConnection(this FeatureContext context, IDbConnection databaseConnection)
+        => context.SetProperty("Database Connection", databaseConnection);
+
+    public static IDbConnection GetDatabaseConnection(this FeatureContext context)
+        => context.GetProperty<IDbConnection>("Database Connection");
 }
