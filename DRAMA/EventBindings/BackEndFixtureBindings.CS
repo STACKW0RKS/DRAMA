@@ -1,4 +1,4 @@
-﻿namespace DRAMA.EventBindings;
+namespace DRAMA.EventBindings;
 
 [Binding]
 public sealed class BackEndFixtureBindings
@@ -8,23 +8,42 @@ public sealed class BackEndFixtureBindings
     {
         BackEnd? configuration = TestRunContext.Profile.SystemUnderTest?.BackEnd;
 
-        /*
-        // TODO: Think Of How To Not Use A Dynamic Or An Object Type (https://stackoverflow.com/questions/981330/instantiate-an-object-with-a-runtime-determined-type)
-        // Maybe Just Store To The Feature Context Straight From The Switch Statement
-        object databaseConnection = configuration?.DatabaseEngine switch
+        DbProviderFactory factory = configuration?.DatabaseEngine switch
         {
-            // TODO: Add Support For All Database Engines Defined By The DatabaseEngine Class
-            DatabaseEngine.MSSQLServer => new SqlConnection(connectionStringBuilder.ConnectionString),
-            DatabaseEngine.Oracle => new OracleConnection(connectionStringBuilder.ConnectionString),
-            DatabaseEngine.SQLite => new SqliteConnection(connectionStringBuilder.ConnectionString),
-            _ => throw new NoMatchException($@"Invalid Database Engine Type ""{configuration?.DatabaseEngine}"" (Inspect The DatabaseEngine Type For Information On Supported Values)")
+            DatabaseEngine.MSSQLServer => ((Func<DbProviderFactory>)(() =>
+            {
+                DbProviderFactories.RegisterFactory(DatabaseEngine.MSSQLServer, SqlClientFactory.Instance);
+                return DbProviderFactories.GetFactory(DatabaseEngine.MSSQLServer);
+            }))(),
+
+            DatabaseEngine.MySQL => ((Func<DbProviderFactory>)(() =>
+            {
+                DbProviderFactories.RegisterFactory(DatabaseEngine.MySQL, MySqlClientFactory.Instance);
+                return DbProviderFactories.GetFactory(DatabaseEngine.MySQL);
+            }))(),
+
+            DatabaseEngine.Oracle => ((Func<DbProviderFactory>)(() =>
+            {
+                DbProviderFactories.RegisterFactory(DatabaseEngine.Oracle, OracleClientFactory.Instance);
+                return DbProviderFactories.GetFactory(DatabaseEngine.Oracle);
+            }))(),
+
+            DatabaseEngine.PostgreSQL => ((Func<DbProviderFactory>)(() =>
+            {
+                DbProviderFactories.RegisterFactory(DatabaseEngine.PostgreSQL, NpgsqlFactory.Instance);
+                return DbProviderFactories.GetFactory(DatabaseEngine.PostgreSQL);
+            }))(),
+
+            DatabaseEngine.SQLite => ((Func<DbProviderFactory>)(() =>
+            {
+                DbProviderFactories.RegisterFactory(DatabaseEngine.SQLite, SqliteFactory.Instance);
+                return DbProviderFactories.GetFactory(DatabaseEngine.SQLite);
+            }))(),
+
+            _ => throw new NoMatchException($@"Unsupported Database Engine ""{configuration?.DatabaseEngine}""")
         };
-        */
 
-        DbProviderFactories.RegisterFactory("SQLite", /*SqlClientFactory.Instance*/ SqliteFactory.Instance);
-        DbProviderFactory factory = DbProviderFactories.GetFactory("SQLite"/*configuration?.DatabaseEngine ?? throw new ConfigurationErrorsException("No DB Engine Defined")*/);
-
-        IDbConnection databaseConnection = factory.CreateConnection() ?? throw new ConfigurationErrorsException("No DB Engine Defined 2");
+        IDbConnection databaseConnection = factory.CreateConnection() ?? throw new ConfigurationErrorsException("No Database Engine Defined");
 
         DbConnectionStringBuilder connectionStringBuilder = new() { ConnectionString = configuration?.ConnectionString };
 

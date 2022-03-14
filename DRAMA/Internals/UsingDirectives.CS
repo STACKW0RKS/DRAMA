@@ -23,6 +23,10 @@
     global using Microsoft.Playwright;
 # endregion
 
+# region MySQL Using Directives
+    global using MySql.Data.MySqlClient;
+# endregion
+
 # region Newtonsoft Using Directives
     global using Newtonsoft.Json;
     global using Newtonsoft.Json.Linq;
@@ -31,6 +35,10 @@
 
 # region Oracle Using Directives
     global using Oracle.ManagedDataAccess.Client;
+# endregion
+
+# region PostgreSQL Using Directives
+    global using Npgsql;
 # endregion
 
 # region TechTalk Using Directives
