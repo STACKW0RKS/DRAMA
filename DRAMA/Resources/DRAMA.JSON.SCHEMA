@@ -19,6 +19,12 @@
 								},
 								"Stop Feature At First Error": {
 									"type": "boolean"
+								},
+								"Property Bag": {
+									"type": "object",
+									"properties": {},
+									"additionalProperties": true,
+									"required": []
 								}
 							},
 							"additionalProperties": false,

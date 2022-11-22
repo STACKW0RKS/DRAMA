@@ -11,4 +11,7 @@ public class TestRun
 
     [JsonProperty("Stop Feature At First Error")]
     public bool? StopFeatureAtFirstError { get; set; }
+
+    [JsonProperty("Property Bag")]
+    public Dictionary<string, object>? PropertyBag { get; set; }
 }

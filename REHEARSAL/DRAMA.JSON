@@ -5,7 +5,10 @@
 
 			"Test Run": {
 				"Results Path": "default",
-				"Stop Feature At First Error": true
+				"Stop Feature At First Error": true,
+				"Property Bag": {
+					"Favourite Colour": "black"
+				}
 			},
 
 			"System Under Test": {

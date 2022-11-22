@@ -33,6 +33,15 @@ internal static class ConfigurationParser
         // If the "Stop Feature At First Error" option is not set, default to TRUE.
         testRunProfile.TestRun.StopFeatureAtFirstError ??= true;
 
+        // Populate the test run context with properties defined in the configuration file.
+        if (testRunProfile.TestRun.PropertyBag is not null && testRunProfile.TestRun.PropertyBag.Any())
+        {
+            TestRunContext.PropertyBag ??= new Dictionary<string, object>();
+
+            foreach (KeyValuePair<string, object> element in testRunProfile.TestRun.PropertyBag)
+                TestRunContext.PropertyBag.Add(element.Key, element.Value);
+        }
+
         // If the test run profile specifies a browser driver configuration, set whether Playwright outputs debug events to the log or not.
         testRunProfile.BrowserDriver?.SetDebugLogging();
 
