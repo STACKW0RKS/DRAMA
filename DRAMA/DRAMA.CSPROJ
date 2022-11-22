@@ -53,7 +53,7 @@
 		<!-- TODO: Remove ExtentReports After Migrating Away From Extent Reports -->
 		<PackageReference Include="ExtentReports" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Playwright" Version="1.27.2" />
+		<PackageReference Include="Microsoft.Playwright" Version="1.28.0" />
 		<PackageReference Include="MySql.Data" Version="8.0.31" />
 		<PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
 		<PackageReference Include="Npgsql" Version="7.0.0" />
