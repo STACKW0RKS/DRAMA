@@ -54,17 +54,25 @@ internal static class ConfigurationParser
     ///     The default configuration file name that this method looks for is "DRAMA.JSON", which needs to exist in the solution's output directory.
     ///     The configuration file is validated against the configuration schema defined in file "DRAMA.JSON.SCHEMA", which gets copied to the solution's output directory at build time.
     /// </summary>
-    private static IEnumerable<Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON", string configurationSchema = "DRAMA.JSON.SCHEMA")
+    private static IEnumerable<Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON", string schemaFile = "DRAMA.JSON.SCHEMA")
     {
+        // Set the configuration file, allowing for case-insensitive matches.
+        configurationFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Where(file => file.Name.Equals(configurationFile, StringComparison.OrdinalIgnoreCase))
+            .SingleOrDefault() ?? throw new FileNotFoundException($@"Configuration File ""{configurationFile}"" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
+
+        // Set the schema file, allowing for case-insensitive matches.
+        schemaFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Where(file => file.Name.Equals(schemaFile, StringComparison.OrdinalIgnoreCase))
+            .SingleOrDefault() ?? throw new FileNotFoundException($@"Configuration File Schema ""DRAMA.JSON."" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
+
         // Read the configuration file, and store the content in memory.
         string configurationFileContent = File.ReadAllText(configurationFile);
 
         // Read the schema for the configuration file, and store the content in memory.
-        string schemaContent = File.ReadAllText(configurationSchema);
+        string schemaFileContent = File.ReadAllText(schemaFile);
 
         // Validate the configuration against the configuration schema.
-        if (JObject.Parse(configurationFileContent).IsValid(JSchema.Parse(schemaContent)).Equals(false))
-            throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{configurationSchema}"" Configuration Schema");
+        if (JObject.Parse(configurationFileContent).IsValid(JSchema.Parse(schemaFileContent)).Equals(false))
+            throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{schemaFile}"" Configuration Schema");
 
         // Deserialise the content of the configuration file.
         Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent);
