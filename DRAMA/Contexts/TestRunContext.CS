@@ -10,5 +10,5 @@ public static class TestRunContext
     /// </summary>
     public static readonly DateTime StartDateTime = DateTime.Now;
 
-    public static Dictionary<string, object> PropertyBag { get; set; } = new Dictionary<string, object>();
+    public static Dictionary<string, object>? PropertyBag { get; set; }
 }
