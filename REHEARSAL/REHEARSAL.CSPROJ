@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.4.0" />
+		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.4.1" />
 		<PackageReference Include="NUnit" Version="3.13.3" />
 	</ItemGroup>
 
@@ -23,12 +23,7 @@
 	</ItemGroup>
 
 	<Target Name="UnzipArchive" BeforeTargets="Build">
-		<Unzip
-			SourceFiles="Resources\Browser-Driver-Playground.ZIP"
-			DestinationFolder="$(OutputPath)\Resources"
-			SkipUnchangedFiles="TRUE"
-			OverwriteReadOnlyFiles="TRUE"
-		/>
+		<Unzip SourceFiles="Resources\Browser-Driver-Playground.ZIP" DestinationFolder="$(OutputPath)\Resources" SkipUnchangedFiles="TRUE" OverwriteReadOnlyFiles="TRUE" />
 	</Target>
 
 </Project>
