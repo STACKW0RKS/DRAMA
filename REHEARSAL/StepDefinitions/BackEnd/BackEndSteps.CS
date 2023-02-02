@@ -18,15 +18,15 @@ internal sealed class BackEndSteps : ProtoStep
         => Assert.AreEqual(ConnectionState.Open, FeatureContext.GetProperty<IDbConnection>("Database Connection").State, "Connection State");
 
     [Given(@"I DROP ANY ALREADY-EXISTING ""(.*)"" TABLE")]
-    public void GIVEN_I_DROP_ANY_ALREADY_EXISTING_P01_TABLE(string tableName)
+    public void I_DROP_ANY_ALREADY_EXISTING_P01_TABLE(string tableName)
         => CreateCommand($"DROP TABLE IF EXISTS {tableName}").ExecuteNonQuery();
 
     [When(@"I CREATE A NEW ""(.*)"" TABLE")]
-    public void WHEN_I_CREATE_A_NEW_P01_TABLE(string tableName)
+    public void I_CREATE_A_NEW_P01_TABLE(string tableName)
         => CreateCommand($"CREATE TABLE IF NOT EXISTS {tableName} (TIMESTAMP VARCHAR(255), LANGUAGE VARCHAR(255), TRANSLATION VARCHAR(255))").ExecuteNonQuery();
 
     [When(@"I INSERT DATA INTO THE ""(.*)"" TABLE")]
-    public void WHEN_I_INSERT_DATA_INTO_THE_P03_TABLE(string tableName, Table table)
+    public void I_INSERT_DATA_INTO_THE_P01_TABLE(string tableName, Table table)
     {
         foreach (TableRow row in table.Rows)
         {
@@ -39,7 +39,7 @@ internal sealed class BackEndSteps : ProtoStep
     }
 
     [Then(@"I CONFIRM THAT THE ""(.*)"" TABLE HAS ""(.*)"" ROWS")]
-    public void THEN_I_CONFIRM_THAT_THE_P01_TABLE_HAS_P02_ROWS(string tableName, int rowCount)
+    public void I_CONFIRM_THAT_THE_P01_TABLE_HAS_P02_ROWS(string tableName, int rowCount)
     {
         DataTable results = new();
         results.Load(CreateCommand($"SELECT * FROM {tableName}").ExecuteReader());

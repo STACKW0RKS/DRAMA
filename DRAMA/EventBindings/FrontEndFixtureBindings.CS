@@ -6,7 +6,7 @@ public sealed class FrontEndFixtureBindings
     [BeforeFeature("Front-End", Order = 1)]
     public static async Task BeforeFeature(FeatureContext featureContext)
     {
-        Profile profile = TestRunContext.Profile;
+        Profile profile = Contexts.TestRun.Profile;
 
         // TODO: Throw An Exception If Browser Driver Is NULL
 
@@ -50,7 +50,7 @@ public sealed class FrontEndFixtureBindings
         IBrowserContext browserContext = featureContext.GetProperty<IBrowser>("Browser").Contexts.Single();
 
         await browserContext.Tracing.StopAsync(new TracingStopOptions
-            { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
+        { Path = Path.Combine(Contexts.TestRun.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
 
         // Required for the generation of HAR files.
         await browserContext.CloseAsync();

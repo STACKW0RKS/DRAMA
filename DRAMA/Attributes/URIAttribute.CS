@@ -10,8 +10,8 @@ public sealed class URIAttribute : Attribute
 
     private static Uri SetURI(string path)
     {
-        FrontEnd configuration = TestRunContext.Profile.SystemUnderTest?.FrontEnd
-                                 ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
+        FrontEnd configuration = Contexts.TestRun.Profile.SystemUnderTest?.FrontEnd
+                                 ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{Contexts.TestRun.Profile.Name}""");
 
         if (configuration.Port is null && configuration.Host is not null)
             return configuration.Protocol is null

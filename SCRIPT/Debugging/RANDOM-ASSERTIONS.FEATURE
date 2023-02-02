@@ -1,0 +1,11 @@
+﻿@DEBUG
+Feature: Random Assertions
+    AS A PROGRAMMER WHO DILIGENTLY DEBUGS THEIR CODE
+    I DON'T KNOW WHAT TO EXPECT FROM RANDOM SEQUENCES OF EVENTS
+
+
+    Scenario:   [01/01] Random Assertions
+        When    I SET A RANDOM STATUS FOR STEP #1
+        When    I SET A RANDOM STATUS FOR STEP #2
+        When    I SET A RANDOM STATUS FOR STEP #3
+        When    I SET A RANDOM STATUS FOR STEP #4

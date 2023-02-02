@@ -1,10 +1,12 @@
 ﻿@Back-End
 Feature: Write To And Read From A Database
-    AS A PROGRAMMER WHO DILIGENTLY DEBUGS THEIR CODE
+    AS A BACK-END TEST AUTOMATION ENGINEER
     I SHOULD BE ABLE TO WRITE TO AND READ FROM A DATABASE
+
 
     Background:
         Given   THE DATABASE CONNECTION IS OPEN
+
 
     Scenario: [01/01] Write And Read Data To A Database
         Given   I DROP ANY ALREADY-EXISTING "ENTRIES" TABLE

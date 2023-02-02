@@ -36,10 +36,10 @@ internal static class ConfigurationParser
         // Populate the test run context with properties defined in the configuration file.
         if (testRunProfile.TestRun.PropertyBag is not null && testRunProfile.TestRun.PropertyBag.Any())
         {
-            TestRunContext.PropertyBag ??= new Dictionary<string, object>();
+            Contexts.TestRun.PropertyBag ??= new Dictionary<string, object>();
 
             foreach (KeyValuePair<string, object> element in testRunProfile.TestRun.PropertyBag)
-                TestRunContext.PropertyBag.Add(element.Key, element.Value);
+                Contexts.TestRun.PropertyBag.Add(element.Key, element.Value);
         }
 
         // If the test run profile specifies a browser driver configuration, set whether Playwright outputs debug events to the log or not.

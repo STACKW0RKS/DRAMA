@@ -1,25 +1,26 @@
-﻿global using AventStack.ExtentReports.Gherkin.Model;
+﻿# region DRAMA Using Directives
+    global using DRAMA.Contexts;
+    global using DRAMA.Extensions.Specflow;
+    global using DRAMA.Extensions.TargetFramework;
+    global using DRAMA.Prototypes;
+# endregion
 
-global using DRAMA.Models.SystemUnderTest;
-global using DRAMA.Extensions.Specflow;
-global using DRAMA.Extensions.TargetFramework;
-global using DRAMA.Prototypes;
+# region Microsoft Using Directives
+    global using Microsoft.Playwright;
+# endregion
 
-global using Microsoft.Playwright;
+# region NUnit Using Directives
+    global using NUnit.Framework;
+# endregion
 
-global using NUnit.Framework;
+# region System Using Directives
+    global using System;
+    global using System.Data;
+    global using System.IO;
+    global using System.Linq;
+    global using System.Threading.Tasks;
+# endregion
 
-global using Newtonsoft.Json;
-
-global using System;
-global using System.Collections.Generic;
-global using System.Data;
-global using System.Diagnostics;
-global using System.IO;
-global using System.Linq;
-global using System.Threading.Tasks;
-
-global using TechTalk.SpecFlow.Assist;
-global using TechTalk.SpecFlow;
-
-// TODO: Clean This Up
+# region TechTalk Using Directives
+    global using TechTalk.SpecFlow;
+# endregion

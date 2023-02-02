@@ -211,3 +211,15 @@ run-tests:
             junit:
                 - ./RESULTS/*.junit
 ```
+
+</br>
+
+Q: How to install Playwright locally, for development purposes?
+
+A: Follow the steps below:
+
+1. install PowerShell by executing `dotnet tool install --global PowerShell`
+2. build the solution and navigate to the directory which contains both `playwright.ps1` and `Microsoft.Playwright.dll` (e.g. `.\bin\Debug\net7.0`)
+3. open a PowerShell terminal and execute `pwsh playwright.ps1 install`
+
+</br>

@@ -7,7 +7,6 @@
 
 # region DRAMA Using Directives
     global using DRAMA.Attributes;
-    global using DRAMA.Contexts;
     global using DRAMA.Enumerations;
     global using DRAMA.Extensions.Specflow;
     global using DRAMA.Extensions.TargetFramework;

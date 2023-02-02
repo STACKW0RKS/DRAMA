@@ -12,7 +12,7 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
     [BeforeTestRun(Order = 1)]
     public static void BeforeTestRun()
     {
-        Profile profile = TestRunContext.Profile;
+        Profile profile = Contexts.TestRun.Profile;
 
         ExtentHtmlReporter reporter = new(profile.TestRun?.ResultsPath, ViewStyle.SPA);
 

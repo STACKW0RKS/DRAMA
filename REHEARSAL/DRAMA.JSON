@@ -17,6 +17,11 @@
 					"Protocol": "https",
 					"Port": 666,
 					"Path": "/auth/login"
+				},
+
+				"Back-End": {
+					"Database Engine": "SQLite",
+					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
 				}
 			},
 
@@ -27,17 +32,6 @@
 					"Devtools": false
 				},
 				"Debug Logging": true
-			}
-		},
-
-		{
-			"Name": "SQLite Tests",
-
-			"System Under Test": {
-				"Back-End": {
-					"Database Engine": "SQLite",
-					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
-				}
 			}
 		}
 	]
