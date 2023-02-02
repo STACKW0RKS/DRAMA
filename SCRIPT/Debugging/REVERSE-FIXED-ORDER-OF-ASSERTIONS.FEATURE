@@ -4,8 +4,28 @@ Feature: Reverse Fixed Order Of Assertions
     I EXPECT THAT ALL BUT THE FIRST STEP IN THIS SEQUENCE ARE SKIPPED
 
 
-    Scenario:   [01/01] Reverse Fixed Order Of Assertions
+    Scenario:   [01/05] FAIL
+        Given   I FAIL THE STEP
         When    I FAIL THE STEP
-        When    I WARN THE STEP
+        Then    I FAIL THE STEP
+
+
+    Scenario:   [02/05] WARN
+        Given   I RAISE A WARNING FOR THE STEP
+        When    I RAISE A WARNING FOR THE STEP
+        Then    I RAISE A WARNING FOR THE STEP
+
+    Scenario:   [03/05] PASS
+        Given   I PASS THE STEP
         When    I PASS THE STEP
+        Then    I PASS THE STEP
+
+    Scenario:   [04/05] INCONCLUSIVE
+        Given   I SET THE STEP INCONCLUSIVE
+        When    I SET THE STEP INCONCLUSIVE
+        Then    I SET THE STEP INCONCLUSIVE
+
+    Scenario:   [05/05] IGNORE
+        Given   I IGNORE THE STEP
         When    I IGNORE THE STEP
+        Then    I IGNORE THE STEP

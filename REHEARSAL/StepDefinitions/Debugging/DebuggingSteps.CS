@@ -10,35 +10,20 @@ internal sealed class DebuggingSteps : ProtoStep
         => Assert.Ignore("IGNORE");
 
     [Given, When, Then]
+    public void I_SET_THE_STEP_INCONCLUSIVE()
+        => Assert.Inconclusive("INCONCLUSIVE");
+
+    [Given, When, Then]
     public void I_PASS_THE_STEP()
         => Assert.Pass("PASS");
 
     [Given, When, Then]
-    public void I_WARN_THE_STEP()
+    public void I_RAISE_A_WARNING_FOR_THE_STEP()
         => Assert.Warn("WARN");
 
     [Given, When, Then]
     public void I_FAIL_THE_STEP()
         => Assert.Fail("FAIL");
-
-    [When(@"I SET A RANDOM STATUS FOR STEP #(.*)")]
-    public void I_SET_A_RANDOM_STATUS_FOR_STEP_P1(int discard)
-    {
-        string assertionType = new[] { "PASS", "FAIL", "WARN", "IGNORE" }.RandomElement();
-
-        switch (assertionType)
-        {
-            case "IGNORE": Assert.Pass("IGNORE"); break;
-
-            case "PASS": Assert.Pass("PASS"); break;
-
-            case "WARN": Assert.Pass("WARN"); break;
-
-            case "FAIL": Assert.Pass("FAIL"); break;
-
-            default: throw new ArgumentOutOfRangeException($@"Unknown Assertion Type ""{assertionType}""");
-        }
-    }
 
     [When(@"I READ THE ""(.*)"" PROPERTY")]
     public void I_READ_THE_P1_PROPERTY(string property)
