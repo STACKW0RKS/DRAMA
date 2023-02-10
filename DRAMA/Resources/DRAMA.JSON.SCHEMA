@@ -25,6 +25,9 @@
 									"properties": {},
 									"additionalProperties": true,
 									"required": []
+								},
+								"Debug Logging": {
+									"type": "boolean"
 								}
 							},
 							"additionalProperties": false,

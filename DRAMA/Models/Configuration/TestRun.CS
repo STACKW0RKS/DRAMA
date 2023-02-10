@@ -3,7 +3,7 @@
 [JsonObject]
 public class TestRun
 {
-    [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public string? Name { get; set; }
 
     [JsonProperty("Results Path")]
@@ -14,4 +14,7 @@ public class TestRun
 
     [JsonProperty("Property Bag")]
     public Dictionary<string, object>? PropertyBag { get; set; }
+
+    [JsonProperty("Debug Logging")]
+    public bool? DebugLogging { get; set; }
 }

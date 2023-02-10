@@ -9,7 +9,7 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
     private static ExtentTest? CurrentFeature { get; set; }
     private static ExtentTest? CurrentScenario { get; set; }
 
-    [BeforeTestRun(Order = 1)]
+    [BeforeTestRun]
     public static void BeforeTestRun()
     {
         Profile profile = Contexts.TestRun.Profile;
@@ -28,21 +28,21 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
         Scenarios = new List<ExtentTest>();
     }
 
-    [BeforeFeature(Order = 1)]
+    [BeforeFeature]
     public static void BeforeFeature(FeatureContext featureContext)
     {
         CurrentFeature = Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised");
         Features?.Add(CurrentFeature);
     }
 
-    [BeforeScenario(Order = 1)]
+    [BeforeScenario]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         CurrentScenario = CurrentFeature?.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title) ?? throw new ConfigurationErrorsException("Extent Feature Has Not Been Initialised");
         Scenarios?.Add(CurrentScenario);
     }
 
-    [AfterStep(Order = 1)]
+    [AfterStep]
     public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         if (featureContext.GetSkipFeatureSteps())
@@ -113,7 +113,7 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
             };
     }
 
-    [AfterTestRun(Order = 1)]
+    [AfterTestRun]
     public static void AfterTestRun()
     {
         if (Scenarios is not null)

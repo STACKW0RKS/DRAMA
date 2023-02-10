@@ -8,7 +8,8 @@
 				"Stop Feature At First Error": true,
 				"Property Bag": {
 					"Favourite Colour": "black"
-				}
+				},
+				"Debug Logging": true
 			},
 
 			"System Under Test": {

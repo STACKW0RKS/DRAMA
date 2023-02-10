@@ -20,4 +20,10 @@ public static class TestRunContextExtensions
 
     public static T Get<T>(this Dictionary<string, object> dictionary, string key) where T : notnull
         => dictionary.TryGetValue(key, out object? value) ? (T)value : throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Test Run Context Property Bag");
+
+    public static void Remove<T>(this Dictionary<string, object> dictionary, string key) where T : notnull
+    {
+        if (dictionary.Remove(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Test Run Context Property Bag");
+    }
 }

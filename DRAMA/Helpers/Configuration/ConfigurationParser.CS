@@ -16,7 +16,7 @@ internal static class ConfigurationParser
 
         // Return the test run profile by name, or throw a NoMatchException if no test run profile with that name is present in the configuration file.
         Profile testRunProfile = ParseConfiguration().SingleOrDefault(profile => profile.Name is not null && profile.Name.Equals(testRunProfileName))
-                                 ?? throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In Configuration File");
+                                 ?? throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In The Configuration File");
 
         // If the profile's test run configuration is NULL, then create a new test run configuration for the profile.
         // This is needed because defining the profile's test run configuration in the configuration file is not mandatory. 
@@ -41,6 +41,10 @@ internal static class ConfigurationParser
             foreach (KeyValuePair<string, object> element in testRunProfile.TestRun.PropertyBag)
                 Contexts.TestRun.PropertyBag.Add(element.Key, element.Value);
         }
+
+        // Set whether or not to log debug information, such as step/scenario/feature execution duration.
+        // If the "Debug Logging" option is not set, default to FALSE.
+        testRunProfile.TestRun.DebugLogging ??= false;
 
         // If the test run profile specifies a browser driver configuration, set whether Playwright outputs debug events to the log or not.
         testRunProfile.BrowserDriver?.SetDebugLogging();

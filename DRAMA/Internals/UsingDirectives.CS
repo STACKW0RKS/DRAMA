@@ -50,6 +50,7 @@
     global using System.Data;
     global using System.Data.Common;
     global using System.Data.SqlClient;
+    global using System.Diagnostics;
     global using System.Configuration;
     global using System.Globalization;
     global using System.Reflection;

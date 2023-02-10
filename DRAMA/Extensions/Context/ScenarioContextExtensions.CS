@@ -20,4 +20,10 @@ public static class ScenarioContextExtensions
 
     public static T Get<T>(this ScenarioContext context, string key) where T : notnull
         => context.TryGetValue(key, out T value) ? value : throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Scenario Context Property Bag");
+
+    public static void Remove<T>(this ScenarioContext context, string key) where T : notnull
+    {
+        if (context.Remove(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Scenario Context Property Bag");
+    }
 }

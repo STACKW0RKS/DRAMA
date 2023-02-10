@@ -21,6 +21,12 @@ public static class FeatureContextExtensions
     public static T Get<T>(this FeatureContext context, string key) where T : notnull
         => context.TryGetValue(key, out T value) ? value : throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Feature Context Property Bag");
 
+    public static void Remove<T>(this FeatureContext context, string key) where T : notnull
+    {
+        if (context.Remove(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Feature Context Property Bag");
+    }
+
     public static void SetCurrentBrowserTab(this FeatureContext context, IPage page)
         => context.Set<IPage>("Current Browser Tab", page);
 
