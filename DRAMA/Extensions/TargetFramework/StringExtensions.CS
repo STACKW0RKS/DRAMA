@@ -25,7 +25,7 @@ public static class StringExtensions
     ///     The intended use of this method is string comparison operations.
     /// </summary>
     public static string Flatten(this string text)
-        => text.Trim().ToUpper();
+        => text.Trim().Normalize().ToUpper();
 
     /// <summary>
     ///     Returns TRUE if the source string is neither null, empty, nor composed entirely of white space characters. Otherwise, returns FALSE.
