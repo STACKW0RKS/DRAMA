@@ -1,7 +1,6 @@
 ﻿# region DRAMA Using Directives
     global using DRAMA.Contexts;
-    global using DRAMA.Extensions.Specflow;
-    global using DRAMA.Extensions.TargetFramework;
+    global using DRAMA.Extensions.Context;
     global using DRAMA.Prototypes;
 # endregion
 

@@ -40,14 +40,14 @@ public sealed class FrontEndFixtureBindings
             Sources = true
         });
 
-        featureContext.SetProperty("Browser", browser);
+        featureContext.Set<IBrowser>("Browser", browser);
         featureContext.SetCurrentBrowserTab(await browserContext.NewPageAsync());
     }
 
     [AfterFeature("Front-End", Order = 1)]
     public static async Task AfterFeature(FeatureContext featureContext)
     {
-        IBrowserContext browserContext = featureContext.GetProperty<IBrowser>("Browser").Contexts.Single();
+        IBrowserContext browserContext = featureContext.Get<IBrowser>("Browser").Contexts.Single();
 
         await browserContext.Tracing.StopAsync(new TracingStopOptions
         { Path = Path.Combine(Contexts.TestRun.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });

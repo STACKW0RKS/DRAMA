@@ -7,7 +7,7 @@ internal sealed class BackEndSteps : ProtoStep
 
     private IDbCommand CreateCommand(string commandText)
     {
-        IDbCommand command = FeatureContext.GetProperty<IDbConnection>("Database Connection").CreateCommand();
+        IDbCommand command = FeatureContext.Get<IDbConnection>("Database Connection").CreateCommand();
         command.CommandText = commandText;
 
         return command;
@@ -15,7 +15,7 @@ internal sealed class BackEndSteps : ProtoStep
 
     [Given]
     public void THE_DATABASE_CONNECTION_IS_OPEN()
-        => Assert.AreEqual(ConnectionState.Open, FeatureContext.GetProperty<IDbConnection>("Database Connection").State, "Connection State");
+        => Assert.AreEqual(ConnectionState.Open, FeatureContext.Get<IDbConnection>("Database Connection").State, "Connection State");
 
     [Given(@"I DROP ANY ALREADY-EXISTING ""(.*)"" TABLE")]
     public void I_DROP_ANY_ALREADY_EXISTING_P01_TABLE(string tableName)

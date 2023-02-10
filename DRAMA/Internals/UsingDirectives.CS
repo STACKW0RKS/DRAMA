@@ -8,7 +8,7 @@
 # region DRAMA Using Directives
     global using DRAMA.Attributes;
     global using DRAMA.Enumerations;
-    global using DRAMA.Extensions.Specflow;
+    global using DRAMA.Extensions.Context;
     global using DRAMA.Extensions.TargetFramework;
     global using DRAMA.Helpers.Configuration;
     global using DRAMA.Helpers.TabularData;
