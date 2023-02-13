@@ -48,6 +48,10 @@ public class CommonFixtureBindings
             scenarioContext.Remove<string>(scenarioContext.StepContext.StepInfo.Text);
         }
 
+        // If the ScenarioExecutionStatus (for the current step) is not OK, then get the value of TestError.ResultState.
+        // When ScenarioExecutionStatus is not OK, TestError should never be NULL.
+        // ResultState seems to be injected at runtime, so it needs to be retrieved via Reflection.
+
         bool failure = scenarioContext.ScenarioExecutionStatus is not ScenarioExecutionStatus.OK &&
                        (scenarioContext.TestError.GetType().GetProperty("ResultState")?.GetValue(scenarioContext.TestError) is not ResultState result ||
                        result.Status switch
@@ -60,7 +64,8 @@ public class CommonFixtureBindings
                            _ => throw new ArgumentOutOfRangeException($@"Unknown Test Status: {result.Status}")
                        });
 
-        // TODO: This Only Works With NUnit; Make It Work With MSTest And XUnit Too
+        // TODO: TestError.ResultState is specific to NUnit, so the code above only works with NUnit. Make the code above also work with MSTest and XUnit.
+        // LINK: https://docs.specflow.org/projects/specflow/en/latest/Installation/Unit-Test-Providers.html
 
         if (failure) featureContext.SetErrorsHaveOccurred(true);
     }
