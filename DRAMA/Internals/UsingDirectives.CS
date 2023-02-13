@@ -32,6 +32,10 @@
     global using Newtonsoft.Json.Schema;
 # endregion
 
+# region NUnit Using Directives
+    global using NUnit.Framework.Interfaces;
+# endregion
+
 # region Oracle Using Directives
     global using Oracle.ManagedDataAccess.Client;
 # endregion

@@ -48,8 +48,21 @@ public class CommonFixtureBindings
             scenarioContext.Remove<string>(scenarioContext.StepContext.StepInfo.Text);
         }
 
-        if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.OK).Equals(false))
-            featureContext.SetErrorsHaveOccurred(true);
+        bool failure = scenarioContext.ScenarioExecutionStatus is not ScenarioExecutionStatus.OK &&
+                       (scenarioContext.TestError.GetType().GetProperty("ResultState")?.GetValue(scenarioContext.TestError) is not ResultState result ||
+                       result.Status switch
+                       {
+                           TestStatus.Skipped => false,
+                           TestStatus.Inconclusive => false,
+                           TestStatus.Passed => false,
+                           TestStatus.Warning => false,
+                           TestStatus.Failed => true,
+                           _ => throw new ArgumentOutOfRangeException($@"Unknown Test Status: {result.Status}")
+                       });
+
+        // TODO: This Only Works With NUnit; Make It Work With MSTest And XUnit Too
+
+        if (failure) featureContext.SetErrorsHaveOccurred(true);
     }
 
     [AfterScenario(Order = 1)]

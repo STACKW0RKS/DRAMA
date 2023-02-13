@@ -4,32 +4,43 @@ Feature: Fixed Order Of Assertions
     I EXPECT THAT NONE OF THE STEPS IN THIS SEQUENCE ARE SKIPPED
 
 
-
-    Scenario:   [01/05] IGNORE
+    Scenario:   [01/07] IGNORE
         Given   I IGNORE THE STEP
         When    I IGNORE THE STEP
         Then    I IGNORE THE STEP
 
 
-    Scenario:   [02/05] INCONCLUSIVE
+    Scenario:   [02/07] INCONCLUSIVE
         Given   I SET THE STEP INCONCLUSIVE
         When    I SET THE STEP INCONCLUSIVE
         Then    I SET THE STEP INCONCLUSIVE
 
 
-    Scenario:   [03/05] PASS
-        Given   I PASS THE STEP
-        When    I PASS THE STEP
-        Then    I PASS THE STEP
+    Scenario:   [03/07] EXPLICIT PASS
+        Given   I EXPLICITLY PASS THE STEP
+        When    I EXPLICITLY PASS THE STEP
+        Then    I EXPLICITLY PASS THE STEP
 
 
-    Scenario:   [04/05] WARN
+    Scenario:   [04/07] IMPLICIT PASS
+        Given   I IMPLICITLY PASS THE STEP
+        When    I IMPLICITLY PASS THE STEP
+        Then    I IMPLICITLY PASS THE STEP
+
+
+    Scenario:   [05/07] WARN
         Given   I RAISE A WARNING FOR THE STEP
         When    I RAISE A WARNING FOR THE STEP
         Then    I RAISE A WARNING FOR THE STEP
 
 
-    Scenario:   [05/05] FAIL
-        Given   I FAIL THE STEP
-        When    I FAIL THE STEP
-        Then    I FAIL THE STEP
+    Scenario:   [06/07] EXPLICIT FAIL
+        Given   I EXPLICITLY FAIL THE STEP
+        When    I EXPLICITLY FAIL THE STEP
+        Then    I EXPLICITLY FAIL THE STEP
+
+
+    Scenario:   [07/07] IMPLICIT FAIL
+        Given   I IMPLICITLY FAIL THE STEP
+        When    I IMPLICITLY FAIL THE STEP
+        Then    I IMPLICITLY FAIL THE STEP

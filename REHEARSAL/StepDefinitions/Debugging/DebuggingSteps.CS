@@ -14,16 +14,24 @@ internal sealed class DebuggingSteps : ProtoStep
         => Assert.Inconclusive("INCONCLUSIVE");
 
     [Given, When, Then]
-    public void I_PASS_THE_STEP()
+    public void I_EXPLICITLY_PASS_THE_STEP()
         => Assert.Pass("PASS");
+
+    [Given, When, Then]
+    public void I_IMPLICITLY_PASS_THE_STEP()
+        => Assert.Null(null, "NULL IS NULL");
 
     [Given, When, Then]
     public void I_RAISE_A_WARNING_FOR_THE_STEP()
         => Assert.Warn("WARN");
 
     [Given, When, Then]
-    public void I_FAIL_THE_STEP()
+    public void I_EXPLICITLY_FAIL_THE_STEP()
         => Assert.Fail("FAIL");
+
+    [Given, When, Then]
+    public void I_IMPLICITLY_FAIL_THE_STEP()
+        => Assert.NotNull(null, "NULL IS NOT NULL");
 
     [When(@"I READ THE ""(.*)"" PROPERTY")]
     public void I_READ_THE_P1_PROPERTY(string key)
