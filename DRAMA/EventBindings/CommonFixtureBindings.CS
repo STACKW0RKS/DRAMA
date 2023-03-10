@@ -7,28 +7,48 @@ public class CommonFixtureBindings
     public static void BeforeTestRun()
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
-            Contexts.TestRun.PropertyBag?.Add<Stopwatch>("STOPWATCH", Stopwatch.StartNew());
+        {
+            Contexts.TestRun.PropertyBag!.Add<Stopwatch>("STOPWATCH", Stopwatch.StartNew());
+
+            LogHelpers.Log($@"[DEBUG] [TEST_RUN__] NAME :: {Contexts.TestRun.Profile.TestRun.Name}");
+            LogHelpers.Log($@"[DEBUG] [TEST_RUN__] INIT :: {DateTimeOffset.Now:HH:mm:ss.fff}");
+        }
     }
 
     [BeforeFeature(Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
+        {
             featureContext.Add<Stopwatch>(featureContext.FeatureInfo.Title, Stopwatch.StartNew());
+
+            LogHelpers.Log($@"[DEBUG] [FEATURE___] NAME :: {featureContext.FeatureInfo.Title}");
+            LogHelpers.Log($@"[DEBUG] [FEATURE___] INIT :: {DateTimeOffset.Now:HH:mm:ss.fff}");
+        }
     }
 
     [BeforeScenario(Order = 1)]
     public void BeforeScenario(ScenarioContext scenarioContext)
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
+        {
             scenarioContext.Add<Stopwatch>(scenarioContext.ScenarioInfo.Title, Stopwatch.StartNew());
+
+            LogHelpers.Log($@"[DEBUG] [SCENARIO__] NAME :: {scenarioContext.ScenarioInfo.Title}");
+            LogHelpers.Log($@"[DEBUG] [SCENARIO__] INIT :: {DateTimeOffset.Now:HH:mm:ss.fff}");
+        }
     }
 
     [BeforeStep(Order = 1)]
     public void BeforeStep(IUnitTestRuntimeProvider unitTestRuntimeProvider, FeatureContext featureContext, ScenarioContext scenarioContext)
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
+        {
             scenarioContext.Add<Stopwatch>(scenarioContext.StepContext.StepInfo.Text, Stopwatch.StartNew());
+
+            LogHelpers.Log($@"[DEBUG] [TEST_STEP_] NAME :: {scenarioContext.StepContext.StepInfo.Text}");
+            LogHelpers.Log($@"[DEBUG] [TEST_STEP_] INIT :: {DateTimeOffset.Now:HH:mm:ss.fff}");
+        }
 
         if ((Contexts.TestRun.Profile.TestRun?.StopFeatureAtFirstError ?? false) && featureContext.GetErrorsHaveOccurred().Equals(true))
         {
@@ -42,8 +62,10 @@ public class CommonFixtureBindings
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
-            Debug.WriteLine($@"[DEBUG] STEP     :: {scenarioContext.StepContext.StepInfo.Text}");
-            Debug.WriteLine($@"[DEBUG] DURATION :: {scenarioContext.Get<Stopwatch>(scenarioContext.StepContext.StepInfo.Text).Elapsed}");
+            TimeSpan elapsed = scenarioContext.Get<Stopwatch>(scenarioContext.StepContext.StepInfo.Text).Elapsed;
+
+            LogHelpers.Log($@"[DEBUG] [TEST_STEP_] NAME :: {scenarioContext.StepContext.StepInfo.Text}");
+            LogHelpers.Log($@"[DEBUG] [TEST_STEP_] DONE :: {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2}.{elapsed.Milliseconds:D3}");
 
             scenarioContext.Remove<string>(scenarioContext.StepContext.StepInfo.Text);
         }
@@ -75,8 +97,10 @@ public class CommonFixtureBindings
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
-            Debug.WriteLine($@"[DEBUG] SCENARIO :: {scenarioContext.ScenarioInfo.Title}");
-            Debug.WriteLine($@"[DEBUG] DURATION :: {scenarioContext.Get<Stopwatch>(scenarioContext.ScenarioInfo.Title).Elapsed}");
+            TimeSpan elapsed = scenarioContext.Get<Stopwatch>(scenarioContext.ScenarioInfo.Title).Elapsed;
+
+            LogHelpers.Log($@"[DEBUG] [SCENARIO__] NAME :: {scenarioContext.ScenarioInfo.Title}");
+            LogHelpers.Log($@"[DEBUG] [SCENARIO__] DONE :: {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2}.{elapsed.Milliseconds:D3}");
 
             scenarioContext.Remove<string>(scenarioContext.ScenarioInfo.Title);
         }
@@ -87,8 +111,11 @@ public class CommonFixtureBindings
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
-            Debug.WriteLine($@"[DEBUG] FEATURE  :: {featureContext.FeatureInfo.Title}");
-            Debug.WriteLine($@"[DEBUG] DURATION :: {featureContext.Get<Stopwatch>(featureContext.FeatureInfo.Title).Elapsed}");
+            TimeSpan elapsed = featureContext.Get<Stopwatch>(featureContext.FeatureInfo.Title).Elapsed;
+
+            LogHelpers.Log($@"[DEBUG] [FEATURE___] NAME :: {featureContext.FeatureInfo.Title}");
+            LogHelpers.Log($@"[DEBUG] [FEATURE___] DONE :: {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2}.{elapsed.Milliseconds:D3}");
+
             featureContext.Remove<string>(featureContext.FeatureInfo.Title);
         }
     }
@@ -98,8 +125,12 @@ public class CommonFixtureBindings
     {
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
-            Debug.WriteLine($@"[DEBUG] TEST RUN :: {Contexts.TestRun.Profile.TestRun.Name}");
-            Debug.WriteLine($@"[DEBUG] DURATION :: {Contexts.TestRun.PropertyBag?.Get<Stopwatch>("STOPWATCH").Elapsed}");
+            TimeSpan elapsed = Contexts.TestRun.PropertyBag!.Get<Stopwatch>("STOPWATCH").Elapsed;
+
+            LogHelpers.Log($@"[DEBUG] [TEST_RUN__] NAME :: {Contexts.TestRun.Profile.TestRun.Name}");
+            LogHelpers.Log($@"[DEBUG] [TEST_RUN__] DONE :: {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2}.{elapsed.Milliseconds:D3}");
+
+            Contexts.TestRun.PropertyBag?.Remove<Stopwatch>("STOPWATCH");
         }
     }
 }

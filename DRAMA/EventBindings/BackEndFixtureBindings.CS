@@ -3,14 +3,14 @@ namespace DRAMA.EventBindings;
 [Binding]
 public sealed class BackEndFixtureBindings
 {
-    [BeforeFeature("Back-End", Order = 1)]
+    [BeforeFeature("Back-End", Order = 2)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
         featureContext.SetDatabaseConnection(ConfigurationHelpers.CreateDatabaseConnection());
         featureContext.GetDatabaseConnection().Open();
     }
 
-    [AfterFeature("Back-End", Order = 1)]
+    [AfterFeature("Back-End", Order = 2)]
     public static void AfterFeature(FeatureContext featureContext)
     {
         featureContext.GetDatabaseConnection().Close();

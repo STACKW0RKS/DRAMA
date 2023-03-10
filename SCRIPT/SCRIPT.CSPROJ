@@ -8,8 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.4.1" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
+		<PackageReference Include="JunitXml.TestLogger" Version="3.0.124" />		
+		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.5.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
 		<PackageReference Include="SpecFlow.NUnit" Version="3.9.74" />
 	</ItemGroup>
 
@@ -20,7 +21,7 @@
 
 	<ItemGroup>
 		<Content Include="SPECFLOW.JSON">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 

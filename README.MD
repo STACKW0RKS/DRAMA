@@ -1,5 +1,16 @@
 # DRAMA
-6th Generation Enterprise-Grade .NET-Based Test Automation Framework
+[6th Generation](https://www.automatetheplanet.com/generations-test-automation-frameworks/ "Automate The Planet") Enterprise-Grade .NET-Based Test Automation Framework
+
+</br>
+
+## PROJECT MAP
+
+| PROJECT   | DESCRIPTION                                                                   |
+|----------:|:------------------------------------------------------------------------------|
+| DRAMA     | Main project from which the NuGet package is built.                           |
+| SPOTLIGHT | Unit tests for DRAMA.                                                         |
+| SCRIPT    | Sample DRAMA implementation project, part one: feature files.                 |
+| REHEARSAL | Sample DRAMA implementation project, part two: step definitions, test engine. |
 
 </br>
 
@@ -82,10 +93,10 @@ A: Create a file called `DOCKERFILE`, which will contain the image definition. A
 # add the Playwright base image, based on Ubuntu 20.04 LTS (Focal Fossa), optionally with .NET
 # https://mcr.microsoft.com/v2/playwright/tags/list
 # https://mcr.microsoft.com/v2/playwright/dotnet/tags/list
-FROM mcr.microsoft.com/playwright:v1.30.0-focal AS dependency-resolver
+FROM mcr.microsoft.com/playwright:v1.31.1-focal AS dependency-resolver
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
-RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 7.0.102
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 7.0.201
 
 # add "dotnet" to the system path
 # https://github.com/dotnet/sdk/issues/9911
@@ -153,7 +164,7 @@ stages:
 
 # https://mcr.microsoft.com/v2/playwright/tags/list
 # https://mcr.microsoft.com/v2/playwright/dotnet/tags/list
-image: mcr.microsoft.com/playwright:v1.30.0-focal
+image: mcr.microsoft.com/playwright:v1.31.1-focal
 
 run-tests:
     stage: execute
@@ -165,7 +176,7 @@ run-tests:
         - SONIC # explicitly specify runner by name
 
     script:
-        - curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 7.0.102 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
+        - curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 7.0.201 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
         - export PATH="$PATH:$HOME/.dotnet" # https://github.com/dotnet/sdk/issues/9911
         - export DOTNET_CLI_TELEMETRY_OPTOUT=true # https://aka.ms/dotnet-cli-telemetry
         - dotnet --info
@@ -211,6 +222,12 @@ run-tests:
             junit:
                 - ./RESULTS/*.junit
 ```
+
+</br>
+
+Q: How to generate test artefacts which are compatible with GitLab?
+
+A: Sadly, GitLab only supports test artefacts in JUnit format, so the following dependency can be added to the project which generates test artefacts: https://github.com/spekt/junit.testlogger. Following this, the `dotnet test` command can be executed with a parameter for a `junit` logger, e.g. `dotnet test --logger "junit;LogFileName=results.junit"`.
 
 </br>
 

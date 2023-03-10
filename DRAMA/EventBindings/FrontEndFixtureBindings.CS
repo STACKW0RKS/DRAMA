@@ -3,7 +3,7 @@
 [Binding]
 public sealed class FrontEndFixtureBindings
 {
-    [BeforeFeature("Front-End", Order = 1)]
+    [BeforeFeature("Front-End", Order = 2)]
     public static async Task BeforeFeature(FeatureContext featureContext)
     {
         Profile profile = Contexts.TestRun.Profile;
@@ -44,7 +44,7 @@ public sealed class FrontEndFixtureBindings
         featureContext.SetCurrentBrowserTab(await browserContext.NewPageAsync());
     }
 
-    [AfterFeature("Front-End", Order = 1)]
+    [AfterFeature("Front-End", Order = 2)]
     public static async Task AfterFeature(FeatureContext featureContext)
     {
         IBrowserContext browserContext = featureContext.Get<IBrowser>("Browser").Contexts.Single();

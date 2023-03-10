@@ -11,6 +11,7 @@
     global using DRAMA.Extensions.Context;
     global using DRAMA.Extensions.TargetFramework;
     global using DRAMA.Helpers.Configuration;
+    global using DRAMA.Helpers.Logging;
     global using DRAMA.Helpers.TabularData;
     global using DRAMA.Models.Configuration;
     global using DRAMA.Models.TabularData;
