@@ -6,6 +6,9 @@ public sealed class FrontEndFixtureBindings
     [BeforeFeature("Front-End", Order = 2)]
     public static async Task BeforeFeature(FeatureContext featureContext)
     {
+        if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
+            LogHelpers.Log($@"[DEBUG] [FEATURE___] INFO :: DRAMA Playwright Version Is v{Assembly.GetAssembly(typeof(Playwright))?.GetName().Version}");
+
         Profile profile = Contexts.TestRun.Profile;
 
         // TODO: Throw An Exception If Browser Driver Is NULL
