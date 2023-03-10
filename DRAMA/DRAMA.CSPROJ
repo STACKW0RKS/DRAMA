@@ -15,14 +15,14 @@
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
 		<Product>DRAMA</Product>
-		<Description>6th Generation Enterprise-Grade .NET-Based Test Automation Framework</Description>
-		<Copyright>Copyright © 2018-2022 StackWorks™ All Rights Reserved</Copyright>
+		<Description>Full Stack Test Automation Framework</Description>
+		<Copyright>Copyright © 2018-2023 StackWorks™ All Rights Reserved</Copyright>
 		<PackageProjectURL>https://www.nuget.org/packages/DRAMA/</PackageProjectURL>
 		<PackageIcon>ICON.PNG</PackageIcon>
 		<PackageReadmeFile>README.MD</PackageReadmeFile>
-		<RepositoryURL>https://github.com/S-T-A-C-K-W-O-R-K-S/DRAMA-Test-Automation-Framework</RepositoryURL>
+		<RepositoryURL>https://github.com/STACKW0RKS/DRAMA</RepositoryURL>
 		<RepositoryType>GIT</RepositoryType>
-		<PackageTags>DRAMA;Playwright;Test;Automation;Framework</PackageTags>
+		<PackageTags>DRAMA;FrontEnd;Playwright;API;BackEnd;FullStack;Test;Automation;Framework;C#;.NET</PackageTags>
 		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
 		<NeutralLanguage>en-GB</NeutralLanguage>
 		<AssemblyVersion>0.3.18.0</AssemblyVersion>
