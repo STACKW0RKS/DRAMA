@@ -18,6 +18,8 @@ public class CommonFixtureBindings
     [BeforeFeature(Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
+        featureContext.SetIdentifier(Guid.NewGuid());
+
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
             featureContext.Add<Stopwatch>(featureContext.FeatureInfo.Title, Stopwatch.StartNew());
@@ -28,8 +30,10 @@ public class CommonFixtureBindings
     }
 
     [BeforeScenario(Order = 1)]
-    public void BeforeScenario(ScenarioContext scenarioContext)
+    public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
+        scenarioContext.SetFeatureIdentifier(featureContext.GetIdentifier());
+
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
             scenarioContext.Add<Stopwatch>(scenarioContext.ScenarioInfo.Title, Stopwatch.StartNew());

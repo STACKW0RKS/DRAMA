@@ -27,6 +27,12 @@ public static class FeatureContextExtensions
             throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Feature Context Property Bag");
     }
 
+    public static void SetIdentifier(this FeatureContext context, Guid identifier)
+        => context.Set<Guid>("Unique Identifier", identifier);
+
+    public static Guid GetIdentifier(this FeatureContext context)
+        => context.Get<Guid>("Unique Identifier");
+
     public static void SetCurrentBrowserTab(this FeatureContext context, IPage page)
         => context.Set<IPage>("Current Browser Tab", page);
 

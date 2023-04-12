@@ -1,13 +1,19 @@
 namespace DRAMA.EventBindings;
 
+public static class ExtentTestExtensions
+{
+    public static void SetFeatureIdentifier(this ExtentTest test, Guid identifier)
+        => test.Model.Description = identifier.ToString();
+
+    public static Guid GetFeatureIdentifier(this ExtentTest context)
+        => new Guid(context.Model.Description);
+}
+
 [Binding]
 public sealed class ExtentReportBindings // TODO: Remove This Type After Migrating Away From Extent Reports
 {
-    private static ExtentReports? Report { get; set; }
-    private static List<ExtentTest>? Features { get; set; }
-    private static List<ExtentTest>? Scenarios { get; set; }
-    private static ExtentTest? CurrentFeature { get; set; }
-    private static ExtentTest? CurrentScenario { get; set; }
+    private static ExtentReports Report { get; set; } = new();
+    private static Dictionary<ExtentTest, List<ExtentTest>> Features { get; set; } = new();
 
     [BeforeTestRun]
     public static void BeforeTestRun()
@@ -21,25 +27,27 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
         reporter.Config.DocumentTitle = profile.TestRun?.Name;
         reporter.Config.Theme = Theme.Dark;
 
-        Report = new ExtentReports();
         Report.AttachReporter(reporter);
-
-        Features = new List<ExtentTest>();
-        Scenarios = new List<ExtentTest>();
     }
 
     [BeforeFeature]
     public static void BeforeFeature(FeatureContext featureContext)
     {
-        CurrentFeature = Report?.CreateTest<Feature>(featureContext.FeatureInfo.Title) ?? throw new ConfigurationErrorsException("Extent Report Has Not Been Initialised");
-        Features?.Add(CurrentFeature);
+        ExtentTest feature = Report.CreateTest<Feature>(featureContext.FeatureInfo.Title);
+        feature.SetFeatureIdentifier(featureContext.GetIdentifier());
+
+        Features.Add(feature, new List<ExtentTest>());
     }
 
     [BeforeScenario]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
-        CurrentScenario = CurrentFeature?.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title) ?? throw new ConfigurationErrorsException("Extent Feature Has Not Been Initialised");
-        Scenarios?.Add(CurrentScenario);
+        ExtentTest feature = Features.Single(feature => feature.Key.GetFeatureIdentifier() == featureContext.GetIdentifier()).Key;
+
+        ExtentTest scenario = feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+        scenario.SetFeatureIdentifier(scenarioContext.GetFeatureIdentifier());
+
+        Features[feature].Add(scenario);
     }
 
     [AfterStep]
@@ -48,7 +56,6 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
         if (featureContext.GetSkipFeatureSteps())
         {
             scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
-            return;
         }
 
         MediaEntityModelProvider? mediaEntity = featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End" }).Any() // TODO: Think Of A Better Trigger For Taking A Screenshot
@@ -58,68 +65,78 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
 
         StepDefinitionType stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType;
 
+        ExtentTest scenario = Features.Single(feature => feature.Key.GetFeatureIdentifier() == featureContext.GetIdentifier()).Value
+            .Last(scenario => scenario.GetFeatureIdentifier() == scenarioContext.GetFeatureIdentifier());
+
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.UndefinedStep))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Warning("Step Definition Is Undefined"),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.StepDefinitionPending))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Info("Step Definition Is Pending"),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.Skipped))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Skip("Step Has Been Skipped"),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.OK))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Pass($"{DateTime.Now:R}", mediaEntity),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.TestError))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fail(scenarioContext.TestError.Message, mediaEntity),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
 
         if (scenarioContext.StepContext.Status.Equals(ScenarioExecutionStatus.BindingError))
             _ = stepType switch
             {
-                StepDefinitionType.Given => CurrentScenario?.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
-                StepDefinitionType.When => CurrentScenario?.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
-                StepDefinitionType.Then => CurrentScenario?.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
+                StepDefinitionType.Given => scenario.CreateNode<Given>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
+                StepDefinitionType.When => scenario.CreateNode<When>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
+                StepDefinitionType.Then => scenario.CreateNode<Then>(scenarioContext.StepContext.StepInfo.Text).Fatal(scenarioContext.TestError.StackTrace, mediaEntity),
                 _ => throw new NoMatchException($"Invalid Step Type: {stepType}")
             };
+    }
+
+    [AfterFeature]
+    public static void AfterFeature(FeatureContext featureContext)
+    {
+        ExtentTest feature = Features.Single(feature => feature.Key.GetFeatureIdentifier() == featureContext.GetIdentifier()).Key;
+        List<ExtentTest> scenarios = Features[feature];
+
+        if (scenarios.Any())
+            foreach (ExtentTest scenario in scenarios.Where(scenario => scenario.Model.HasChildren.Equals(false)))
+                scenario.Skip("Scenario Has Been Skipped Due To An Error In A Previous Scenario");
     }
 
     [AfterTestRun]
     public static void AfterTestRun()
     {
-        if (Scenarios is not null)
-            foreach (ExtentTest scenario in Scenarios.Where(scenario => scenario.Model.HasChildren.Equals(false)))
-                scenario.Skip("Scenario Has Been Skipped Due To An Error In A Previous Scenario");
-
-        Report?.Flush();
+        Report.Flush();
     }
 }

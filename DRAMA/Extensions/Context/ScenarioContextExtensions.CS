@@ -26,4 +26,10 @@ public static class ScenarioContextExtensions
         if (context.Remove(key).Equals(false))
             throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Scenario Context Property Bag");
     }
+
+    public static void SetFeatureIdentifier(this ScenarioContext context, Guid identifier)
+        => context.Set<Guid>("Unique Feature Identifier", identifier);
+
+    public static Guid GetFeatureIdentifier(this ScenarioContext context)
+        => context.Get<Guid>("Unique Feature Identifier");
 }
