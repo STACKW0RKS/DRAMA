@@ -90,10 +90,11 @@ A: Create a file called `DOCKERFILE`, which will contain the image definition. A
 ```dockerfile
 #################################################################################################### STAGE 1
 
-# add the Playwright base image, based on Ubuntu 20.04 LTS (Focal Fossa), optionally with .NET
+# add the Playwright base image, based on Ubuntu 22.04 LTS (Jammy Jellyfish)
 # https://mcr.microsoft.com/v2/playwright/tags/list
+# optionally, with .NET 6 included
 # https://mcr.microsoft.com/v2/playwright/dotnet/tags/list
-FROM mcr.microsoft.com/playwright:v1.31.1-focal AS dependency-resolver
+FROM mcr.microsoft.com/playwright:v1.32.0-jammy-amd64 AS dependency-resolver
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
 RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 7.0.201
