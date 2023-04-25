@@ -11,7 +11,7 @@ internal static class ConfigurationParser
     {
         // If the environment variable is set, then use the environment variable for the test run profile name, otherwise use the default value.
         string testRunProfileName = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
-            ? Environment.GetEnvironmentVariable(environmentVariable) ?? profileName
+            ? Environment.GetEnvironmentVariable(environmentVariable)!
             : profileName;
 
         // Return the test run profile by name, or throw a NoMatchException if no test run profile with that name is present in the configuration file.
@@ -61,12 +61,12 @@ internal static class ConfigurationParser
     private static IEnumerable<Profile> ParseConfiguration(string configurationFile = "DRAMA.JSON", string schemaFile = "DRAMA.JSON.SCHEMA")
     {
         // Set the configuration file, allowing for case-insensitive matches.
-        configurationFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Where(file => file.Name.Equals(configurationFile, StringComparison.OrdinalIgnoreCase))
-            .SingleOrDefault() ?? throw new FileNotFoundException($@"Configuration File ""{configurationFile}"" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
+        configurationFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().SingleOrDefault(file => file.Name.Equals(configurationFile, StringComparison.OrdinalIgnoreCase))
+            ?? throw new FileNotFoundException($@"Configuration File ""{configurationFile}"" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
 
         // Set the schema file, allowing for case-insensitive matches.
-        schemaFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Where(file => file.Name.Equals(schemaFile, StringComparison.OrdinalIgnoreCase))
-            .SingleOrDefault() ?? throw new FileNotFoundException($@"Configuration File Schema ""DRAMA.JSON."" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
+        schemaFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().SingleOrDefault(file => file.Name.Equals(schemaFile, StringComparison.OrdinalIgnoreCase))
+            ?? throw new FileNotFoundException($@"Configuration File Schema ""DRAMA.JSON."" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
 
         // Read the configuration file, and store the content in memory.
         string configurationFileContent = File.ReadAllText(configurationFile);
@@ -119,7 +119,7 @@ internal static class ConfigurationParser
                 : Path.Combine(
                     Uri.IsWellFormedUriString(run.ResultsPath, UriKind.RelativeOrAbsolute)
                         ? run.ResultsPath
-                        : throw new UriFormatException($@"""{run.ResultsPath} Is Not A Valid URI For The Results Path"""),
+                        : throw new UriFormatException($@"""{run.ResultsPath}"" Is Not A Valid URI For The Results Path"),
                     directoryName, run.Name);
 
         // Append a directory separator character to the path before setting it.
