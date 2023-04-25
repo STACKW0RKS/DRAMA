@@ -53,9 +53,7 @@
 										}
 									},
 									"additionalProperties": false,
-									"required": [
-										"Host"
-									]
+									"required": []
 								},
 								"API": {
 									"type": "object",
@@ -74,15 +72,15 @@
 										}
 									},
 									"additionalProperties": false,
-									"required": [
-										"Host"
-									]
+									"required": []
 								},
 								"Back-End": {
 									"type": "object",
 									"properties": {
 										"Database Engine": {
-											"type": "string"
+											"type": "string",
+											"enum": [ "Microsoft SQL Server", "MySQL", "Oracle", "PostgreSQL", "SQLite" ],
+											"$comment": "The supported values are defined in the DRAMA > Enumerations > DatabaseEngine.CS > DatabaseEngine class."
 										},
 										"Connection String": {
 											"type": "string"
@@ -102,7 +100,9 @@
 							"type": "object",
 							"properties": {
 								"Browser": {
-									"type": "string"
+									"type": "string",
+									"enum": [ "chromium", "firefox", "webkit" ],
+									"$comment": "The supported values are defined in the Microsoft > Playwright > BrowserType.CS > BrowserType class."
 								},
 								"Browser Options": {
 									"type": "object",
