@@ -135,7 +135,7 @@ internal static class ConfigurationParser
     {
         // Remove the "DEBUG" environment variable from all potential targets, in order to avoid conflicts.
         foreach (EnvironmentVariableTarget target in new[] { EnvironmentVariableTarget.Machine, EnvironmentVariableTarget.User, EnvironmentVariableTarget.Process })
-            if (Environment.GetEnvironmentVariable("DEBUG", target) is not null) Environment.SetEnvironmentVariable("DEBUG", null);
+            if (Environment.GetEnvironmentVariable("DEBUG", target) is not null) Environment.SetEnvironmentVariable("DEBUG", null, target);
 
         // If the value of the "Debug Logging" key in the configuration file is TRUE, then enable Playwright to output debug events to the log.
         if (browserDriver.DebugLogging ?? false) Environment.SetEnvironmentVariable("DEBUG", "pw:api", EnvironmentVariableTarget.Process);
