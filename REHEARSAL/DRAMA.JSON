@@ -20,6 +20,13 @@
 					"Path": "/auth/login"
 				},
 
+				"API": {
+					"Host": "127.0.0.1",
+					"Protocol": "https",
+					"Port": 999,
+					"Path": "/api"
+				},
+
 				"Back-End": {
 					"Database Engine": "SQLite",
 					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
