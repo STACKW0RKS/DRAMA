@@ -6,9 +6,11 @@ public class CommonFixtureBindings
     [BeforeTestRun(Order = 1)]
     public static void BeforeTestRun()
     {
+        Contexts.TestRun.PropertyBag ??= new Dictionary<string, object>();
+
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
-            Contexts.TestRun.PropertyBag!.Add<Stopwatch>("STOPWATCH", Stopwatch.StartNew());
+            Contexts.TestRun.PropertyBag.Add<Stopwatch>("STOPWATCH", Stopwatch.StartNew());
 
             LogHelpers.Log($@"[DEBUG] [TEST_RUN__] NAME :: {Contexts.TestRun.Profile.TestRun.Name}");
             LogHelpers.Log($@"[DEBUG] [TEST_RUN__] INIT :: {DateTimeOffset.Now:HH:mm:ss.fff}");
