@@ -22,7 +22,7 @@
 		</Content>
 	</ItemGroup>
 
-	<Target Name="UnzipArchive" BeforeTargets="Build">
+	<Target Name="UnzipArchive" AfterTargets="Build">
 		<Unzip SourceFiles="Resources\Browser-Driver-Playground.ZIP" DestinationFolder="$(OutputPath)\Resources" SkipUnchangedFiles="TRUE" OverwriteReadOnlyFiles="TRUE" />
 	</Target>
 
