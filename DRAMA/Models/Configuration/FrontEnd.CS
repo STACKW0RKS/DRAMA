@@ -14,4 +14,7 @@ public class FrontEnd
 
     [JsonProperty("Path")]
     public string? Path { get; set; }
+
+    [JsonProperty("Browser Driver")]
+    public BrowserDriver? BrowserDriver { get; set; }
 }

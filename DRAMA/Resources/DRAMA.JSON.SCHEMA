@@ -1,142 +1,144 @@
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"type": "object",
-	"properties": {
-		"Test Run Profiles": {
-			"type": "array",
-			"items": [
-				{
-					"type": "object",
-					"properties": {
-						"Name": {
-							"type": "string"
-						},
-						"Test Run": {
-							"type": "object",
-							"properties": {
-								"Results Path": {
-									"type": "string"
-								},
-								"Stop Feature At First Error": {
-									"type": "boolean"
-								},
-								"Property Bag": {
-									"type": "object",
-									"properties": {},
-									"additionalProperties": true,
-									"required": []
-								},
-								"Debug Logging": {
-									"type": "boolean"
-								}
-							},
-							"additionalProperties": false,
-							"required": []
-						},
-						"System Under Test": {
-							"type": "object",
-							"properties": {
-								"Front-End": {
-									"type": "object",
-									"properties": {
-										"Host": {
-											"type": "string"
-										},
-										"Protocol": {
-											"type": "string"
-										},
-										"Port": {
-											"type": "integer"
-										},
-										"Path": {
-											"type": "string"
-										}
-									},
-									"additionalProperties": false,
-									"required": []
-								},
-								"API": {
-									"type": "object",
-									"properties": {
-										"Host": {
-											"type": "string"
-										},
-										"Protocol": {
-											"type": "string"
-										},
-										"Port": {
-											"type": "integer"
-										},
-										"Path": {
-											"type": "string"
-										}
-									},
-									"additionalProperties": false,
-									"required": []
-								},
-								"Back-End": {
-									"type": "object",
-									"properties": {
-										"Database Engine": {
-											"type": "string",
-											"enum": [ "Microsoft SQL Server", "MySQL", "Oracle", "PostgreSQL", "SQLite" ],
-											"$comment": "The supported values are defined in the DRAMA > Enumerations > DatabaseEngine.CS > DatabaseEngine class."
-										},
-										"Connection String": {
-											"type": "string"
-										}
-									},
-									"additionalProperties": false,
-									"required": [
-										"Database Engine",
-										"Connection String"
-									]
-								}
-							},
-							"additionalProperties": false,
-							"required": []
-						},
-						"Browser Driver": {
-							"type": "object",
-							"properties": {
-								"Browser": {
-									"type": "string",
-									"enum": [ "chromium", "firefox", "webkit" ],
-									"$comment": "The supported values are defined in the Microsoft > Playwright > BrowserType.CS > BrowserType class."
-								},
-								"Browser Options": {
-									"type": "object",
-									"properties": {
-										"Headless": {
-											"type": "boolean"
-										},
-										"Devtools": {
-											"type": "boolean"
-										}
-									},
-									"additionalProperties": true,
-									"required": []
-								},
-								"Debug Logging": {
-									"type": "boolean"
-								}
-							},
-							"additionalProperties": false,
-							"required": []
-						}
-					},
-					"additionalProperties": false,
-					"required": [
-						"Name",
-						"System Under Test"
-					]
-				}
-			],
-			"additionalItems": true
-		}
-	},
-	"additionalProperties": false,
-	"required": [
-		"Test Run Profiles"
-	]
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "Test Run Profiles": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "Name": {
+                            "type": "string"
+                        },
+                        "Test Run": {
+                            "type": "object",
+                            "properties": {
+                                "Results Path": {
+                                    "type": "string"
+                                },
+                                "Stop Feature At First Error": {
+                                    "type": "boolean"
+                                },
+                                "Property Bag": {
+                                    "type": "object",
+                                    "properties": {},
+                                    "additionalProperties": true,
+                                    "required": []
+                                },
+                                "Debug Logging": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": []
+                        },
+                        "System Under Test": {
+                            "type": "object",
+                            "properties": {
+                                "Front-End": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Host": {
+                                            "type": "string"
+                                        },
+                                        "Protocol": {
+                                            "type": "string"
+                                        },
+                                        "Port": {
+                                            "type": "integer"
+                                        },
+                                        "Path": {
+                                            "type": "string"
+                                        },
+                                        "Browser Driver": {
+                                            "type": "object",
+                                            "properties": {
+                                                "Browser": {
+                                                    "type": "string",
+                                                    "enum": [ "chromium", "firefox", "webkit" ],
+                                                    "$comment": "The supported values are defined in the Microsoft > Playwright > BrowserType.CS > BrowserType class."
+                                                },
+                                                "Browser Options": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "Headless": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "Devtools": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "additionalProperties": true,
+                                                    "required": []
+                                                },
+                                                "Debug Logging": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "additionalProperties": false,
+                                            "required": []
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "Browser Driver"
+                                    ]
+                                },
+                                "API": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Host": {
+                                            "type": "string"
+                                        },
+                                        "Protocol": {
+                                            "type": "string"
+                                        },
+                                        "Port": {
+                                            "type": "integer"
+                                        },
+                                        "Path": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": []
+                                },
+                                "Back-End": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Database Engine": {
+                                            "type": "string",
+                                            "enum": [ "Microsoft SQL Server", "MySQL", "Oracle", "PostgreSQL", "SQLite" ],
+                                            "$comment": "The supported values are defined in the DRAMA > Enumerations > DatabaseEngine.CS > DatabaseEngine class."
+                                        },
+                                        "Connection String": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "Database Engine",
+                                        "Connection String"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": []
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "Name",
+                        "System Under Test"
+                    ]
+                }
+            ],
+            "additionalItems": true
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "Test Run Profiles"
+    ]
 }

@@ -17,7 +17,16 @@
 					"Host": "127.0.0.1",
 					"Protocol": "https",
 					"Port": 666,
-					"Path": "/auth/login"
+					"Path": "/auth/login",
+
+					"Browser Driver": {
+						"Browser": "firefox",
+						"Browser Options": {
+							"Headless": false,
+							"Devtools": false
+						},
+						"Debug Logging": true
+					}
 				},
 
 				"API": {
@@ -31,15 +40,6 @@
 					"Database Engine": "SQLite",
 					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
 				}
-			},
-
-			"Browser Driver": {
-				"Browser": "firefox",
-				"Browser Options": {
-					"Headless": false,
-					"Devtools": false
-				},
-				"Debug Logging": true
 			}
 		}
 	]

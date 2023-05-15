@@ -11,7 +11,4 @@ public class Profile
 
     [JsonProperty("System Under Test")]
     public SystemUnderTest? SystemUnderTest { get; set; }
-
-    [JsonProperty("Browser Driver")]
-    public BrowserDriver? BrowserDriver { get; set; }
 }

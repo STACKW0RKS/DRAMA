@@ -47,7 +47,7 @@ internal static class ConfigurationParser
         testRunProfile.TestRun.DebugLogging ??= false;
 
         // If the test run profile specifies a browser driver configuration, set whether Playwright outputs debug events to the log or not.
-        testRunProfile.BrowserDriver?.SetDebugLogging();
+        testRunProfile.SystemUnderTest?.FrontEnd?.BrowserDriver?.SetDebugLogging();
 
         // Return the test run profile, after having set values for the profile's mandatory properties.
         return testRunProfile;

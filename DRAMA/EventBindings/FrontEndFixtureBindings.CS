@@ -15,12 +15,14 @@ public sealed class FrontEndFixtureBindings
 
         IPlaywright playwright = await Playwright.CreateAsync();
 
-        IBrowser browser = profile.BrowserDriver?.Browser?.ToLower() switch
+        // TODO: Make This Easier To Read
+
+        IBrowser browser = profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.Browser?.ToLower() switch
         {
-            BrowserType.Chromium => await playwright.Chromium.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
-            BrowserType.Firefox => await playwright.Firefox.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
-            BrowserType.Webkit => await playwright.Webkit.LaunchAsync(profile.BrowserDriver?.BrowserOptions),
-            _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.BrowserDriver?.Browser}"" (Expected: chromium\firefox\webkit)")
+            BrowserType.Chromium => await playwright.Chromium.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
+            BrowserType.Firefox => await playwright.Firefox.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
+            BrowserType.Webkit => await playwright.Webkit.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
+            _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.Browser}"" (Expected: chromium\firefox\webkit)")
         };
 
         // TODO: Make These Configurable
