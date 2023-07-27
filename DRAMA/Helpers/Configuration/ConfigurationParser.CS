@@ -79,10 +79,10 @@ internal static class ConfigurationParser
             throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{schemaFile}"" Configuration Schema");
 
         // Deserialise the content of the configuration file.
-        Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent);
+        Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent) ?? throw new Newtonsoft.Json.JsonException("Unable To Deserialise Configuration File Content");
 
         // If no test run profiles have been discovered, throw an exception.
-        if (configuration.TestRunProfiles is null || configuration.TestRunProfiles.None())
+        if (configuration?.TestRunProfiles is null || configuration.TestRunProfiles.None())
             throw new NoMatchException($@"No Test Run Profiles Found In Configuration File ""{configurationFile}""");
 
         // Return the collection of discovered test run profiles.
