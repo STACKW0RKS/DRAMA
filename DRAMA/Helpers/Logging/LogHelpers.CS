@@ -1,11 +1,10 @@
-﻿namespace DRAMA.Helpers.Logging
+﻿namespace DRAMA.Helpers.Logging;
+
+public static class LogHelpers
 {
-    public static class LogHelpers
+    public static void Log(string message, bool console = true, bool debug = true)
     {
-        public static void Log(string message, bool console = true, bool debug = true)
-        {
-            if (console) Console.WriteLine(message);
-            if (debug) Debug.WriteLine(message);
-        }
+        if (console) Console.WriteLine(message);
+        if (debug) Debug.WriteLine(message);
     }
 }
