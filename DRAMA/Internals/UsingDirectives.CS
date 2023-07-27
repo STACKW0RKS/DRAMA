@@ -60,6 +60,7 @@
     global using System.Globalization;
     global using System.Reflection;
     global using System.Runtime.Serialization;
+    global using System.Security.Cryptography.X509Certificates;
     global using System.Text;
     global using System.Text.Json;
 # endregion
