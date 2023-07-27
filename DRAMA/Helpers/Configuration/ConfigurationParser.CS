@@ -66,7 +66,7 @@ internal static class ConfigurationParser
 
         // Set the schema file, allowing for case-insensitive matches.
         schemaFile = (new DirectoryInfo(Environment.CurrentDirectory).GetFiles().SingleOrDefault(file => file.Name.Equals(schemaFile, StringComparison.OrdinalIgnoreCase))
-            ?? throw new FileNotFoundException($@"Configuration File Schema ""DRAMA.JSON."" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
+            ?? throw new FileNotFoundException($@"Configuration File Schema ""{schemaFile}"" (Case-Insensitive Name) Not Found In Directory ""{Environment.CurrentDirectory}""")).FullName;
 
         // Read the configuration file, and store the content in memory.
         string configurationFileContent = File.ReadAllText(configurationFile);
