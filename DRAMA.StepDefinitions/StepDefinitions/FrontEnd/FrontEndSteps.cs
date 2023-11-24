@@ -1,7 +1,7 @@
 ﻿namespace DRAMA.StepDefinitions.StepDefinitions.FrontEnd;
 
 [Binding]
-internal sealed class FrontEndSteps : ProtoStep
+internal sealed class FrontEndSteps : Base.Steps.FrontEndSteps
 {
     internal FrontEndSteps(FeatureContext featureContext, ScenarioContext scenarioContext) : base(featureContext, scenarioContext) { }
 

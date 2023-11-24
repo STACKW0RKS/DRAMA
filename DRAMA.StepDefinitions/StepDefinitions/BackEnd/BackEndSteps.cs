@@ -1,7 +1,7 @@
 ﻿namespace DRAMA.StepDefinitions.StepDefinitions.BackEnd;
 
 [Binding]
-internal sealed class BackEndSteps : ProtoStep
+internal sealed class BackEndSteps : Base.Steps.BackEndSteps
 {
     internal BackEndSteps(FeatureContext featureContext) : base(featureContext) { }
 

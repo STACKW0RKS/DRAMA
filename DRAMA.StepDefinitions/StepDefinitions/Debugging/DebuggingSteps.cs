@@ -1,7 +1,7 @@
 ﻿namespace DRAMA.StepDefinitions.StepDefinitions.Debugging;
 
 [Binding]
-internal sealed class DebuggingSteps : ProtoStep
+internal sealed class DebuggingSteps : ProtoStepCollection
 {
     internal DebuggingSteps(FeatureContext featureContext, ScenarioContext scenarioContext) : base(featureContext, scenarioContext) { }
 

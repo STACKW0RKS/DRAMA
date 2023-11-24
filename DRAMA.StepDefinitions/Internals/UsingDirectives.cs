@@ -1,7 +1,7 @@
 ﻿# region DRAMA Using Directives
+    global using DRAMA.Base.Prototypes;
     global using DRAMA.Contexts;
     global using DRAMA.Extensions.Context;
-    global using DRAMA.Prototypes;
 # endregion
 
 # region Microsoft Using Directives

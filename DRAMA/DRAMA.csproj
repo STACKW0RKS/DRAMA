@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>NET8.0</TargetFramework>
-		<ImplicitUsings>ENABLE</ImplicitUsings>
-		<Nullable>ENABLE</Nullable>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<IsPackable>TRUE</IsPackable>
-		<GeneratePackageOnBuild>TRUE</GeneratePackageOnBuild> <!-- "dotnet pack" for manual generation of package -->
-		<PackageFormat>NUPKG</PackageFormat>
-		<IncludeSymbols>TRUE</IncludeSymbols>
-		<SymbolPackageFormat>SNUPKG</SymbolPackageFormat>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild> <!-- "dotnet pack" for manual generation of package -->
+		<PackageFormat>nupkg</PackageFormat>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -24,23 +24,23 @@
 		<Description>Full Stack Test Automation Framework</Description>
 		<Copyright>Copyright © 2018-2024 StackWorks™ All Rights Reserved</Copyright>
 		<PackageProjectURL>https://www.nuget.org/packages/DRAMA/</PackageProjectURL>
-		<PackageIcon>ICON.PNG</PackageIcon>
-		<PackageReadmeFile>README.MD</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<RepositoryURL>https://github.com/STACKW0RKS/DRAMA</RepositoryURL>
-		<RepositoryType>GIT</RepositoryType>
+		<RepositoryType>Git</RepositoryType>
 		<PackageTags>DRAMA;FrontEnd;Playwright;API;BackEnd;FullStack;Test;Automation;Framework;C#;.NET</PackageTags>
 		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
 		<NeutralLanguage>en-GB</NeutralLanguage>
 		<AssemblyVersion>1.0.10</AssemblyVersion>
 		<FileVersion>1.0.10</FileVersion>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageRequireLicenseAcceptance>TRUE</PackageRequireLicenseAcceptance>
+		<PackageLicenseFile>license</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content PackagePath="" Visible="FALSE" Include="NuGet\icon.png" />
-		<Content PackagePath="" Visible="FALSE" Include="..\readme.md" />
-		<Content PackagePath="" Visible="FALSE" Include="..\license" />
+		<Content PackagePath="" Visible="false" Include="NuGet\icon.png" />
+		<Content PackagePath="" Visible="false" Include="..\readme.md" />
+		<Content PackagePath="" Visible="false" Include="..\license" />
 	</ItemGroup>
 
 	<ItemGroup>

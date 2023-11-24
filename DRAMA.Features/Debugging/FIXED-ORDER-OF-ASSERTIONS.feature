@@ -3,6 +3,11 @@ Feature: Fixed Order Of Assertions
     AS A PROGRAMMER WHO DILIGENTLY DEBUGS THEIR CODE
     I EXPECT THAT THE "IMPLICIT FAIL" SCENARIO WILL BE SKIPPED
     FOLLOWING THE FAILURE OF THE "EXPLICIT FAIL" SCENARIO
+    IF "Stop Feature At First Error" IS SET TO "TRUE" IN THE CONFIGURATION FILE
+
+
+    # The acceptance criteria for this fixture is that the result of each scenario matches the outcome specified in the name of the scenario, apart from the "IMPLICIT FAIL" scenario (more details below).
+    # The "IMPLICIT FAIL" scenario will either fail or be skipped, depending on whether "Stop Feature At First Error" is enabled or not in the configuration file.
 
 
     Scenario:   [01/07] IGNORE

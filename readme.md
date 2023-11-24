@@ -416,7 +416,7 @@ jobs:
     displayName: "Publish NuGet Package"
     inputs:
       command: "push"
-      packagesToPush: "**/DRAMA/**/*.NUPKG"
+      packagesToPush: "**/DRAMA/**/*.nupkg"
       publishVstsFeed: "93c20076-464c-483b-91a7-6a900265ed53"
       allowPackageConflicts: true
 ```
