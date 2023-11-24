@@ -286,6 +286,154 @@ run-tests:
 
 </br>
 
+Q: How do I set up my solution which integrates DRAMA to run via an Azure pipeline?
+
+A: Create an `azure-pipeline-tests.yml` configuration file along the lines of the following:
+
+```yaml
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/
+
+trigger: "none"
+
+schedules:
+- cron: "0 5 * * *"
+  displayName: "CRON Schedule"
+  branches:
+    include:
+    - "main"
+  always: true
+  batch: false
+
+parameters:
+- name: "image"
+  displayName: "Pool Image"
+  type: "string"
+  default: "ubuntu-latest"
+  values:
+  - "ubuntu-latest"
+  - "windows-latest"
+  - "macos-latest"
+
+- name: "profile"
+  displayName: "Test Run Profile"
+  type: "string"
+  default: "Chromium Headless"
+  values:
+  - "Firefox Headless"
+  - "Chromium Headless"
+  - "WebKit Headless"
+
+- name: "filter"
+  displayName: "Test Category Filter"
+  type: "string"
+  default: "TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+  values:
+  - "TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+  - "TestCategory=Front-End&TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+  - "TestCategory=API&TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+  - "TestCategory=Back-End&TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+  - "TestCategory=DEMO"
+
+jobs:
+- job: "execute"
+  displayName: "Build Solution & Run Tests"
+
+  pool:
+    vmImage: "${{parameters.image}}"
+
+  variables:
+  - name: "starttime"
+    value: "$[format('{0:yyyy}-{0:MM}-{0:dd}_{0:HH}-{0:mm}-{0:ss}', pipeline.startTime)]"
+
+  steps:
+  - task: "UseDotNet@2"
+    displayName: "Use .NET SDK"
+    inputs:
+      packageType: "sdk"
+      version: "8.0.x"
+
+  - task: "NuGetAuthenticate@1"
+    displayName: "NuGet Authenticate"
+
+  - script: "dotnet build"
+    displayName: "Build Solution"
+
+  - script: "pwsh P3.BDD.Features/bin/Debug/net7.0/playwright.ps1 install --with-deps"
+    displayName: "Install Playwright Binaries"
+
+  - script: "pwsh run-tests.ps1"
+    displayName: "Run Tests"
+    env:
+      DRAMA_TEST_RUN_NAME: "$(starttime)"
+      DRAMA_PROFILE: "${{parameters.profile}}"
+      DRAMA_TEST_CATEGORIES: "${{parameters.filter}}"
+
+  - task: "PublishPipelineArtifact@1"
+    displayName: "Publish Test Artefacts"
+    inputs:
+      targetPath: "DRAMA_RESULTS/$(starttime)/"
+      publishLocation: "pipeline"
+      artifactName: "Test Artefacts"
+
+  - task: "PublishTestResults@2"
+    displayName: "Publish TRX Results"
+    inputs:
+      testResultsFormat: "VSTest"
+      testResultsFiles: "DRAMA_RESULTS/$(starttime)/*.trx"
+      failTaskOnFailedTests: true
+```
+
+</br>
+
+Q: How do I build a DRAMA NuGet package via an Azure pipeline?
+
+A: Create an `azure-pipeline-nuget.yml` configuration file along the lines of the following:
+
+```yaml
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/
+
+trigger:
+  tags:
+    include:
+    - "*.*.*"
+
+jobs:
+- job: "execute"
+  displayName: "Pack And Publish NuGet Package"
+
+  pool:
+    vmImage: "windows-latest"
+
+  steps:
+  - task: "PowerShell@2"
+    displayName: "Set Build Number From Tag"
+    inputs:
+      targetType: "inline"
+      script: |
+        ${LATEST_TAG} = git tag | Sort-Object -V -D | Select-Object -F 1
+        Write-Host "Latest Tag Is: '${LATEST_TAG}'"
+        Write-Host "##vso[build.updatebuildnumber]${LATEST_TAG}"
+
+  - script: "dotnet build"
+    displayName: "Build Solution"
+
+  - script: "dotnet pack"
+    displayName: "Pack NuGet Package"
+
+  - task: "NuGetAuthenticate@1"
+    displayName: "NuGet Authenticate"
+
+  - task: "NuGetCommand@2"
+    displayName: "Publish NuGet Package"
+    inputs:
+      command: "push"
+      packagesToPush: "**/DRAMA/**/*.NUPKG"
+      publishVstsFeed: "93c20076-464c-483b-91a7-6a900265ed53"
+      allowPackageConflicts: true
+```
+
+</br>
+
 Q: How to generate test artefacts which are compatible with GitLab?
 
 A: Sadly, GitLab only supports test artefacts in JUnit format, so the following dependency can be added to the project which generates test artefacts: https://github.com/spekt/junit.testlogger. Following this, the `dotnet test` command can be executed with a parameter for a `junit` logger, e.g. `dotnet test --logger "junit;LogFileName=results.junit"`.
