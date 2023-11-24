@@ -30,54 +30,114 @@ Q: How do I run my tests in a CI/CD pipeline?
 A: Either use a PowerShell script or a Bash script, along the lines of the examples below:
 
 ```powershell
-# set the environment variable for the results path, which DRAMA will look for at runtime
+# set the environment variable for the results path, which the framework will look for at runtime
 [Environment]::SetEnvironmentVariable("DRAMA_RESULTS_PATH", $PSScriptRoot)
 ${RESULTS_PATH} = [Environment]::GetEnvironmentVariable("DRAMA_RESULTS_PATH")
-Write-Host "[DEBUG] DRAMA Results Path: ${RESULTS_PATH}" -ForegroundColor Yellow
+Write-Host "[DEBUG] Results Path: ${RESULTS_PATH}" -ForegroundColor Yellow
 
-# set the environment variable for the test run name, which DRAMA will look for at runtime
-[Environment]::SetEnvironmentVariable("DRAMA_TEST_RUN_NAME", (Get-Date -Format "yyyy-MM-dd_HH-mm-ss"))
-${TEST_RUN_NAME} = [Environment]::GetEnvironmentVariable("DRAMA_TEST_RUN_NAME")
-Write-Host "[DEBUG] DRAMA Test Run Name: ${TEST_RUN_NAME}" -ForegroundColor Yellow
+# set the environment variable for the test run name, which the framework will look for at runtime
+${TEST_RUN_NAME} = (Get-Date -Format "yyyy-MM-dd_HH-mm-ss")
+
+if (![string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable("DRAMA_TEST_RUN_NAME")))
+{
+    ${TEST_RUN_NAME} = [Environment]::GetEnvironmentVariable("DRAMA_TEST_RUN_NAME")
+}
+
+else
+{
+    [Environment]::SetEnvironmentVariable("DRAMA_TEST_RUN_NAME", "${TEST_RUN_NAME}")
+}
+
+Write-Host "[DEBUG] Test Run Name: ${TEST_RUN_NAME}" -ForegroundColor Yellow
 
 # create a variable that points to the directory where the test run results will be stored
-# this directory needs to be known prior to DRAMA runtime, so that it can be passed to the "dotnet test" command
-# both DRAMA and MSTest artefacts will be generated at this path
+# this directory needs to be known at test run start time, so that it can be passed to the "dotnet test" command
+# both the framework and MSTest artefacts will be generated at this path
 ${TEST_RUN_RESULTS_PATH} = [IO.Path]::Combine("${RESULTS_PATH}", "DRAMA_RESULTS", "${TEST_RUN_NAME}")
-Write-Host "[DEBUG] DRAMA Test Run Results Path: ${TEST_RUN_RESULTS_PATH}" -ForegroundColor Yellow
+Write-Host "[DEBUG] Test Run Results Path: ${TEST_RUN_RESULTS_PATH}" -ForegroundColor Yellow
 
-# start the DRAMA test run
+# set the environment variable for the test run filter, which the framework will look for at runtime
+${TEST_CATEGORIES} = "TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+
+if (![string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable("DRAMA_TEST_CATEGORIES")))
+{
+    ${TEST_CATEGORIES} = [Environment]::GetEnvironmentVariable("DRAMA_TEST_CATEGORIES")
+}
+
+else
+{
+    [Environment]::SetEnvironmentVariable("DRAMA_TEST_CATEGORIES", "${TEST_CATEGORIES}")
+}
+
+Write-Host "[DEBUG] Test Run Categories: ${TEST_CATEGORIES}" -ForegroundColor Yellow
+
+# if an "DRAMA_PROFILE" environment variable exists, log its value to the terminal
+if (![string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable("DRAMA_PROFILE")))
+{
+    ${PROFILE} = [Environment]::GetEnvironmentVariable("DRAMA_PROFILE")
+    Write-Host "[DEBUG] Test Run Profile: ${PROFILE}" -ForegroundColor Yellow
+}
+
+else { Write-Host "[DEBUG] Test Run Profile: Default" -ForegroundColor Yellow }
+
+# start the test run
 dotnet test `
-    --filter "TestCategory!=DEBUG&TestCategory!=DEMO" `
+    --filter "${TEST_CATEGORIES}" `
     --logger "console;verbosity=detailed" `
     --logger "trx;LogFileName=${TEST_RUN_NAME}.trx" `
     --logger "html;LogFileName=${TEST_RUN_NAME}.html" `
-    --logger "junit;LogFileName=${DRAMA_TEST_RUN_NAME}.junit" `
     --results-directory "${TEST_RUN_RESULTS_PATH}"
 ```
 
 ```bash
-# set the environment variable for the results path, which DRAMA will look for at runtime
+# set the environment variable for the results path, which the framework will look for at runtime
 export DRAMA_RESULTS_PATH=${PWD}
-echo "[DEBUG] DRAMA Results Path: ${DRAMA_RESULTS_PATH}"
+echo "[DEBUG] Results Path: ${DRAMA_RESULTS_PATH}"
 
-# set the environment variable for the test run name, which DRAMA will look for at runtime
-export DRAMA_TEST_RUN_NAME=$(date "+%Y-%m-%d_%H-%M-%S")
-echo "[DEBUG] DRAMA Test Run Name: ${DRAMA_TEST_RUN_NAME}"
+# set the environment variable for the test run name, which the framework will look for at runtime
+TEST_RUN_NAME=$(date "+%Y-%m-%d_%H-%M-%S")
+
+if [ ! -z "$DRAMA_TEST_RUN_NAME" ]
+then
+    TEST_RUN_NAME="$DRAMA_TEST_RUN_NAME"
+else
+    export DRAMA_TEST_RUN_NAME="$TEST_RUN_NAME"
+fi
+
+echo "[DEBUG] Test Run Name: ${DRAMA_TEST_RUN_NAME}"
 
 # create a variable that points to the directory where the test run results will be stored
-# this directory needs to be known prior to DRAMA runtime, so that it can be passed to the "dotnet test" command
-# both DRAMA and MSTest artefacts will be generated at this path
+# this directory needs to be known at test run start time, so that it can be passed to the "dotnet test" command
+# both the framework and MSTest artefacts will be generated at this path
 export TEST_RUN_RESULTS_PATH="${DRAMA_RESULTS_PATH}/DRAMA_RESULTS/${DRAMA_TEST_RUN_NAME}"
-echo "[DEBUG] DRAMA Test Run Results Path: ${TEST_RUN_RESULTS_PATH}"
+echo "[DEBUG] Test Run Results Path: ${TEST_RUN_RESULTS_PATH}"
 
-# start the DRAMA test run
+# set the environment variable for the test run filter, which the framework will look for at runtime
+TEST_CATEGORIES="TestCategory!=DEBUG&TestCategory!=DEMO&TestCategory!=WIP"
+
+if [ ! -z "$DRAMA_TEST_CATEGORIES" ]
+then
+    TEST_CATEGORIES="$DRAMA_TEST_CATEGORIES"
+else
+    export DRAMA_TEST_CATEGORIES="$TEST_CATEGORIES"
+fi
+
+echo "[DEBUG] Test Run Categories: ${TEST_CATEGORIES}"
+
+# if an "DRAMA_PROFILE" environment variable exists, log its value to the terminal
+if [ ! -z "$DRAMA_PROFILE" ]
+then
+    echo "[DEBUG] Test Run Profile: ${DRAMA_PROFILE}"
+else
+    echo "[DEBUG] Test Run Profile: Default"
+fi
+
+# start the test run
 dotnet test \
-    --filter "TestCategory!=DEBUG&TestCategory!=DEMO" \
+    --filter "${TEST_CATEGORIES}" \
     --logger "console;verbosity=detailed" \
     --logger "trx;LogFileName=${DRAMA_TEST_RUN_NAME}.trx" \
     --logger "html;LogFileName=${DRAMA_TEST_RUN_NAME}.html" \
-    --logger "junit;LogFileName=${DRAMA_TEST_RUN_NAME}.junit" \
     --results-directory "${TEST_RUN_RESULTS_PATH}"
 ```
 
@@ -237,7 +297,23 @@ Q: How to install Playwright locally, for development purposes?
 A: Follow the steps below:
 
 1. install PowerShell by executing `dotnet tool install --global PowerShell`
-2. build the solution and navigate to the directory which contains both `playwright.ps1` and `Microsoft.Playwright.dll` (e.g. `.\bin\Debug\net7.0`)
+2. build the solution and navigate to the directory which contains both `playwright.ps1` and `Microsoft.Playwright.dll` (e.g. `.\bin\Debug\net8.0`)
 3. open a PowerShell terminal and execute `pwsh playwright.ps1 install`
+
+</br>
+
+Q: How do I clean up the build artefacts, for debugging purposes?
+
+A: Use one of the following scripts:
+
+```powershell
+Get-ChildItem .\ -include bin,obj -Recurse | ForEach-Object ($_) { Remove-Item $_.FullName -Force -Recurse }
+```
+
+or
+
+```powershell
+gci -include bin,obj -recurse | remove-item -force -recurse
+```
 
 </br>
