@@ -6,47 +6,7 @@ public sealed class FrontEndFixtureBindings
     [BeforeFeature("Front-End", Order = 2)]
     public static async Task BeforeFeature(FeatureContext featureContext)
     {
-        if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
-            LogHelpers.Log($@"[DEBUG] [FEATURE___] INFO :: DRAMA Playwright Version Is v{Assembly.GetAssembly(typeof(Playwright))?.GetName().Version}");
-
-        Profile profile = Contexts.TestRun.Profile;
-
-        // TODO: Throw An Exception If Browser Driver Is NULL
-
-        IPlaywright playwright = await Playwright.CreateAsync();
-
-        // TODO: Make This Easier To Read
-
-        IBrowser browser = profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.Browser?.ToLower() switch
-        {
-            BrowserType.Chromium => await playwright.Chromium.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
-            BrowserType.Firefox => await playwright.Firefox.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
-            BrowserType.Webkit => await playwright.Webkit.LaunchAsync(profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.BrowserOptions),
-            _ => throw new NoMatchException($@"Invalid Browser Type ""{profile.SystemUnderTest?.FrontEnd?.BrowserDriver?.Browser}"" (Expected: chromium\firefox\webkit)")
-        };
-
-        // TODO: Make These Configurable
-        BrowserNewContextOptions browserNewContextOptions = new()
-        {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
-            IgnoreHTTPSErrors = true,
-            RecordVideoDir = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible()),
-            RecordVideoSize = new RecordVideoSize() { Width = 1280, Height = 720 },
-            RecordHarPath = Path.Combine(profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.har")
-        };
-
-        IBrowserContext browserContext = await browser.NewContextAsync(browserNewContextOptions);
-        browserContext.SetDefaultTimeout(30000);
-
-        await browserContext.Tracing.StartAsync(new TracingStartOptions
-        {
-            Screenshots = true,
-            Snapshots = true,
-            Sources = true
-        });
-
-        featureContext.Set<IBrowser>("Browser", browser);
-        featureContext.SetCurrentBrowserTab(await browserContext.NewPageAsync());
+        await EventBindingHelpers.InitialiseBrowserTab(featureContext);
     }
 
     [AfterFeature("Front-End", Order = 2)]
@@ -57,7 +17,7 @@ public sealed class FrontEndFixtureBindings
         await browserContext.Tracing.StopAsync(new TracingStopOptions
         { Path = Path.Combine(Contexts.TestRun.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
 
-        // Required for the generation of HAR files.
+        // Required for the generation of HAR files. Closing The browser context triggers the HAR files to flush.
         await browserContext.CloseAsync();
     }
 }

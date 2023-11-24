@@ -1,4 +1,4 @@
-﻿# region AventStack Using Directives // TODO: Remove These Using Directives After Migrating Away From Extent Reports
+﻿# region AventStack Using Directives // TODO: Remove These Using Directives After Migrating Away From Extent Reports (A Good Alternative Would Be Allure Framework)
     global using AventStack.ExtentReports;
     global using AventStack.ExtentReports.Gherkin.Model;
     global using AventStack.ExtentReports.Reporter;
@@ -7,10 +7,13 @@
 
 # region DRAMA Using Directives
     global using DRAMA.Attributes;
+    global using DRAMA.Base.Prototypes;
     global using DRAMA.Enumerations;
     global using DRAMA.Extensions.Context;
     global using DRAMA.Extensions.TargetFramework;
+    global using DRAMA.Handlers;
     global using DRAMA.Helpers.Configuration;
+    global using DRAMA.Helpers.EventBindings;
     global using DRAMA.Helpers.Logging;
     global using DRAMA.Helpers.TabularData;
     global using DRAMA.Models.Configuration;

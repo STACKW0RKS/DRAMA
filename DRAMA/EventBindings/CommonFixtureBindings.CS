@@ -10,6 +10,8 @@ public class CommonFixtureBindings
 
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
         {
+            LogHelpers.Log($@"[DEBUG] [TEST_RUN__] CONF :: {Contexts.TestRun.Profile.Name}");
+
             Contexts.TestRun.PropertyBag.Add<Stopwatch>("STOPWATCH", Stopwatch.StartNew());
 
             LogHelpers.Log($@"[DEBUG] [TEST_RUN__] NAME :: {Contexts.TestRun.Profile.TestRun.Name}");
@@ -20,6 +22,7 @@ public class CommonFixtureBindings
     [BeforeFeature(Order = 1)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
+        featureContext.SetStartDateTime(DateTime.Now);
         featureContext.SetIdentifier(Guid.NewGuid());
 
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
@@ -34,6 +37,7 @@ public class CommonFixtureBindings
     [BeforeScenario(Order = 1)]
     public void BeforeScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
+        scenarioContext.SetStartDateTime(DateTime.Now);
         scenarioContext.SetFeatureIdentifier(featureContext.GetIdentifier());
 
         if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)

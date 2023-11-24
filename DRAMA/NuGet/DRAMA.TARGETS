@@ -1,0 +1,14 @@
+<Project>
+
+    <!-- https://learn.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties -->
+    <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties -->
+    
+	<ItemGroup>
+		<SchemaFiles Include="$(MSBuildThisFileDirectory)*.json.schema" />
+	</ItemGroup>
+
+	<Target Name="CopySchemaFiles" BeforeTargets="Build">
+		<Copy SourceFiles="@(SchemaFiles)" DestinationFolder="$(TargetDir)" />
+	</Target>
+
+</Project>

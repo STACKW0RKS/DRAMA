@@ -6,7 +6,7 @@ public sealed class BackEndFixtureBindings
     [BeforeFeature("Back-End", Order = 2)]
     public static void BeforeFeature(FeatureContext featureContext)
     {
-        featureContext.SetDatabaseConnection(ConfigurationHelpers.CreateDatabaseConnection());
+        featureContext.SetDatabaseConnection(BackEndHelpers.CreateDatabaseConnection());
         featureContext.GetDatabaseConnection().Open();
     }
 

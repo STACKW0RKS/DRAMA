@@ -2,7 +2,7 @@
 
 public static class TestRun
 {
-    public static readonly Profile Profile = ConfigurationParser.GetTestRunProfile();
+    public static readonly Profile Profile = ConfigurationHandler.GetTestRunProfile();
 
     /// <summary>
     ///     The local date and time at which the test run started.

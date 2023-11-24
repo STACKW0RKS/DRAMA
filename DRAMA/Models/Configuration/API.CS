@@ -1,7 +1,7 @@
 ﻿namespace DRAMA.Models.Configuration;
 
 [JsonObject]
-public class API // TODO: Implement API Testing (Look Into NBomber @ https://nbomber.com/)
+public class API
 {
     [JsonProperty("Host")]
     public string? Host { get; set; }
@@ -14,4 +14,7 @@ public class API // TODO: Implement API Testing (Look Into NBomber @ https://nbo
 
     [JsonProperty("Path")]
     public string? Path { get; set; }
+
+    [JsonProperty("Authorisation Scheme")]
+    public string? AuthorisationScheme { get; set; }
 }

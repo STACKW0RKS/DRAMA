@@ -27,6 +27,23 @@ public static class FeatureContextExtensions
             throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Feature Context Property Bag");
     }
 
+    public static void CreateOrAddToList<T>(this FeatureContext context, string key, T value) where T : notnull
+    {
+        if (context.ContainsKey(key).Equals(false))
+            context[key] = new List<T> { value };
+
+        else if (context[key] is not List<T>)
+            throw new NoMatchException($@"Feature Context Property With Key ""{key}"" Is Not A ""List<{typeof(T)}>"" Type");
+
+        else (context[key] as List<T> ?? new List<T>()).Add(value);
+    }
+
+    public static void SetStartDateTime(this FeatureContext context, DateTime datetime)
+        => context.Set<DateTime>("Feature Start DateTime", datetime);
+
+    public static DateTime GetStartDateTime(this FeatureContext context)
+        => context.Get<DateTime>("Feature Start DateTime");
+
     public static void SetIdentifier(this FeatureContext context, Guid identifier)
         => context.Set<Guid>("Unique Identifier", identifier);
 
@@ -38,6 +55,12 @@ public static class FeatureContextExtensions
 
     public static IPage GetCurrentBrowserTab(this FeatureContext context)
         => context.Get<IPage>("Current Browser Tab");
+
+    public static void SetCurrentHTTPCallContext(this FeatureContext context, IAPIRequestContext api)
+        => context.Set<IAPIRequestContext>("Current API Call Context", api);
+
+    public static IAPIRequestContext GetCurrentHTTPCallContext(this FeatureContext context)
+        => context.Get<IAPIRequestContext>("Current API Call Context");
 
     public static void SetErrorsHaveOccurred(this FeatureContext context, bool errorsHaveOccurred)
         => context.Set<bool>("Errors Have Occurred", context.GetErrorsHaveOccurred() || errorsHaveOccurred);
@@ -56,4 +79,10 @@ public static class FeatureContextExtensions
 
     public static IDbConnection GetDatabaseConnection(this FeatureContext context)
         => context.Get<IDbConnection>("Database Connection");
+
+    public static void SetAPIAuthenticationToken(this FeatureContext context, string token)
+        => context.Set<string>(key: "API Authentication Token", value: token);
+
+    public static string GetAPIAuthenticationToken(this FeatureContext context)
+        => context.TryGetValue<string>(key: "API Authentication Token", value: out string token) ? token : string.Empty;
 }

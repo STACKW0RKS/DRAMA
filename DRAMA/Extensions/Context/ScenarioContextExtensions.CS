@@ -27,6 +27,23 @@ public static class ScenarioContextExtensions
             throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Scenario Context Property Bag");
     }
 
+    public static void CreateOrAddToList<T>(this ScenarioContext context, string key, T value) where T : notnull
+    {
+        if (context.ContainsKey(key).Equals(false))
+            context[key] = new List<T> { value };
+
+        else if (context[key] is not List<T>)
+            throw new NoMatchException($@"Scenario Context Property With Key ""{key}"" Is Not A ""List<{typeof(T)}>"" Type");
+
+        else (context[key] as List<T> ?? new List<T>()).Add(value);
+    }
+
+    public static void SetStartDateTime(this ScenarioContext context, DateTime datetime)
+        => context.Set<DateTime>("Scenario Start DateTime", datetime);
+
+    public static DateTime GetStartDateTime(this ScenarioContext context)
+        => context.Get<DateTime>("Scenario Start DateTime");
+
     public static void SetFeatureIdentifier(this ScenarioContext context, Guid identifier)
         => context.Set<Guid>("Unique Feature Identifier", identifier);
 

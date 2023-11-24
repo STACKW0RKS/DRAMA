@@ -10,7 +10,7 @@ public static class ExtentTestExtensions
 }
 
 [Binding]
-public sealed class ExtentReportBindings // TODO: Remove This Type After Migrating Away From Extent Reports
+public sealed class ExtentReportBindings // TODO: Remove This Type After Migrating Away From Extent Reports (A Good Alternative Would Be Allure Framework)
 {
     private static ExtentReports Report { get; set; } = new();
     private static Dictionary<ExtentTest, List<ExtentTest>> Features { get; set; } = new();
