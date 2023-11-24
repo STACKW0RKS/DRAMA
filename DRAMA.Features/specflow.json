@@ -12,7 +12,7 @@
 		"allowDebugGeneratedFiles": true,
 		"allowRowTests": true,
 		"addNonParallelizableMarkerForTags": [
-			"Solo"
+			"Non-Parallelisable"
 		]
 	},
 
@@ -30,13 +30,9 @@
 	},
 
 	"stepAssemblies": [
-		{
-			"assembly": "Unily.Automation.Core"
-		},
-		{
-			"assembly": "P2.BDD.StepDefinitions"
-		}
+		{ "assembly": "DRAMA" },
+		{ "assembly": "DRAMA.StepDefinitions" }
 	],
-	
+
 	"documentation": "https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html"
 }

@@ -41,7 +41,7 @@
 
 				"Back-End": {
 					"Database Engine": "SQLite",
-					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+					"Connection String": "Data Source = DRAMA.sqlite; Cache = Shared;"
 				}
 			}
 		}

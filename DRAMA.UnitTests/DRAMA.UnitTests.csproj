@@ -8,23 +8,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JunitXml.TestLogger" Version="3.0.124" />		
 		<PackageReference Include="Microsoft.NET.Test.SDK" Version="17.5.0" />
+		<PackageReference Include="NUnit" Version="3.13.3" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
-		<PackageReference Include="SpecFlow.NUnit" Version="3.9.74" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
-		<ProjectReference Include="..\DRAMA.StepDefinitions\DRAMA.StepDefinitions.CSPROJ" />
+		<ProjectReference Include="..\DRAMA\DRAMA.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="configuration.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-
-		<Content Include="specflow.json">
+		<Content Include="Resources\Table-Parser-Unit-Testing-Playground.html">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

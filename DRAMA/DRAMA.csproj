@@ -38,15 +38,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content PackagePath="" Visible="FALSE" Include="NuGet\ICON.PNG" />
-		<Content PackagePath="" Visible="FALSE" Include="..\README.MD" />
-		<Content PackagePath="" Visible="FALSE" Include="..\LICENSE" />
+		<Content PackagePath="" Visible="FALSE" Include="NuGet\icon.png" />
+		<Content PackagePath="" Visible="FALSE" Include="..\readme.md" />
+		<Content PackagePath="" Visible="FALSE" Include="..\license" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content PackagePath="build" Include="JSON\configuration.json.schema" />
 		<Content PackagePath="build" Include="JSON\specflow.json.schema" />
-		<Content PackagePath="build" Include="NuGet\DRAMA.TARGETS" />
+		<Content PackagePath="build" Include="NuGet\DRAMA.targets" />
 	</ItemGroup>
 
 	<ItemGroup>

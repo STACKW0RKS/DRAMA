@@ -13,11 +13,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DRAMA\DRAMA.CSPROJ" />
+		<ProjectReference Include="..\DRAMA\DRAMA.csproj" />
 	</ItemGroup>
 
 	<Target Name="UnzipArchive" AfterTargets="Build">
-		<Unzip SourceFiles="Resources\Browser-Driver-Playground.ZIP" DestinationFolder="$(OutputPath)\Resources" SkipUnchangedFiles="TRUE" OverwriteReadOnlyFiles="TRUE" />
+		<Unzip SourceFiles="Resources\Browser-Driver-Playground.zip" DestinationFolder="$(OutputPath)\Resources" SkipUnchangedFiles="TRUE" OverwriteReadOnlyFiles="TRUE" />
 	</Target>
 
 </Project>
