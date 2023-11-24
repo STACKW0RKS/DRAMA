@@ -1,0 +1,49 @@
+{
+	"Test Run Profiles": [
+		{
+			"Name": "DRAMA Default",
+
+			"Test Run": {
+				"Results Path": "default",
+				"Stop Feature At First Error": true,
+				"Debug Logging": true,
+
+				"Property Bag": {
+					"Favourite Colour": "black"
+				}
+			},
+
+			"System Under Test": {
+				"Front-End": {
+					"Protocol": "https",
+					"Host": "127.0.0.1",
+					"Port": 666,
+					"Path": "/auth/login",
+
+					"Browser Driver": {
+						"Browser": "firefox",
+						"Browser Options": {
+							"Headless": false,
+							"Devtools": false
+						},
+
+						"Debug Logging": true
+					}
+				},
+
+				"API": {
+					"Protocol": "https",
+					"Host": "127.0.0.1",
+					"Port": 999,
+					"Path": "/api",
+					"Authorisation Scheme": "bearer"
+				},
+
+				"Back-End": {
+					"Database Engine": "SQLite",
+					"Connection String": "Data Source = DRAMA.SQLITE; Cache = Shared;"
+				}
+			}
+		}
+	]
+}

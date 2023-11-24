@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RunSettings>
+    <RunConfiguration>
+        <EnvironmentVariables>
+            <DRAMA_PROFILE>Default</DRAMA_PROFILE>
+        </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>

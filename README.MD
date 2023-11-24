@@ -3,17 +3,6 @@ Full Stack Test Automation Framework
 
 </br>
 
-## PROJECT MAP
-
-| PROJECT   | DESCRIPTION                                                                   |
-|----------:|:------------------------------------------------------------------------------|
-| DRAMA     | Main project from which the NuGet package is built.                           |
-| SPOTLIGHT | Unit tests for DRAMA.                                                         |
-| SCRIPT    | Sample DRAMA implementation project, part one: feature files.                 |
-| REHEARSAL | Sample DRAMA implementation project, part two: step definitions, test engine. |
-
-</br>
-
 ## FAQ
 Q: Where to download Playwright images from, for my solution which integrates DRAMA?
 

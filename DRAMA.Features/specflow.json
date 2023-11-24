@@ -1,0 +1,42 @@
+{
+	"language": {
+		"feature": "en-GB",
+		"tool": "en-GB"
+	},
+
+	"bindingCulture": {
+		"name": "en-GB"
+	},
+
+	"generator": {
+		"allowDebugGeneratedFiles": true,
+		"allowRowTests": true,
+		"addNonParallelizableMarkerForTags": [
+			"Solo"
+		]
+	},
+
+	"runtime": {
+		"missingOrPendingStepsOutcome": "Pending",
+		"obsoleteBehavior": "Warn",
+		"stopAtFirstError": true
+	},
+
+	"trace": {
+		"traceSuccessfulSteps": true,
+		"traceTimings": true,
+		"minTracedDuration": "0:0:0.01",
+		"stepDefinitionSkeletonStyle": "RegexAttribute"
+	},
+
+	"stepAssemblies": [
+		{
+			"assembly": "Unily.Automation.Core"
+		},
+		{
+			"assembly": "P2.BDD.StepDefinitions"
+		}
+	],
+	
+	"documentation": "https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html"
+}
