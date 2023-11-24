@@ -8,6 +8,7 @@ Feature: Fixed Order Of Assertions
 
     # The acceptance criteria for this fixture is that the result of each scenario matches the outcome specified in the name of the scenario, apart from the "IMPLICIT FAIL" scenario (more details below).
     # The "IMPLICIT FAIL" scenario will either fail or be skipped, depending on whether "Stop Feature At First Error" is enabled or not in the configuration file.
+    # This fixture only exists for debugging purposes, and some of these tests are expected to fail, so don't include them in a test run which is not for debugging purposes.
 
 
     Scenario:   [01/07] IGNORE

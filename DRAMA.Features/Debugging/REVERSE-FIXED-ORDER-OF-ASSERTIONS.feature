@@ -8,6 +8,7 @@ Feature: Reverse Fixed Order Of Assertions
 
     # The acceptance criteria for this fixture is that the "IMPLICIT FAIL" scenario will fail.
     # All the other scenarios will either be skipped or match the outcome specified in the name of the scenario, depending on whether "Stop Feature At First Error" is enabled or not in the configuration file.
+    # This fixture only exists for debugging purposes, and some of these tests are expected to fail, so don't include them in a test run which is not for debugging purposes.
 
 
     Scenario:   [01/07] IMPLICIT FAIL
