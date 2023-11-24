@@ -2,6 +2,7 @@
     global using DRAMA.Base.Prototypes;
     global using DRAMA.Contexts;
     global using DRAMA.Extensions.Context;
+    global using DRAMA.Helpers.BDD;
 # endregion
 
 # region Microsoft Using Directives
