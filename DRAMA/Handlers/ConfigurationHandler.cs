@@ -4,10 +4,10 @@ internal static class ConfigurationHandler
 {
     /// <summary>
     ///     Returns a test run profile by name from the collection of test run profiles present in the configuration file.
-    ///     The default profile which will be returned is "Default", however, this can be overridden by setting the "DRAMA_PROFILE" environment variable.
+    ///     The default profile which will be returned is "DEFAULT", however, this can be overridden by setting the "DRAMA_PROFILE" environment variable.
     ///     If no test run profile names in the configuration file match the value of the environment variable or the default value, then a NoMatchException is thrown.
     /// </summary>
-    internal static Profile GetTestRunProfile(string environmentVariable = "DRAMA_PROFILE", string profileName = "Default")
+    internal static Profile GetTestRunProfile(string environmentVariable = "DRAMA_PROFILE", string profileName = "DEFAULT")
     {
         // If the environment variable is set, then use the environment variable for the test run profile name, otherwise use the default value.
         string testRunProfileName = Environment.GetEnvironmentVariable(environmentVariable).HasTextContent()
@@ -15,8 +15,8 @@ internal static class ConfigurationHandler
             : profileName;
 
         // Return the test run profile by name, or throw a NoMatchException if no test run profile with that name is present in the configuration file.
-        Profile testRunProfile = ParseConfiguration().SingleOrDefault(profile => profile.Name is not null && profile.Name.Equals(testRunProfileName))
-                                 ?? throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In The Configuration File");
+        Profile testRunProfile = ParseConfiguration().SingleOrDefault(profile => profile.Name is not null && profile.Name.Equals(testRunProfileName, StringComparison.OrdinalIgnoreCase))
+            ?? throw new NoMatchException($@"Profile ""{testRunProfileName}"" Not Found In The Configuration File");
 
         // If the profile's test run configuration is NULL, then create a new test run configuration for the profile.
         // This is needed because defining the profile's test run configuration in the configuration file is not mandatory. 
@@ -74,9 +74,24 @@ internal static class ConfigurationHandler
         // Read the schema for the configuration file, and store the content in memory.
         string schemaFileContent = File.ReadAllText(schemaFile);
 
+        // Deserialise the schema for the configuration file.
+        JsonSchema schema = JsonSchema.FromJsonAsync(schemaFileContent).Get();
+
         // Validate the configuration against the configuration schema.
-        if (JObject.Parse(configurationFileContent).IsValid(JSchema.Parse(schemaFileContent)).Equals(false))
-            throw new JSchemaException($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{schemaFile}"" Configuration Schema");
+        ICollection<ValidationError> schemaValidationErrors = schema.Validate(configurationFileContent);
+
+        // Log any configuration schema validation errors.
+        if (schemaValidationErrors.Any())
+        {
+            StringBuilder output = new($@"Configuration File ""{configurationFile}"" Does Not Validate Against The ""{schemaFile}"" Configuration Schema");
+
+            output.Append(Environment.NewLine);
+
+            foreach (ValidationError schemaValidationError in schemaValidationErrors)
+                output.Append(Environment.NewLine).Append(schemaValidationError);
+
+            throw new System.Text.Json.JsonException(output.ToString());
+        }
 
         // Deserialise the content of the configuration file.
         Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent) ?? throw new Newtonsoft.Json.JsonException("Unable To Deserialise Configuration File Content");

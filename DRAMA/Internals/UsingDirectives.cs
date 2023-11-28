@@ -28,12 +28,15 @@
 
 # region MySQL Using Directives
     global using MySql.Data.MySqlClient;
-# endregion
+#endregion
 
 # region Newtonsoft Using Directives
     global using Newtonsoft.Json;
-    global using Newtonsoft.Json.Linq;
-    global using Newtonsoft.Json.Schema;
+# endregion
+
+# region NJsonSchema Using Directives
+    global using NJsonSchema;
+    global using NJsonSchema.Validation;
 # endregion
 
 # region NUnit Using Directives
