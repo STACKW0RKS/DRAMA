@@ -399,7 +399,7 @@ jobs:
     inputs:
       targetType: "inline"
       script: |
-        ${LATEST_TAG} = git tag | Sort-Object -V -D | Select-Object -F 1
+        ${LATEST_TAG} = git tag | %{ new-object System.Version ($_) } | Sort-Object -D | Select-Object -F 1
         Write-Host "Latest Tag Is: '${LATEST_TAG}'"
         Write-Host "##vso[build.updatebuildnumber]${LATEST_TAG}"
 
