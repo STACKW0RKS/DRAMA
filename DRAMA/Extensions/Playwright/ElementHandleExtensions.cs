@@ -8,19 +8,19 @@ public static class ElementHandleExtensions
     ///     </para>
     ///     <para>
     ///         If no selectors are specified, the defaults will be used. The default selectors are the following:
-    ///         <br />
+    ///         <br/>
     ///         Table Container Selector: <c>"table"</c>
-    ///         <br />
+    ///         <br/>
     ///         Header Row Selector: <c>"thead > tr"</c>
-    ///         <br />
+    ///         <br/>
     ///         Header Cell Selector: <c>"th"</c>
-    ///         <br />
+    ///         <br/>
     ///         Body Row Selector: <c>"tbody > tr"</c>
-    ///         <br />
+    ///         <br/>
     ///         Body Cell Selector: <c>"th, td"</c>
-    ///         <br />
+    ///         <br/>
     ///         Footer Row Selector: <c>"tfoot > tr"</c>
-    ///         <br />
+    ///         <br/>
     ///         Footer Cell Selector: <c>"th, td"</c>
     ///     </para>
     /// </summary>
@@ -39,24 +39,24 @@ public static class ElementHandleExtensions
     /// <summary>
     ///     <para>
     ///         Parses an AG Grid element to a table of element handle objects which can be interacted with (e.g. read, click, evaluate).
-    ///         <br />
+    ///         <br/>
     ///         The implementation of the grid can be either JavaScript, Angular, React, or Vue. More information can be found at <a href="https://www.ag-grid.com/"></a>.
     ///     </para>
     ///     <para>
     ///         If no selectors are specified, the defaults will be used. The default selectors are the following:
-    ///         <br />
+    ///         <br/>
     ///         Table Container Selector: <c>"div.ag-root-wrapper"</c>
-    ///         <br />
+    ///         <br/>
     ///         Header Row Selector: <c>"div.ag-header-container > div.ag-header-row"</c>
-    ///         <br />
+    ///         <br/>
     ///         Header Cell Selector: <c>"div.ag-header-cell"</c>
-    ///         <br />
+    ///         <br/>
     ///         Body Row Selector: <c>":nth-match(div.ag-center-cols-container, 1) > div.ag-row"</c>
-    ///         <br />
+    ///         <br/>
     ///         Body Cell Selector: <c>"div.ag-cell"</c>
-    ///         <br />
+    ///         <br/>
     ///         Footer Row Selector: <c>":nth-match(div.ag-center-cols-container, 2) > div.ag-row"</c>
-    ///         <br />
+    ///         <br/>
     ///         Footer Cell Selector: <c>"div.ag-cell"</c>
     ///     </para>
     /// </summary>

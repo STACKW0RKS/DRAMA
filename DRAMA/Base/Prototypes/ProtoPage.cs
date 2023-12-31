@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     Architecturally, this class is intended to be the lowest-level parent class of all page object models.
-///     <br />
+///     <br/>
 ///     This class exposes the Page property, which holds a reference to the Playwright page object used during initialisation of objects of derived classes.
 /// </summary>
 public abstract class ProtoPage

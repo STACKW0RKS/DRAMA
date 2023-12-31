@@ -2,7 +2,7 @@ namespace DRAMA.Base.Prototypes;
 
 /// <summary>
 ///     Architecturally, this class is intended to be the lowest-level parent class of all element object models.
-///     <br />
+///     <br/>
 ///     Inheriting from this class exposes several properties which can be used to interact with the element and/or its parent: Page, Selector, Locator.
 /// </summary>
 public abstract class ProtoElement

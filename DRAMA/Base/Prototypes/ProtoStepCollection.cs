@@ -2,7 +2,7 @@ namespace DRAMA.Base.Prototypes;
 
 /// <summary>
 ///     Architecturally, this class is intended to be the lowest-level parent class of all classes containing SpecFlow steps.
-///     <br />
+///     <br/>
 ///     This class exposes the FeatureContext and ScenarioContext properties, which hide the members of the same respective names from the SpecFlow.Steps class.
 /// </summary>
 public abstract class ProtoStepCollection

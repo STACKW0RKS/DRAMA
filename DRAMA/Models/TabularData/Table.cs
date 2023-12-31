@@ -7,7 +7,7 @@ public class Table<TContent>
 {
     /// <summary>
     ///     Constructs a table with content of the specified type.
-    ///     <br />
+    ///     <br/>
     ///     The header, rows, footer, and columns are not fully defined, and the Header, Rows, and Columns properties need to be set post object construction.
     /// </summary>
     public Table()
@@ -20,7 +20,7 @@ public class Table<TContent>
 
     /// <summary>
     ///     Constructs a table with content of the specified type.
-    ///     <br />
+    ///     <br/>
     ///     The header, rows, footer, and columns are already defined, and passed as arguments to the constructor's parameters.
     /// </summary>
     public Table(Row<TContent> header, List<Row<TContent>> rows, Row<TContent> footer, List<Column<TContent>> columns)

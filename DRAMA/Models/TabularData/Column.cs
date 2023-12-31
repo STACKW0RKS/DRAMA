@@ -7,7 +7,7 @@ public class Column<TContent>
 {
     /// <summary>
     ///     Constructs a table column with content of the specified type.
-    ///     <br />
+    ///     <br/>
     ///     The header, the collection of cells, and the footer are not fully defined, and the Header, Cells, and Footer properties need to be set post object construction.
     /// </summary>
     public Column(int index, string name, Table<TContent> table)
@@ -22,7 +22,7 @@ public class Column<TContent>
 
     /// <summary>
     ///     Constructs a table column with content of the specified type.
-    ///     <br />
+    ///     <br/>
     ///     The header and the collection of cells are already defined, and passed as arguments to the constructor's parameters.
     /// </summary>
     public Column(int index, string name, Cell<TContent> header, List<Cell<TContent>> cells, Cell<TContent> footer, Table<TContent> table)

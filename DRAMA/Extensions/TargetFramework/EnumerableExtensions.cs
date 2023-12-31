@@ -34,7 +34,7 @@ public static class EnumerableExtensions
 
     /// <summary>
     ///     Returns TRUE if the source collection does not contain the specified element. Otherwise, returns FALSE.
-    ///     <br />
+    ///     <br/>
     ///     The method's signature also includes a parameter for specifying the equality comparer.
     /// </summary>
     public static bool ContainsNot<TSource>(this IEnumerable<TSource> collection, TSource element, IEqualityComparer<TSource>? comparer)

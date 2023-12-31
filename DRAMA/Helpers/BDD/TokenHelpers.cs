@@ -24,15 +24,15 @@ public static class TokenHelpers
 
     /// <summary>
     ///     Returns a value from an environment variable, the test run context, a feature context, or a scenario context, identified by the tokenised key.
-    ///     <br />
-    ///     <br />
+    ///     <br/>
+    ///     <br/>
     ///     <code>
     ///         [¦key¦] represents a value retrieved by key "key" from an environment variable
     ///         &lt;¦key¦&gt; represents a value retrieved by key "key" from the test run context
     ///         {¦key¦} represents a value retrieved by key "key" from a feature context
     ///         (¦key¦) represents a value retrieved by key "key" from a scenario context
     ///     </code>
-    ///     <br />
+    ///     <br/>
     ///     The token symbol separator character "¦" is called a "broken bar" and has Unicode code <see href="https://www.compart.com/en/unicode/U+00A6">U+00A6</see>.
     /// </summary>
     public static string Detokenise(string token, FeatureContext? featureContext = null, ScenarioContext? scenarioContext = null)
