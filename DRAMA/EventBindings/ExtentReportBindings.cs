@@ -18,7 +18,7 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
     [BeforeTestRun]
     public static void BeforeTestRun()
     {
-        Profile profile = Contexts.TestRun.Profile;
+        Profile profile = TestRunContext.Profile;
 
         ExtentHtmlReporter reporter = new(profile.TestRun?.ResultsPath, ViewStyle.SPA);
 
@@ -53,11 +53,6 @@ public sealed class ExtentReportBindings // TODO: Remove This Type After Migrati
     [AfterStep]
     public async Task AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
     {
-        if (featureContext.GetSkipFeatureSteps())
-        {
-            scenarioContext.StepContext.Status = ScenarioExecutionStatus.Skipped;
-        }
-
         MediaEntityModelProvider? mediaEntity = featureContext.FeatureInfo.Tags.Intersect(new[] { "Front-End" }).Any() // TODO: Think Of A Better Trigger For Taking A Screenshot
             ? MediaEntityBuilder.CreateScreenCaptureFromBase64String
                 (Convert.ToBase64String(await featureContext.GetCurrentBrowserTab().ScreenshotAsync(new PageScreenshotOptions { FullPage = true })), scenarioContext.ScenarioInfo.Title.Trim()).Build()

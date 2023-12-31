@@ -15,7 +15,7 @@ public sealed class FrontEndFixtureBindings
         IBrowserContext browserContext = featureContext.Get<IBrowser>("Browser").Contexts.Single();
 
         await browserContext.Tracing.StopAsync(new TracingStopOptions
-        { Path = Path.Combine(Contexts.TestRun.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
+        { Path = Path.Combine(TestRunContext.Profile.TestRun?.ResultsPath ?? string.Empty, featureContext.FeatureInfo.Title.ToPathCompatible(), $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip") });
 
         // Required for the generation of HAR files. Closing The browser context triggers the HAR files to flush.
         await browserContext.CloseAsync();

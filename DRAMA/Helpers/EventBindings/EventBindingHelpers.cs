@@ -4,10 +4,10 @@ public static class EventBindingHelpers
 {
     public static async Task<IPage> InitialiseBrowserTab(FeatureContext featureContext, BrowserNewContextOptions? browserNewContextOptions = null)
     {
-        if (Contexts.TestRun.Profile.TestRun?.DebugLogging is true)
+        if (TestRunContext.Profile.TestRun?.DebugLogging is true)
             LogHelpers.Log($@"[DEBUG] [FEATURE___] INFO :: Current Playwright Version Is v{Assembly.GetAssembly(typeof(Playwright))?.GetName().Version}");
 
-        Profile profile = Contexts.TestRun.Profile;
+        Profile profile = TestRunContext.Profile;
 
         // TODO: Throw An Exception If Browser Driver Is NULL
 
@@ -55,7 +55,7 @@ public static class EventBindingHelpers
 
     public static async Task<IAPIRequestContext> InitialiseHTTPCallContext(FeatureContext featureContext, APIRequestNewContextOptions? apiRequestNewContextOptions = null)
     {
-        Profile profile = Contexts.TestRun.Profile;
+        Profile profile = TestRunContext.Profile;
 
         IPlaywright playwright = await Playwright.CreateAsync();
 

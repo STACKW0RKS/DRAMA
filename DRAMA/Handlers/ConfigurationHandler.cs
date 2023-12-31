@@ -36,10 +36,10 @@ internal static class ConfigurationHandler
         // Populate the test run context with properties defined in the configuration file.
         if (testRunProfile.TestRun.PropertyBag is not null && testRunProfile.TestRun.PropertyBag.Any())
         {
-            Contexts.TestRun.PropertyBag ??= new Dictionary<string, object>();
+            TestRunContext.PropertyBag ??= new Dictionary<string, object>();
 
             foreach (KeyValuePair<string, object> element in testRunProfile.TestRun.PropertyBag)
-                Contexts.TestRun.PropertyBag.Add(element.Key, element.Value);
+                TestRunContext.PropertyBag.Add(element.Key, element.Value);
         }
 
         // Set whether or not to log debug information, such as step/scenario/feature execution duration.

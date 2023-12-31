@@ -14,5 +14,5 @@ public abstract class HTTPCallSteps : ProtoStepCollection
         => URIHelpers.ResolveEndpointURI(path).AbsoluteUri;
 
     protected static string GetURI(string host, string path)
-        => URIHelpers.ResolveEndpointURI(Contexts.TestRun.Profile.TestRun?.PropertyBag?.Get<string>(host) ?? "localhost", path).AbsoluteUri;
+        => URIHelpers.ResolveEndpointURI(TestRunContext.Profile.TestRun?.PropertyBag?.Get<string>(host) ?? "localhost", path).AbsoluteUri;
 }

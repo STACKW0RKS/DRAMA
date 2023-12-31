@@ -48,7 +48,7 @@ public static class TokenHelpers
         {
             string input = token.TrimStart(TestRunContextTokenStart.ToArray()).TrimEnd(TestRunContextTokenEnd.ToArray());
 
-            return Contexts.TestRun.PropertyBag?.ContainsKey(input) ?? false ? Contexts.TestRun.PropertyBag.Get<dynamic>(input).ToString() ?? string.Empty : string.Empty;
+            return TestRunContext.PropertyBag?.ContainsKey(input) ?? false ? TestRunContext.PropertyBag.Get<dynamic>(input).ToString() ?? string.Empty : string.Empty;
         }
 
         else if (token.StartsWith(FeatureContextTokenStart) && token.EndsWith(FeatureContextTokenEnd))

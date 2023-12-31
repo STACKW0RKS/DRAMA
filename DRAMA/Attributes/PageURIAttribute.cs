@@ -7,7 +7,7 @@ public sealed class PageURIAttribute : Attribute
         => URI = URIHelpers.ResolvePageURI(path);
 
     public PageURIAttribute(string host, string path)
-        => URI = URIHelpers.ResolvePageURI(Contexts.TestRun.Profile.TestRun?.PropertyBag?.Get<string>(host) ?? "localhost", path);
+        => URI = URIHelpers.ResolvePageURI(TestRunContext.Profile.TestRun?.PropertyBag?.Get<string>(host) ?? "localhost", path);
 
     public Uri URI { get; init; }
 }

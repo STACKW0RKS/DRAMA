@@ -1,6 +1,6 @@
 ﻿namespace DRAMA.Contexts;
 
-public static class TestRun
+public static class TestRunContext
 {
     public static readonly Profile Profile = ConfigurationHandler.GetTestRunProfile();
 

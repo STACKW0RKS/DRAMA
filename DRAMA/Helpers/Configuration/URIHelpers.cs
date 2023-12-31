@@ -3,20 +3,20 @@
 public static class URIHelpers
 {
     public static Uri ResolvePageURI(string path)
-        => Contexts.TestRun.Profile.SystemUnderTest?.FrontEnd?.ResolveURI(path)
-            ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{Contexts.TestRun.Profile.Name}""");
+        => TestRunContext.Profile.SystemUnderTest?.FrontEnd?.ResolveURI(path)
+            ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
 
     public static Uri ResolveEndpointURI(string path)
-        => Contexts.TestRun.Profile.SystemUnderTest?.API?.ResolveURI(path)
-            ?? throw new ConfigurationErrorsException($@"API Test Configuration Not Found In Profile ""{Contexts.TestRun.Profile.Name}""");
+        => TestRunContext.Profile.SystemUnderTest?.API?.ResolveURI(path)
+            ?? throw new ConfigurationErrorsException($@"API Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
 
     public static Uri ResolvePageURI(string host, string path)
-    => Contexts.TestRun.Profile.SystemUnderTest?.FrontEnd?.ResolveURI(host, path)
-        ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{Contexts.TestRun.Profile.Name}""");
+        => TestRunContext.Profile.SystemUnderTest?.FrontEnd?.ResolveURI(host, path)
+            ?? throw new ConfigurationErrorsException($@"Front-End Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
 
     public static Uri ResolveEndpointURI(string host, string path)
-        => Contexts.TestRun.Profile.SystemUnderTest?.API?.ResolveURI(host, path)
-            ?? throw new ConfigurationErrorsException($@"API Test Configuration Not Found In Profile ""{Contexts.TestRun.Profile.Name}""");
+        => TestRunContext.Profile.SystemUnderTest?.API?.ResolveURI(host, path)
+            ?? throw new ConfigurationErrorsException($@"API Test Configuration Not Found In Profile ""{TestRunContext.Profile.Name}""");
 
     private static Uri ResolveURI(this FrontEnd configuration, string path)
         => ParseURI(configuration.Host, configuration.Protocol, configuration.Port, configuration.Path, path);

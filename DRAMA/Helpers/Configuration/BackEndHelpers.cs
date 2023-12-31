@@ -4,7 +4,7 @@ internal static class BackEndHelpers
 {
     internal static IDbConnection CreateDatabaseConnection()
     {
-        BackEnd? configuration = Contexts.TestRun.Profile.SystemUnderTest?.BackEnd;
+        BackEnd? configuration = TestRunContext.Profile.SystemUnderTest?.BackEnd;
 
         DbProviderFactory factory = configuration?.DatabaseEngine switch
         {
