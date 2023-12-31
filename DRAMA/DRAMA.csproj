@@ -16,7 +16,7 @@
 
 	<PropertyGroup>
 		<PackageID>DRAMA</PackageID>
-		<Version>1.0.12</Version>
+		<Version>1.0.13</Version>
 		<Title>DRAMA</Title>
 		<Authors>Vlad-Alexandru Tănăsescu</Authors>
 		<Company>StackWorks™</Company>
@@ -31,8 +31,8 @@
 		<PackageTags>DRAMA;FrontEnd;Playwright;API;BackEnd;FullStack;Test;Automation;Framework;C#;.NET</PackageTags>
 		<PackageReleaseNotes>Death Is Just One Character I Play, My Real Name Is Change</PackageReleaseNotes>
 		<NeutralLanguage>en-GB</NeutralLanguage>
-		<AssemblyVersion>1.0.12</AssemblyVersion>
-		<FileVersion>1.0.12</FileVersion>
+		<AssemblyVersion>1.0.13</AssemblyVersion>
+		<FileVersion>1.0.13</FileVersion>
 		<PackageLicenseFile>license</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
@@ -65,13 +65,14 @@
 		<PackageReference Include="ExtentReports" Version="4.1.0" /> <!-- TODO: Remove ExtentReports After Migrating Away From Extent Reports -->
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Playwright" Version="1.40.0" />
+		<PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.205.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.205.1" />
 		<PackageReference Include="MySql.Data" Version="8.2.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="NJsonSchema" Version="10.9.0" />
-		<PackageReference Include="Npgsql" Version="8.0.0" />
+		<PackageReference Include="Npgsql" Version="8.0.1" />
 		<PackageReference Include="NUnit" Version="3.14.0" />
 		<PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.120" />
-		<PackageReference Include="SpecFlow" Version="3.9.74" />
+		<PackageReference Include="SpecFlow" Version="4.0.31-beta" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>

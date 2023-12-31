@@ -130,6 +130,37 @@
                             },
                             "additionalProperties": false,
                             "required": []
+                        },
+                        "Integrations": {
+                            "type": "object",
+                            "properties": {
+                                "Azure DevOps": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Enabled": {
+                                            "type": "boolean"
+                                        },
+                                        "Host": {
+                                            "type": "string"
+                                        },
+                                        "Project": {
+                                            "type": "string",
+                                            "$comment": "The value can be either a project name or a project GUID."
+                                        },
+                                        "Personal Access Token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "Host",
+                                        "Project",
+                                        "Personal Access Token"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": []
                         }
                     },
                     "additionalProperties": false,

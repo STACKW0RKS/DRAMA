@@ -11,4 +11,7 @@ public class Profile
 
     [JsonProperty("System Under Test")]
     public SystemUnderTest? SystemUnderTest { get; set; }
+
+    [JsonProperty("Integrations")]
+    public Integrations? Integrations { get; set; }
 }
