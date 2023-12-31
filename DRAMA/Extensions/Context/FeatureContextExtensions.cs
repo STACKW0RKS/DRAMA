@@ -38,6 +38,17 @@ public static class FeatureContextExtensions
         else (context[key] as List<T> ?? new List<T>()).Add(value);
     }
 
+    public static void RemoveFromList<T>(this FeatureContext context, string key, T value) where T : notnull
+    {
+        if (context.ContainsKey(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Feature Context Property Bag");
+
+        else if (context[key] is not List<T>)
+            throw new NoMatchException($@"Feature Context Property With Key ""{key}"" Is Not A ""List<{typeof(T)}>"" Type");
+
+        else (context[key] as List<T> ?? throw new NullReferenceException($@"Feature Context Property With Key ""{key}"" Is NULL")).Remove(value);
+    }
+
     public static void SetStartDateTime(this FeatureContext context, DateTime datetime)
         => context.Set<DateTime>("Feature Start DateTime", datetime);
 
@@ -61,6 +72,12 @@ public static class FeatureContextExtensions
 
     public static IAPIRequestContext GetCurrentHTTPCallContext(this FeatureContext context)
         => context.Get<IAPIRequestContext>("Current API Call Context");
+
+    public static void SetCurrentHTTPClient(this FeatureContext context, HttpClient client)
+        => context.Set<HttpClient>("Current HTTP Client", client);
+
+    public static HttpClient GetCurrentHTTPClient(this FeatureContext context)
+        => context.Get<HttpClient>("Current HTTP Client");
 
     public static void SetErrorsHaveOccurred(this FeatureContext context, bool errorsHaveOccurred)
         => context.Set<bool>("Errors Have Occurred", context.GetErrorsHaveOccurred() || errorsHaveOccurred);

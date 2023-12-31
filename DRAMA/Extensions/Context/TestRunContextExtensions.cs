@@ -37,4 +37,15 @@ public static class TestRunContextExtensions
 
         else (dictionary[key] as List<T> ?? new List<T>()).Add(value);
     }
+
+    public static void RemoveFromList<T>(this Dictionary<string, object> dictionary, string key, T value) where T : notnull
+    {
+        if (dictionary.ContainsKey(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Test Run Context Property Bag");
+
+        else if (dictionary[key] is not List<T>)
+            throw new NoMatchException($@"Test Run Context Property With Key ""{key}"" Is Not A ""List<{typeof(T)}>"" Type");
+
+        else (dictionary[key] as List<T> ?? throw new NullReferenceException($@"Test Run Context Property With Key ""{key}"" Is NULL")).Remove(value);
+    }
 }

@@ -79,4 +79,18 @@ public static class EventBindingHelpers
 
         return currentHTTPCallContext;
     }
+
+    public static HttpClient InitialiseHTTPClient(FeatureContext featureContext)
+    {
+        HttpClient client = new(HTTPClientContext.HTTPHandler, disposeHandler: false);
+
+        Profile profile = TestRunContext.Profile;
+
+        if (profile.SystemUnderTest?.API?.AuthorisationScheme is not null && string.IsNullOrWhiteSpace(featureContext.GetAPIAuthenticationToken()).Equals(false))
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(profile.SystemUnderTest.API.AuthorisationScheme.ToTitleCase(), featureContext.GetAPIAuthenticationToken());
+
+        featureContext.SetCurrentHTTPClient(client);
+
+        return client;
+    }
 }

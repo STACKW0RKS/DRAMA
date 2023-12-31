@@ -20,9 +20,4 @@ public class DuplicateException : SystemException
     ///     Initialises a DuplicateException that takes a nullable exception message and a nullable inner exception for arguments.
     /// </summary>
     public DuplicateException(string? message, Exception? innerException) : base(message, innerException) { }
-
-    /// <summary>
-    ///     Initialises a DuplicateException that takes serialisation information and a streaming context for arguments.
-    /// </summary>
-    protected DuplicateException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

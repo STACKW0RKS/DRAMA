@@ -38,6 +38,17 @@ public static class ScenarioContextExtensions
         else (context[key] as List<T> ?? new List<T>()).Add(value);
     }
 
+    public static void RemoveFromList<T>(this ScenarioContext context, string key, T value) where T : notnull
+    {
+        if (context.ContainsKey(key).Equals(false))
+            throw new NoMatchException($@"Property With Key ""{key}"" Not Found In The Scenario Context Property Bag");
+
+        else if (context[key] is not List<T>)
+            throw new NoMatchException($@"Scenario Context Property With Key ""{key}"" Is Not A ""List<{typeof(T)}>"" Type");
+
+        else (context[key] as List<T> ?? throw new NullReferenceException($@"Scenario Context Property With Key ""{key}"" Is NULL")).Remove(value);
+    }
+
     public static void SetStartDateTime(this ScenarioContext context, DateTime datetime)
         => context.Set<DateTime>("Scenario Start DateTime", datetime);
 

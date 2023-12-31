@@ -49,6 +49,9 @@ internal static class ConfigurationHandler
         // If the test run profile specifies a browser driver configuration, set whether Playwright outputs debug events to the log or not.
         testRunProfile.SystemUnderTest?.FrontEnd?.BrowserDriver?.SetDebugLogging();
 
+        // Set up any integrations that may be defined in the configuration file.
+        testRunProfile.Integrations?.SetUpIntegrations();
+
         // Return the test run profile, after having set values for the profile's mandatory properties.
         return testRunProfile;
     }
@@ -94,7 +97,8 @@ internal static class ConfigurationHandler
         }
 
         // Deserialise the content of the configuration file.
-        Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent) ?? throw new Newtonsoft.Json.JsonException("Unable To Deserialise Configuration File Content");
+        Models.Configuration.Configuration configuration = JsonConvert.DeserializeObject<Models.Configuration.Configuration>(configurationFileContent)
+            ?? throw new Newtonsoft.Json.JsonException("Unable To Deserialise Configuration File Content");
 
         // If no test run profiles have been discovered, throw an exception.
         if (configuration?.TestRunProfiles is null || configuration.TestRunProfiles.None())
@@ -154,5 +158,25 @@ internal static class ConfigurationHandler
 
         // If the value of the "Debug Logging" key in the configuration file is TRUE, then enable Playwright to output debug events to the log.
         if (browserDriver.DebugLogging ?? false) Environment.SetEnvironmentVariable("DEBUG", "pw:api", EnvironmentVariableTarget.Process);
+    }
+
+    /// <summary>
+    ///     Set up each integration that may be defined in the configuration file.
+    /// </summary>
+    private static void SetUpIntegrations(this Models.Configuration.Integrations integrations)
+    {
+        // Azure DevOps Integration
+        if (integrations.AzureDevOps is not null)
+        {
+            // If the "Enabled" option is not set, default to FALSE. All other integration options which come from JSON properties are required to have a value, by means of JSON schema validation.
+            integrations.AzureDevOps.Enabled ??= false;
+
+            // Resolve the Azure DevOps integration personal access token (PAT).
+            string detokenisedPAT = TokenHelpers.Detokenise(integrations.AzureDevOps.PersonalAccessToken ?? string.Empty);
+
+            // Initialise an Azure DevOps integration object, which exposes a connection and a few out-of-the-box methods for interacting with the Azure DevOps API.
+            if (integrations.AzureDevOps.Enabled.Equals(true) && detokenisedPAT.HasTextContent())
+                integrations.AzureDevOps.Integration = new(detokenisedPAT, integrations.AzureDevOps.Host ?? string.Empty, integrations.AzureDevOps.Project ?? string.Empty);
+        }
     }
 }
